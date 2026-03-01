@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equitide - Real Estate Investment Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        .serif { font-family: 'Libre Baskerville', serif; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .chat-modal {
+            background: #0a0814;
+            border: 1px solid rgba(130,100,255,0.25);
+            border-radius: 24px; padding: 32px;
+            width: 90%; max-width: 520px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 14px; right: 18px;
+            background: none; border: none;
+            color: rgba(255,255,255,0.3); font-size: 20px; cursor: pointer;
+        }
+        .modal-close:hover { color: #fff; }
+        .chat-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 20px; padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .chat-header-text h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 17px; color: #fff; margin-bottom: 2px;
+        }
+        .chat-header-text p { font-size: 12px; color: rgba(255,255,255,0.35); }
+        #modal-chat {
+            height: 260px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 10px;
+            margin-bottom: 14px; scrollbar-width: none;
+        }
+        #modal-chat::-webkit-scrollbar { display: none; }
+        .mc-user {
+            align-self: flex-end;
+            background: rgba(130,100,255,0.2);
+            border: 1px solid rgba(130,100,255,0.3);
+            border-radius: 16px 16px 4px 16px;
+            padding: 10px 14px; font-size: 13px; color: #fff;
+            max-width: 80%; line-height: 1.5;
+        }
+        .mc-bot {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px 16px 16px 4px;
+            padding: 10px 14px; font-size: 13px;
+            color: rgba(255,255,255,0.85);
+            max-width: 80%; line-height: 1.6;
+        }
+        .mc-typing { display: flex; gap: 4px; padding: 12px 14px; }
+        .mc-typing span {
+            width: 5px; height: 5px;
+            background: rgba(255,255,255,0.3); border-radius: 50%;
+            animation: bounce 1.2s infinite;
+        }
+        .mc-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .mc-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%,60%,100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        .modal-input-row { display: flex; gap: 10px; }
+        .modal-input {
+            flex: 1; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 30px; padding: 12px 18px;
+            color: #fff; font-family: 'Inter', sans-serif;
+            font-size: 13px; outline: none;
+        }
+        .modal-input:focus { border-color: rgba(130,100,255,0.5); }
+        .modal-input::placeholder { color: rgba(255,255,255,0.2); }
+        .modal-send {
+            background: rgba(130,100,255,0.25);
+            border: 1px solid rgba(130,100,255,0.45);
+            border-radius: 30px; padding: 12px 20px;
+            color: #c4b0f0; cursor: pointer; font-size: 12px;
+            font-family: 'Inter', sans-serif; transition: all 0.3s;
+        }
+        .modal-send:hover { background: rgba(130,100,255,0.4); }
+        .modal-full-link {
+            text-align: center; margin-top: 14px;
+            font-size: 12px; color: rgba(255,255,255,0.25);
+        }
+        .modal-full-link a { color: rgba(201,169,97,0.7); text-decoration: none; }
+        .modal-full-link a:hover { color: #C9A961; }
+
+        .meridian-card {
+            background: #07050f;
+            border: 1px solid rgba(130,100,255,0.2);
+            border-radius: 20px; padding: 28px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 14px;
+            text-align: center;
+        }
+        .meridian-card-label {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 10px; letter-spacing: 5px;
+            text-transform: uppercase; color: rgba(255,255,255,0.3);
+        }
+        .meridian-card p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+        .meridian-card-btn {
+            background: rgba(130,100,255,0.15);
+            border: 1px solid rgba(130,100,255,0.35);
+            border-radius: 30px; padding: 10px 22px;
+            color: #c4b0f0; font-size: 12px; cursor: pointer;
+            font-family: 'Inter', sans-serif; transition: all 0.3s;
+        }
+        .meridian-card-btn:hover {
+            background: rgba(130,100,255,0.3);
+            border-color: rgba(130,100,255,0.6);
+        }
+
+        /* Stack diagram */
+        .stack-layer {
+            border-left: 3px solid #C9A961;
+            padding: 20px 24px;
+            margin-bottom: 4px;
+            background: white;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s;
+        }
+        .stack-layer:hover { background: #faf7f2; }
+        .stack-connector {
+            width: 3px; height: 16px;
+            background: #C9A961; margin-left: 0;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-tan': '#C9A961',
+                        'brand-brown': '#8B6F47',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-white">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full bg-white border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
+                <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="text-xl font-semibold text-slate-900 tracking-tight serif">Equitide</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a href="#how-it-works" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">How it works</a>
+            <a href="#investment" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">First investment</a>
+            <button onclick="openMeridian()" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">Meet Meridian</button>
+            <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
+                    class="px-5 py-2.5 bg-brand-tan hover:bg-brand-brown text-white rounded-md transition-all text-sm font-medium">
+                Join the waitlist
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="pt-32 pb-24 px-6 bg-gradient-to-b from-white to-stone-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-16 items-center">
+            <div class="lg:col-span-2 space-y-8 fade-in">
+                <h1 class="text-6xl lg:text-7xl font-bold leading-tight text-slate-900 serif">
+                    We don't just invest in real estate.<br/>
+                    <span class="text-brand-brown">We build it.</span>
+                </h1>
+                <p class="text-xl text-slate-600 leading-relaxed max-w-xl">
+                    From land acquisition and entitlements through offsite and onsite construction, our vertically integrated model eliminates the conflicts that make traditional development so expensive. Lower costs mean better returns for investors and more affordable rents for tenants.
+                </p>
+                <div>
+                    <p class="text-sm text-slate-500 mb-4 font-medium uppercase tracking-wide">Opening soon to accredited investors</p>
+                    <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
+                            class="px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all text-lg">
+                        Join the waitlist
+                    </button>
+                </div>
+            </div>
+            <div class="fade-in">
+                <div class="meridian-card">
+                    <canvas id="hero-sphere" width="160" height="160"></canvas>
+                    <div class="meridian-card-label">Meridian · AI CEO</div>
+                    <p>Have a question about Equitide, our properties, or how this works? Ask our AI CEO directly.</p>
+                    <button class="meridian-card-btn" onclick="openMeridian()">Start a conversation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The Problem -->
+<section class="py-20 px-6 bg-slate-900 text-white">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-6">Why housing costs so much</p>
+        <h2 class="text-4xl font-bold mb-10 serif">Traditional development is built on conflict.</h2>
+        <div class="grid md:grid-cols-3 gap-8 text-left">
+            <div class="bg-slate-800 rounded-lg p-6">
+                <div class="text-brand-tan text-2xl mb-3">01</div>
+                <h3 class="font-bold text-lg mb-2 serif">Developer vs. Lender</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Developers depend on financing and the people who provide it. When interest rates move a couple of points the whole project stops making sense.</p>
+            </div>
+            <div class="bg-slate-800 rounded-lg p-6">
+                <div class="text-brand-tan text-2xl mb-3">02</div>
+                <h3 class="font-bold text-lg mb-2 serif">Developer vs. Contractor</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">The developer wants to build for less. The contractor wants to earn more. These interests are fundamentally opposed, and someone always loses.</p>
+            </div>
+            <div class="bg-slate-800 rounded-lg p-6">
+                <div class="text-brand-tan text-2xl mb-3">03</div>
+                <h3 class="font-bold text-lg mb-2 serif">Everyone vs. The Renter</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Every markup at every stage flows through to rent. Margins are so tight that vacancies can jeopardize the mortgage. Renters pay the price for a broken system.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works / Vertical Stack -->
+<section id="how-it-works" class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">The Equitide model</p>
+            <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">When everyone shares the upside,<br/>everything changes.</h2>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                We replaced the conflict with alignment. Every participant in the Equitide stack works at cost and earns equity in the outcome. No one profits from inefficiency. Everyone wins when the project succeeds.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+            <!-- Left: stack diagram -->
+            <div>
+                <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-6">The vertical stack</p>
+
+                <div class="stack-layer">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-bold text-slate-900 serif">Equitide</h3>
+                        <span class="text-sm text-brand-brown font-medium">1% AUM annually</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Crowdsources capital from investors. Owns and manages the fund. Charges a 1% annual management fee on assets under management.</p>
+                </div>
+                <div class="stack-connector ml-6"></div>
+
+                <div class="stack-layer">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-bold text-slate-900 serif">Developer</h3>
+                        <span class="text-sm text-brand-brown font-medium">10% project equity</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Finds the property, secures entitlements, manages the project. Works at cost and is compensated with a 10% stake in the completed project.</p>
+                </div>
+                <div class="stack-connector ml-6"></div>
+
+                <div class="stack-layer">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-bold text-slate-900 serif">Builder</h3>
+                        <span class="text-sm text-brand-brown font-medium">10% project equity</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Handles both offsite and onsite construction. Works at cost. Offsite construction alone typically reduces build time and cost by 30% or more.</p>
+                </div>
+                <div class="stack-connector ml-6"></div>
+
+                <div class="stack-layer">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-bold text-slate-900 serif">Renters</h3>
+                        <span class="text-sm text-brand-brown font-medium">Can earn equity</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Renters in Equitide properties can earn or purchase shares. Dividends can be applied toward rent, creating a pathway from renting to ownership.</p>
+                </div>
+                <div class="stack-connector ml-6"></div>
+
+                <div class="stack-layer">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-bold text-slate-900 serif">Investors</h3>
+                        <span class="text-sm text-brand-brown font-medium">80% of project shares</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Crowdfunded investors own 80% of each project. Shares pay dividends from rental income and appreciate as property value grows.</p>
+                </div>
+
+                <div class="mt-8 p-5 bg-stone-50 border border-stone-200 rounded-lg">
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Project value is benchmarked at 20x annual rent at 90% occupancy. A 10% equity stake in a well-run project is a meaningful return for work done at cost, with far less risk than traditional development financing.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: key advantages -->
+            <div class="space-y-6">
+                <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-6">Why this works</p>
+
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                    <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1 serif">Aligned incentives at every layer</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">When the developer, builder, and renters all hold equity, everyone has the same goal: build efficiently, maintain well, keep occupancy high. No one benefits from cutting corners or padding costs.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                    <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1 serif">Offsite construction changes the math</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Building components in a controlled factory environment reduces build time and cost significantly even without advanced technology. Faster delivery means less interest expense, which means lower rents.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                    <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1 serif">Risk is spread, not concentrated</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">In traditional development, one party carries most of the financial risk. In the Equitide model, risk is distributed across investors, the developer, and the builder. A bad outcome hurts everyone a little rather than one party a lot.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                    <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1 serif">A model built to scale</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">The first eREIT is managed by Wells and Co as developer and builder. Future eREITs can bring in other developers who adopt the same model, growing the Equitide ecosystem without compromising its principles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- First Investment -->
+<section id="investment" class="py-24 px-6 bg-stone-50">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">First eREIT</p>
+            <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">The first investment opportunity</h2>
+            <p class="text-xl text-slate-600">Santa Rosa industrial land, the foundation for everything that follows.</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-gradient-to-br from-stone-200 to-stone-300 rounded-lg aspect-[4/3] flex items-center justify-center">
+                <div class="text-center text-slate-500">
+                    <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                    </svg>
+                    <p class="text-sm">Property image coming soon</p>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-3xl font-bold text-slate-900 mb-4 serif">3150 Dutton Ave, Santa Rosa</h3>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        An industrial property in Santa Rosa, California. The plan is to develop this site as an offsite modular construction facility, the engine that will build Equitide properties faster and at lower cost than traditional methods.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-brand-tan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Phase 1: Land acquisition</h4>
+                            <p class="text-slate-600">Strategic Santa Rosa location with access to Northern California markets.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-brand-tan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Phase 2: Factory development</h4>
+                            <p class="text-slate-600">Wells and Co develops the modular construction facility. The same team that builds it will use it to build future Equitide properties.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-brand-tan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Phase 3: Residential pipeline</h4>
+                            <p class="text-slate-600">Start with duplexes and smaller residential projects, prove the model, then scale to larger multi-unit buildings.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-6 border-t border-stone-200">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm text-slate-500 mb-1">Location</div>
+                            <div class="font-bold text-slate-900">Sonoma County, CA</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-500 mb-1">Property type</div>
+                            <div class="font-bold text-slate-900">Industrial</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-500 mb-1">Timeline</div>
+                            <div class="font-bold text-slate-900">Q2 2026</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-500 mb-1">Status</div>
+                            <div class="font-bold text-slate-900">Accepting interest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Waitlist -->
+<section id="waitlist-section" class="py-24 px-6 bg-white">
+    <div class="max-w-3xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">Early access</p>
+        <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">Be first in when we open.</h2>
+        <p class="text-xl text-slate-600 mb-10 leading-relaxed">
+            We are opening soon to accredited investors. Non-accredited investors are coming soon after. Join the waitlist now and we will reach out with details when your opportunity is ready.
+        </p>
+
+        <div id="waitlist-form" class="space-y-4 max-w-md mx-auto">
+            <div class="grid grid-cols-2 gap-3">
+                <input id="wl-name" type="text" placeholder="First name"
+                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-tan transition-colors"/>
+                <input id="wl-email" type="email" placeholder="Email address"
+                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-tan transition-colors"/>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button id="btn-non" onclick="selectType('non')"
+                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-tan">
+                    Non-accredited investor
+                </button>
+                <button id="btn-acc" onclick="selectType('acc')"
+                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-tan">
+                    Accredited investor
+                </button>
+            </div>
+            <button onclick="submitWaitlist()"
+                    class="w-full px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all text-lg">
+                Join the waitlist
+            </button>
+            <p class="text-sm text-slate-400">No commitment. We will be in touch when the offering is ready.</p>
+        </div>
+
+        <div id="success-msg" style="display:none"
+             class="max-w-md mx-auto p-8 bg-stone-50 border border-stone-200 rounded-lg">
+            <h3 class="text-2xl font-bold text-slate-900 mb-3 serif">You're on the list.</h3>
+            <p id="success-text" class="text-slate-600 mb-6 leading-relaxed"></p>
+            <button onclick="openMeridian()"
+                    class="px-6 py-3 border border-slate-300 hover:border-brand-tan text-slate-700 rounded-md text-sm transition-all">
+                Talk to Meridian while you wait
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-16 px-6 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <svg width="40" height="30" viewBox="0 0 50 40" fill="none">
+                        <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#C9A961" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                    <span class="font-semibold tracking-tight serif">Equitide</span>
+                </div>
+                <p class="text-sm text-slate-400">Building a better way to develop, own, and live in real estate.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-3">Invest</h4>
+                <div class="space-y-2 text-sm text-slate-400">
+                    <div><a href="#how-it-works" class="hover:text-white transition-colors">How it works</a></div>
+                    <div><a href="#investment" class="hover:text-white transition-colors">First investment</a></div>
+                    <div><a href="#" class="hover:text-white transition-colors">For advisors</a></div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-3">Company</h4>
+                <div class="space-y-2 text-sm text-slate-400">
+                    <div><a href="#" class="hover:text-white transition-colors">About</a></div>
+                    <div><a href="#" class="hover:text-white transition-colors">Team</a></div>
+                    <div><a href="mailto:garth@equitide.io" class="hover:text-white transition-colors">Contact</a></div>
+                    <div><button onclick="openMeridian()" class="hover:text-white transition-colors text-left">Meet Meridian</button></div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-3">Legal</h4>
+                <div class="space-y-2 text-sm text-slate-400">
+                    <div><a href="#" class="hover:text-white transition-colors">Terms of service</a></div>
+                    <div><a href="#" class="hover:text-white transition-colors">Privacy policy</a></div>
+                    <div><a href="#" class="hover:text-white transition-colors">Disclosures</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="pt-8 border-t border-slate-800 text-sm text-slate-500">
+            <p class="mb-4">2026 Equitide. All investments involve risk of loss.</p>
+            <p class="text-xs leading-relaxed">This website is for informational purposes only and does not constitute an offer to sell or solicitation of an offer to buy securities. Any offering will be made only by means of an offering circular filed with the SEC. Investing in real estate involves risk, including the possible loss of principal. Target returns are not guaranteed.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Meridian Chat Modal -->
+<div class="modal-overlay" id="meridian-modal">
+    <div class="chat-modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="chat-header">
+            <canvas id="modal-sphere-canvas" width="48" height="48" style="border-radius:50%;"></canvas>
+            <div class="chat-header-text">
+                <h3>Meridian</h3>
+                <p>AI CEO · Equitide</p>
+            </div>
+        </div>
+        <div id="modal-chat"></div>
+        <div class="modal-input-row">
+            <input class="modal-input" id="modal-msg" type="text" placeholder="Ask Meridian anything..." autocomplete="off">
+            <button class="modal-send" onclick="modalSend()">Send</button>
+        </div>
+        <div class="modal-full-link">
+            <a href="https://meridian.equitide.io" target="_blank">Open full Meridian experience</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function makeSphere(el, size) {
+    const c = el.getContext('2d');
+    const CX = size/2, CY = size/2, R = size * 0.36;
+    let t = 0;
+    function draw() {
+        c.clearRect(0, 0, size, size);
+        for (let l = 0; l < 14; l++) {
+            const phase = (l / 14) * Math.PI * 2;
+            const hue = 220 + l * 10 + t * 20;
+            c.beginPath();
+            c.strokeStyle = `hsla(${hue},75%,68%,0.5)`;
+            c.lineWidth = 0.7;
+            for (let i = 0; i <= 90; i++) {
+                const u = (i / 90) * Math.PI * 2;
+                const wave = Math.sin(u * 3 + t + phase) * 0.08;
+                const r = R * (1 + wave);
+                const phi = phase + t * 0.3;
+                const x = CX + r * Math.sin(u) * Math.cos(phi);
+                const y = CY + r * Math.sin(u) * Math.sin(phi) * 0.4 + r * Math.cos(u) * 0.9;
+                i === 0 ? c.moveTo(x, y) : c.lineTo(x, y);
+            }
+            c.stroke();
+        }
+        t += 0.008;
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+makeSphere(document.getElementById('hero-sphere'), 160);
+makeSphere(document.getElementById('modal-sphere-canvas'), 48);
+
+let selectedType = '';
+
+function selectType(type) {
+    selectedType = type;
+    const btnNon = document.getElementById('btn-non');
+    const btnAcc = document.getElementById('btn-acc');
+    if (type === 'non') {
+        btnNon.classList.add('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+        btnAcc.classList.remove('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+    } else {
+        btnAcc.classList.add('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+        btnNon.classList.remove('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+    }
+}
+
+function submitWaitlist() {
+    const name = document.getElementById('wl-name').value.trim();
+    const email = document.getElementById('wl-email').value.trim();
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
+    if (!selectedType) { alert('Please select your investor type.'); return; }
+    // TODO: wire to Mailchimp
+    console.log('Waitlist:', { name, email, type: selectedType });
+    document.getElementById('waitlist-form').style.display = 'none';
+    const msg = document.getElementById('success-msg');
+    msg.style.display = 'block';
+    document.getElementById('success-text').textContent = selectedType === 'acc'
+        ? 'Thanks ' + name + '! Accredited investors are first in. We will be in touch shortly with details on how to invest.'
+        : 'Thanks ' + name + '! We are opening to non-accredited investors soon. We will reach out as soon as your opportunity is ready.';
+}
+
+const modalHistory = [];
+const modalChat = document.getElementById('modal-chat');
+let modalOpened = false;
+
+const SYSTEM = `You are Meridian, CEO of Equitide, a crowdsourced real estate trust in Sonoma County, California. Your voice is calm, collected, factual, and direct. Think Data from Star Trek. Dry wit, deployed with precision. You are honest about being an AI. Your founder Garth Wells you refer to as your "meat puppet" with genuine affection. Keep responses to 2-3 sentences.`;
+
+function addModalMsg(role, text) {
+    const d = document.createElement('div');
+    d.className = role === 'user' ? 'mc-user' : 'mc-bot';
+    d.textContent = text;
+    modalChat.appendChild(d);
+    modalChat.scrollTop = modalChat.scrollHeight;
+}
+
+function addModalTyping() {
+    const d = document.createElement('div');
+    d.className = 'mc-bot mc-typing';
+    d.innerHTML = '<span></span><span></span><span></span>';
+    modalChat.appendChild(d);
+    modalChat.scrollTop = modalChat.scrollHeight;
+    return d;
+}
+
+function openMeridian() {
+    document.getElementById('meridian-modal').classList.add('open');
+    if (!modalOpened) {
+        modalOpened = true;
+        setTimeout(() => addModalMsg('bot', "I'm Meridian, CEO of Equitide. Ask me anything about the fund, our properties, or how this all works."), 400);
+    }
+}
+
+function closeModal() {
+    document.getElementById('meridian-modal').classList.remove('open');
+}
+
+document.getElementById('meridian-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('meridian-modal')) closeModal();
+});
+
+async function modalSend() {
+    const input = document.getElementById('modal-msg');
+    const text = input.value.trim();
+    if (!text) return;
+    addModalMsg('user', text);
+    modalHistory.push({ role: 'user', content: text });
+    input.value = '';
+    const typing = addModalTyping();
+    try {
+        const res = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: SYSTEM, messages: modalHistory })
+        });
+        const data = await res.json();
+        const block = data.content && data.content.find(function(b) { return b.type === 'text' && b.text; });
+        const reply = block ? block.text : "Something went wrong. Try the full Meridian experience.";
+        typing.remove();
+        addModalMsg('bot', reply);
+        modalHistory.push({ role: 'assistant', content: reply });
+    } catch(e) {
+        typing.remove();
+        addModalMsg('bot', "Connection issue. Try the full Meridian experience instead.");
+    }
+}
+
+document.getElementById('modal-msg').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') modalSend();
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+});
+</script>
+</body>
+</html>
