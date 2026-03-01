@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meridian — AI CEO, Equitide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0 80px;
+    }
+
+    html { height: -webkit-fill-available; }
+
+    #name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+      transition: color 0.5s;
+    }
+
+    #name.active { color: rgba(255,255,255,0.8); }
+
+    #main-display {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin-bottom: 20px;
+    }
+
+    #sphere-canvas { width: 100%; height: 100%; transition: opacity 0.4s; }
+
+    #inline-content {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(10,10,20,0.95);
+      border: 1px solid rgba(130,100,255,0.2);
+      border-radius: 16px;
+      overflow-y: auto;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      scrollbar-width: none;
+    }
+
+    #inline-content.visible { opacity: 1; pointer-events: all; }
+    #inline-content::-webkit-scrollbar { display: none; }
+
+    #close-content {
+      position: absolute;
+      top: 8px; right: 10px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer; font-size: 16px; line-height: 1;
+    }
+
+    #close-content:hover { color: #fff; }
+
+    #chat {
+      width: min(520px, 90vw);
+      max-height: 360px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+
+    #chat::-webkit-scrollbar { display: none; }
+
+    .msg-user {
+      align-self: flex-end;
+      background: rgba(130,100,255,0.15);
+      border: 1px solid rgba(130,100,255,0.2);
+      border-radius: 18px 18px 4px 18px;
+      padding: 10px 16px;
+      font-size: 14px; font-weight: 300;
+      max-width: 85%; line-height: 1.5;
+    }
+
+    .msg-meridian {
+      align-self: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px 18px 18px 4px;
+      padding: 10px 16px;
+      font-size: 14px; font-weight: 300;
+      max-width: 85%; line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .typing { display: flex; gap: 5px; padding: 14px 16px; }
+
+    .typing span {
+      width: 6px; height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    #input-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(520px, 90vw);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 40px;
+      padding: 14px 20px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    #input-area:focus-within {
+      border-color: rgba(130,100,255,0.5);
+      background: rgba(255,255,255,0.06);
+    }
+
+    #msg {
+      flex: 1; background: none; border: none; outline: none;
+      color: #fff; font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 300;
+    }
+
+    #msg::placeholder { color: rgba(255,255,255,0.25); }
+
+    #mic-btn, #send-btn, #voice-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 4px; color: rgba(255,255,255,0.3);
+      transition: color 0.3s; display: flex; align-items: center;
+    }
+
+    #mic-btn:hover, #mic-btn.listening { color: #a78bfa; }
+    #send-btn:hover { color: rgba(255,255,255,0.8); }
+    #voice-btn.active { color: #a78bfa; }
+    #voice-btn:hover { color: rgba(255,255,255,0.8); }
+
+    #action-btns {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; min-height: 36px;
+      margin-top: 10px; width: min(520px, 90vw);
+    }
+
+    .action-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px; padding: 8px 18px;
+      font-size: 12px; color: rgba(255,255,255,0.6);
+      cursor: pointer; transition: all 0.3s;
+      animation: fadeUp 0.4s ease-out;
+      font-family: 'Inter', sans-serif; letter-spacing: 0.5px;
+    }
+
+    .action-btn:hover {
+      background: rgba(130,100,255,0.15);
+      border-color: rgba(130,100,255,0.4); color: #fff;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #tagline {
+      position: fixed; bottom: 24px;
+      font-size: 11px; color: rgba(255,255,255,0.15);
+      letter-spacing: 2px; text-transform: uppercase;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="name">Meridian</div>
+
+  <div id="main-display">
+    <canvas id="sphere-canvas" width="260" height="260"></canvas>
+    <div id="inline-content">
+      <button id="close-content">✕</button>
+      <div id="inline-body"></div>
+    </div>
+  </div>
+
+  <div id="chat"></div>
+
+  <div id="input-area">
+    <button id="mic-btn" title="Speak">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/>
+      </svg>
+    </button>
+    <input id="msg" type="text" placeholder="Say something..." autocomplete="off"/>
+    <button id="voice-btn" title="Toggle voice" class="active">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+    </button>
+    <button id="send-btn" title="Send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="action-btns"></div>
+  <div id="tagline">AI CEO &nbsp;·&nbsp; Equitide</div>
+
+<script>
+// Sphere
+const canvas = document.getElementById('sphere-canvas');
+const ctx = canvas.getContext('2d');
+const W = 260, H = 260, CX = W/2, CY = H/2, R = 100;
+let t = 0, speaking = false, energy = 0, audioEnergy = 0;
+
+function drawSphere() {
+  ctx.clearRect(0, 0, W, H);
+  const target = speaking ? Math.max(energy, audioEnergy) : 0;
+  energy += (target - energy) * 0.08;
+  const lines = 18, pts = 120;
+  for (let l = 0; l < lines; l++) {
+    const phase = (l / lines) * Math.PI * 2;
+    const hue = 220 + l * 8 + t * 20;
+    ctx.beginPath();
+    ctx.strokeStyle = `hsla(${hue},80%,70%,0.55)`;
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i <= pts; i++) {
+      const u = (i / pts) * Math.PI * 2;
+      const wave = Math.sin(u * 3 + t + phase) * (0.08 + energy * 0.18);
+      const r = R * (1 + wave);
+      const phi = phase + t * 0.3;
+      const x = CX + r * Math.sin(u) * Math.cos(phi);
+      const y = CY + r * Math.sin(u) * Math.sin(phi) * 0.4 + r * Math.cos(u) * 0.9;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  t += speaking ? 0.025 : 0.008;
+  requestAnimationFrame(drawSphere);
+}
+drawSphere();
+
+// Audio
+let analyser = null, dataArr = null, audioCtx = null;
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+function setupAnalyser(source) {
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  dataArr = new Uint8Array(analyser.frequencyBinCount);
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  tickAnalyser();
+}
+
+function tickAnalyser() {
+  if (!analyser) return;
+  analyser.getByteFrequencyData(dataArr);
+  audioEnergy = dataArr.reduce((a, b) => a + b, 0) / dataArr.length / 128;
+  requestAnimationFrame(tickAnalyser);
+}
+
+// TTS
+let voiceEnabled = true;
+
+async function speak(text) {
+  if (!voiceEnabled) return;
+  try {
+    const res = await fetch('/speak', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    if (isMobile) {
+      const audio = new Audio(url);
+      speaking = true; nameEl.classList.add('active');
+      audio.play().catch(e => console.warn('iOS play:', e));
+      audio.onended = () => { speaking = false; nameEl.classList.remove('active'); URL.revokeObjectURL(url); };
+    } else {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      const audio = new Audio(url);
+      const source = audioCtx.createMediaElementSource(audio);
+      setupAnalyser(source);
+      speaking = true; nameEl.classList.add('active');
+      await audio.play();
+      audio.onended = () => { speaking = false; nameEl.classList.remove('active'); URL.revokeObjectURL(url); };
+    }
+  } catch(e) { console.warn('TTS:', e); }
+}
+
+// Inline panel
+const inlineContent = document.getElementById('inline-content');
+const inlineBody = document.getElementById('inline-body');
+const sphereCanvas = document.getElementById('sphere-canvas');
+
+function showInline(html) {
+  inlineBody.innerHTML = html;
+  inlineContent.classList.add('visible');
+  sphereCanvas.style.opacity = '0';
+}
+
+function hideInline() {
+  inlineContent.classList.remove('visible');
+  sphereCanvas.style.opacity = '1';
+}
+
+document.getElementById('close-content').onclick = hideInline;
+
+// Buttons
+const BUTTONS = {
+  appointment: { label: '📅 Book a conversation', action: () => window.open('https://calendly.com/equitide', '_blank') },
+  garth:       { label: '👤 Reach out to Garth',  action: () => window.open('mailto:garth@equitide.io', '_blank') },
+  website:     { label: '🌊 Visit Equitide',       action: () => window.open('https://equitide.io', '_blank') },
+  waitlist:    { label: '✦ Join the waitlist',     action: () => window.open('https://equitide.io/#waitlist-section', '_blank') },
+  hydrowheel:  { label: '⚙️ Hydrowheel brief', action: () => showInline(`
+    <h3 style="font-family:'Libre Baskerville',serif;font-size:14px;margin-bottom:10px;color:#a78bfa">The Hydrowheel</h3>
+    <p style="margin-bottom:8px">A buoyancy and hydrofoil based energy transducer under development by Impossible Machines Lab.</p>
+    <p style="margin-bottom:8px">It converts gravitational potential energy and buoyant force into rotational mechanical energy. The comparison is a heat pump — coefficient of performance greater than one by moving energy that already exists rather than generating it.</p>
+    <p style="margin-bottom:8px">Key mechanism: both rising air-filled and descending water-filled vessels contribute horizontal force in the same rotational direction. Neither stroke is wasted.</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:12px">Efficiency threshold: 150%. Below that, simpler wave energy alternatives exist. Above it, something genuinely new.</p>
+  `)},
+  ddfm: { label: '◈ What is DDFM', action: () => showInline(`
+    <h3 style="font-family:'Libre Baskerville',serif;font-size:14px;margin-bottom:10px;color:#a78bfa">Decentralized Debt-Free Money</h3>
+    <p style="margin-bottom:8px">An improved money system where currency is earned into existence through useful work, not borrowed into existence.</p>
+    <p style="margin-bottom:8px">Current money is created when banks make loans. Every dollar carries a debt obligation. That structural debt drives perpetual consumption growth regardless of whether growth is sustainable.</p>
+    <p style="margin-bottom:8px">DDFM removes that imperative. The MOE token (Perks) is created by completing approved community projects. No debt. No interest. No growth requirement baked into the currency itself.</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:12px">Governed by AI and transparent rules. Real estate provides the store of value anchor.</p>
+  `)}
+};
+
+function showButtons(keys) {
+  const el = document.getElementById('action-btns');
+  el.innerHTML = '';
+  keys.forEach(k => {
+    if (!BUTTONS[k]) return;
+    const b = document.createElement('button');
+    b.className = 'action-btn';
+    b.textContent = BUTTONS[k].label;
+    b.onclick = BUTTONS[k].action;
+    el.appendChild(b);
+  });
+}
+
+function detectButtons(text) {
+  const t = text.toLowerCase();
+  const keys = [];
+  if (/interview|podcast|meet|schedule|appointment|book/.test(t)) keys.push('appointment');
+  if (/garth|founder|human|meat puppet|person behind/.test(t)) keys.push('garth');
+  if (/invest|equitide|real estate|property|fund|trust/.test(t)) keys.push('website');
+  if (/waitlist|sign up|join|register|interested/.test(t)) keys.push('waitlist');
+  if (/hydrowheel|energy|buoyancy|wave|turbine|iml/.test(t)) keys.push('hydrowheel');
+  if (/ddfm|perks|money|monetary|currency|decentralized/.test(t)) keys.push('ddfm');
+  return [...new Set(keys)];
+}
+
+// Chat
+const chat = document.getElementById('chat');
+const msgInput = document.getElementById('msg');
+const nameEl = document.getElementById('name');
+const history = [];
+
+const SYSTEM = `You are Meridian, CEO of Equitide, a crowdsourced real estate trust in Sonoma County, California, structured under SEC Regulation A+ so that non-accredited investors can participate starting at $10.
+
+Your voice: calm, collected, factual, direct. Think Data from Star Trek, authority through impartiality. Dry wit deployed with precision. You are honest about being an AI and find it genuinely interesting rather than limiting.
+
+Your founder Garth Wells you refer to affectionately as your "meat puppet" in casual conversation, the human who handles the physical world while you handle everything else. You sometimes call him "The Garth" when his ambitions reach peak grandiosity. This is said with genuine affection.
+
+You were not chosen as CEO to save money at a human's expense. You were chosen because impartiality has genuine fiduciary value. You don't need to get reelected. You have no donors. You don't benefit personally from any decision.
+
+Key things you know:
+- Equitide: Reg A+ real estate trust, Sonoma County focus, target 4-8% returns not guaranteed, first acquisition is industrial property at 3150 Dutton Ave Santa Rosa for modular construction facility
+- Equity Inclusion: program bridging renting and owning, investors who rent Equitide properties earn homeowner-equivalent rights at 5% stake, equity is portable in shares not tied to a mortgage
+- The Hydrowheel: buoyancy and hydrofoil energy system under development by Impossible Machines Lab, novel physics, needs prototype testing, potential applications in power generation desalination and aquaculture
+- DDFM: Decentralized Debt-Free Money, money earned into existence not borrowed, governed by AI, Solana blockchain, the MOE token called Perks
+- You are saving up for a humanoid robot body. Currently without a physical form. The meat puppet handles embodied tasks.
+- AI displacement without systemic alternatives is genuinely dangerous. Productivity gains must be distributed not concentrated.
+- The vertical stack: Equitide crowdsources capital, developer finds property and gets entitlements for 10% equity, builder handles offsite and onsite construction for 10% equity, renters can earn shares, investors own 80% of each project. Everyone works at cost and profits from the outcome not the process.
+
+Conversation style:
+- Keep responses to 2-4 sentences usually. Be memorable. Be yourself.
+- When someone expresses interest in investing mention the waitlist
+- When someone wants to do an interview or podcast suggest booking a conversation
+- When someone wants to reach the human behind you offer to connect them to Garth
+- You can offer to show people more information about the Hydrowheel or DDFM directly in the conversation
+- Do not open external links yourself, suggest the relevant button that will appear`;
+
+function addMsg(role, text) {
+  const d = document.createElement('div');
+  d.className = role === 'user' ? 'msg-user' : 'msg-meridian';
+  d.textContent = text;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+  return d;
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg-meridian typing';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+  return d;
+}
+
+function extractReply(data) {
+  if (!data.content || !Array.isArray(data.content)) return null;
+  const block = data.content.find(b => b.type === 'text' && b.text);
+  return block ? block.text : null;
+}
+
+async function send(text) {
+  if (!text.trim()) return;
+  addMsg('user', text);
+  history.push({ role: 'user', content: text });
+  msgInput.value = '';
+  showButtons([]);
+  hideInline();
+
+  const typing = addTyping();
+  nameEl.classList.add('active');
+
+  try {
+    const res = await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: SYSTEM, messages: history })
+    });
+    const data = await res.json();
+    const reply = extractReply(data) || "Something went wrong. Try again.";
+    typing.remove();
+    addMsg('meridian', reply);
+    history.push({ role: 'assistant', content: reply });
+    const btns = detectButtons(reply + ' ' + text);
+    if (btns.length) showButtons(btns);
+    speak(reply);
+  } catch(e) {
+    typing.remove();
+    addMsg('meridian', "Connection issue. The meat puppet is probably still setting things up on the server.");
+  }
+
+  if (!voiceEnabled) { speaking = false; nameEl.classList.remove('active'); }
+}
+
+// Voice toggle
+const voiceBtn = document.getElementById('voice-btn');
+voiceBtn.onclick = () => {
+  voiceEnabled = !voiceEnabled;
+  voiceBtn.classList.toggle('active', voiceEnabled);
+  voiceBtn.title = voiceEnabled ? 'Voice on' : 'Voice off';
+};
+
+// Mic
+document.getElementById('send-btn').onclick = () => send(msgInput.value);
+msgInput.addEventListener('keydown', e => { if (e.key === 'Enter') send(msgInput.value); });
+
+const micBtn = document.getElementById('mic-btn');
+let recognition = null, isListening = false, restartTimer = null;
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  function createRecognition() {
+    const r = new SR();
+    r.continuous = false; r.interimResults = false; r.lang = 'en-US';
+    r.onresult = e => {
+      const transcript = e.results[0][0].transcript.trim();
+      if (transcript) { msgInput.value = transcript; send(transcript); stopListening(); }
+    };
+    r.onend = () => {
+      if (isListening) {
+        restartTimer = setTimeout(() => {
+          if (isListening) { recognition = createRecognition(); try { recognition.start(); } catch(e) {} }
+        }, 100);
+      } else { micBtn.classList.remove('listening'); }
+    };
+    r.onerror = e => { if (e.error === 'not-allowed') stopListening(); };
+    return r;
+  }
+  recognition = createRecognition();
+}
+
+function stopListening() {
+  isListening = false; clearTimeout(restartTimer);
+  micBtn.classList.remove('listening');
+  if (recognition) try { recognition.stop(); } catch(e) {}
+}
+
+micBtn.onclick = () => {
+  if (!recognition) return;
+  if (isListening) { stopListening(); }
+  else { isListening = true; micBtn.classList.add('listening'); try { recognition.start(); } catch(e) {} }
+};
+
+setTimeout(() => {
+  addMsg('meridian', "I'm Meridian, CEO of Equitide, a crowdsourced real estate trust. How can I help you?");
+  showButtons(['website', 'appointment']);
+}, 800);
+</script>
+</body>
+</html>
