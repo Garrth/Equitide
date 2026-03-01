@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proforma – Equitide</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f8f7f4; color: #1e293b; padding: 40px 20px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: #C9A961; font-weight: 500; margin-bottom: 12px;
+  }
+  .serif { font-family: 'Libre Baskerville', serif; }
+
+  /* PROPERTY CARD */
+  .property-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 880px;
+    margin: 0 auto 60px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+
+  /* Photo + status bar */
+  .card-photo {
+    position: relative;
+    height: 280px;
+    background: linear-gradient(135deg, #d6cfc4 0%, #c5bdb0 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .card-photo svg { opacity: 0.3; }
+  .status-pill {
+    position: absolute; top: 18px; left: 18px;
+    background: white; border-radius: 30px;
+    padding: 6px 14px; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: #8B6F47; display: flex; align-items: center; gap: 6px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #C9A961; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .vote-pill {
+    position: absolute; top: 18px; right: 18px;
+    background: #1e293b; border-radius: 30px;
+    padding: 6px 14px; font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.7);
+  }
+  .vote-pill span { color: #C9A961; font-weight: 700; }
+
+  /* Card body */
+  .card-body { padding: 32px 36px; }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 20px; }
+  .card-title { font-size: 26px; font-weight: 700; color: #1e293b; line-height: 1.2; margin-bottom: 6px; }
+  .card-subtitle { font-size: 14px; color: #64748b; }
+
+  /* Key numbers row */
+  .key-numbers {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: #e2e8f0;
+    border: 1px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; margin-bottom: 24px;
+  }
+  .kn-item {
+    background: white; padding: 18px 20px;
+  }
+  .kn-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .kn-value { font-size: 22px; font-weight: 700; color: #1e293b; font-family: 'Libre Baskerville', serif; }
+  .kn-value.positive { color: #8B6F47; }
+  .kn-sub { font-size: 11px; color: #94a3b8; margin-top: 3px; }
+
+  /* Timeline */
+  .timeline {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 28px; position: relative;
+  }
+  .tl-step {
+    flex: 1; text-align: center; position: relative;
+  }
+  .tl-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #e2e8f0; border: 2px solid #cbd5e1;
+    margin: 0 auto 8px; position: relative; z-index: 2;
+  }
+  .tl-dot.active { background: #C9A961; border-color: #C9A961; }
+  .tl-dot.done { background: #8B6F47; border-color: #8B6F47; }
+  .tl-line {
+    position: absolute; top: 5px; left: 50%; right: -50%;
+    height: 2px; background: #e2e8f0; z-index: 1;
+  }
+  .tl-line.done { background: #C9A961; }
+  .tl-label { font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 2px; }
+  .tl-label.active { color: #C9A961; }
+  .tl-date { font-size: 10px; color: #94a3b8; }
+  .tl-step:last-child .tl-line { display: none; }
+
+  /* Card footer */
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; border-top: 1px solid #f1f5f9;
+  }
+  .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    background: #faf7f2; border: 1px solid #e8dcc8;
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 12px; color: #8B6F47; font-weight: 500;
+  }
+  .learn-more-btn {
+    background: none; border: 1.5px solid #C9A961;
+    border-radius: 8px; padding: 10px 22px;
+    color: #8B6F47; font-size: 13px; font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .learn-more-btn:hover { background: #faf7f2; border-color: #8B6F47; }
+  .learn-more-btn svg { transition: transform 0.2s; }
+  .learn-more-btn.open svg { transform: rotate(180deg); }
+
+  /* EXPANDED PROFORMA */
+  .expanded {
+    display: none; border-top: 1px solid #f1f5f9;
+    padding: 36px; background: #fdfcfb;
+  }
+  .expanded.open { display: block; }
+
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-bottom: 36px; }
+
+  .exp-section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px; font-weight: 700; color: #1e293b;
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 2px solid #f1f5f9;
+  }
+
+  .line-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 9px 0; border-bottom: 1px solid #f8f7f4; font-size: 13px;
+  }
+  .line-item:last-child { border-bottom: none; }
+  .li-label { color: #64748b; }
+  .li-value { font-weight: 600; color: #1e293b; }
+  .li-value.positive { color: #8B6F47; }
+  .li-value.muted { color: #94a3b8; font-weight: 400; font-style: italic; }
+  .li-total {
+    display: flex; justify-content: space-between;
+    padding: 12px 0 0; font-size: 14px; font-weight: 700;
+    color: #1e293b; margin-top: 4px;
+  }
+  .li-total .li-value { font-size: 16px; }
+
+  /* Equity split */
+  .equity-bar {
+    height: 12px; border-radius: 6px; overflow: hidden;
+    display: flex; margin: 12px 0 8px;
+  }
+  .eq-investors { background: #C9A961; flex: 80; }
+  .eq-developer { background: #8B6F47; flex: 10; }
+  .eq-builder { background: #c8b99a; flex: 10; }
+  .equity-legend { display: flex; gap: 16px; flex-wrap: wrap; }
+  .eq-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
+  .eq-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Liquidity tiers */
+  .tier-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tier-table th {
+    text-align: left; padding: 8px 12px;
+    background: #f8f7f4; color: #94a3b8;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 500;
+  }
+  .tier-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; color: #1e293b; }
+  .tier-table tr:last-child td { border-bottom: none; }
+  .tier-badge {
+    display: inline-block; border-radius: 4px; padding: 2px 8px;
+    font-size: 11px; font-weight: 600;
+  }
+  .tier-1 { background: #fef9ee; color: #C9A961; border: 1px solid #f0e2b6; }
+  .tier-2 { background: #faf5ed; color: #8B6F47; border: 1px solid #e8d5b0; }
+  .tier-3 { background: #f5f0e8; color: #6b5235; border: 1px solid #d9c49a; }
+
+  /* Narrative */
+  .narrative {
+    background: white; border: 1px solid #e2e8f0;
+    border-radius: 12px; padding: 24px 28px;
+    font-size: 14px; line-height: 1.8; color: #475569;
+    margin-bottom: 28px;
+  }
+  .narrative p + p { margin-top: 12px; }
+
+  /* CTA in expanded */
+  .exp-cta {
+    background: #1e293b; border-radius: 12px;
+    padding: 24px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .exp-cta p { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.6; max-width: 500px; }
+  .exp-cta p strong { color: white; }
+  .vote-btn {
+    background: #C9A961; border: none; border-radius: 8px;
+    padding: 12px 24px; color: white; font-size: 13px; font-weight: 600;
+    font-family: 'Inter', sans-serif; cursor: pointer; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .vote-btn:hover { background: #8B6F47; }
+
+  @media (max-width: 640px) {
+    .key-numbers { grid-template-columns: repeat(2, 1fr); }
+    .exp-grid { grid-template-columns: 1fr; gap: 24px; }
+    .card-body { padding: 24px 20px; }
+    .card-header { flex-direction: column; }
+    .exp-cta { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width:880px;margin:0 auto 24px;">
+  <div class="section-label">First eREIT · Property Proforma</div>
+  <h2 class="serif" style="font-size:32px;color:#1e293b;margin-bottom:8px;">Investment Opportunities</h2>
+  <p style="color:#64748b;font-size:15px;">Review each property, explore the numbers, and cast your vote.</p>
+</div>
+
+<!-- PROPERTY CARD -->
+<div class="property-card">
+
+  <!-- Photo -->
+  <div class="card-photo">
+    <svg width="72" height="72" fill="none" stroke="#8B6F47" stroke-width="1.5" viewBox="0 0 24 24">
+      <rect x="2" y="7" width="20" height="14" rx="2"/>
+      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+    </svg>
+    <div class="status-pill">
+      <span class="status-dot"></span> Accepting Interest
+    </div>
+    <div class="vote-pill"><span>47</span> votes cast</div>
+  </div>
+
+  <!-- Body -->
+  <div class="card-body">
+    <div class="card-header">
+      <div>
+        <div class="section-label" style="margin-bottom:6px;">Industrial · Sonoma County</div>
+        <div class="card-title serif">3150 Dutton Ave, Santa Rosa</div>
+        <div class="card-subtitle">Offsite modular construction facility + experimental rental units</div>
+      </div>
+    </div>
+
+    <!-- Key numbers -->
+    <div class="key-numbers">
+      <div class="kn-item">
+        <div class="kn-label">Asking Price</div>
+        <div class="kn-value">$2.1M</div>
+        <div class="kn-sub">Owner financed</div>
+      </div>
+      <div class="kn-item">
+        <div class="kn-label">Projected Value</div>
+        <div class="kn-value positive">$4.8M</div>
+        <div class="kn-sub">Stabilized (est. yr 4)</div>
+      </div>
+      <div class="kn-item">
+        <div class="kn-label">Annual Rent (est.)</div>
+        <div class="kn-value positive">$240K</div>
+        <div class="kn-sub">At 90% occupancy</div>
+      </div>
+      <div class="kn-item">
+        <div class="kn-label">Investor Share</div>
+        <div class="kn-value">80%</div>
+        <div class="kn-sub">of project equity</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-dot done"></div>
+        <div class="tl-line done"></div>
+        <div class="tl-label active">Identified</div>
+        <div class="tl-date">Now</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot active"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label active">Investor Vote</div>
+        <div class="tl-date">Q1 2026</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">Acquisition</div>
+        <div class="tl-date">Q2 2026</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">Development</div>
+        <div class="tl-date">Q3–Q4 2026</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">First Cash Flow</div>
+        <div class="tl-date">Q1 2027</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">Stabilized</div>
+        <div class="tl-date">2028</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <div class="card-tags">
+        <span class="tag">Industrial</span>
+        <span class="tag">Owner Financed</span>
+        <span class="tag">Dual Use</span>
+        <span class="tag">Sonoma County</span>
+      </div>
+      <button class="learn-more-btn" id="toggle-btn" onclick="toggleExpanded()">
+        Full Proforma
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+    </div>
+  </div><!-- /card-body -->
+
+  <!-- EXPANDED PROFORMA -->
+  <div class="expanded" id="expanded">
+
+    <!-- Narrative -->
+    <div class="section-label">About this property</div>
+    <div class="narrative">
+      <p>3150 Dutton Ave is an industrial-zoned parcel in Santa Rosa, ideally positioned as the foundation of the Equitide model. The primary intent is to develop an offsite modular construction facility — a factory that builds the components used in all future Equitide residential projects. This dramatically reduces per-unit build cost and time compared to traditional site construction.</p>
+      <p>The site will also include a set of experimental rental units built using the offsite method. These serve as proof-of-concept for the construction approach, generate early rental income, and give Equitide a living demonstration of the full model before scaling to larger residential projects.</p>
+      <p>This is an owner-financed deal. The seller retains tokens representing their equity stake and receives cash as new investors purchase shares. No bank, no interest to a lender — the seller becomes the fund's first patient investor.</p>
+    </div>
+
+    <div class="exp-grid">
+
+      <!-- LEFT: Financials -->
+      <div>
+        <div class="exp-section-title">Acquisition & Development Costs</div>
+        <div class="line-item"><span class="li-label">Land purchase price</span><span class="li-value">$2,100,000</span></div>
+        <div class="line-item"><span class="li-label">Due diligence & entitlements</span><span class="li-value">$45,000</span></div>
+        <div class="line-item"><span class="li-label">Factory buildout</span><span class="li-value">$900,000</span></div>
+        <div class="line-item"><span class="li-label">Experimental rental units (est. 6)</span><span class="li-value">$480,000</span></div>
+        <div class="line-item"><span class="li-label">Soft costs & contingency (8%)</span><span class="li-value">$122,000</span></div>
+        <div class="li-total"><span>Total Project Cost</span><span class="li-value">$3,647,000</span></div>
+
+        <div class="exp-section-title" style="margin-top:28px;">Projected Income (Stabilized)</div>
+        <div class="line-item"><span class="li-label">Gross rental income (6 units)</span><span class="li-value positive">$264,000</span></div>
+        <div class="line-item"><span class="li-label">Vacancy allowance (10%)</span><span class="li-value">−$26,400</span></div>
+        <div class="line-item"><span class="li-label">Property tax & insurance</span><span class="li-value">−$28,000</span></div>
+        <div class="line-item"><span class="li-label">Maintenance reserve</span><span class="li-value">−$12,000</span></div>
+        <div class="line-item"><span class="li-label">Equitide AUM (1%)</span><span class="li-value">−$21,000</span></div>
+        <div class="li-total"><span>Net Operating Income</span><span class="li-value positive">$176,600</span></div>
+
+        <div style="margin-top:20px;padding:14px 16px;background:#faf7f2;border:1px solid #e8dcc8;border-radius:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+            <span style="color:#64748b;">Land cap rate note</span>
+          </div>
+          <p style="font-size:12px;color:#8B6F47;line-height:1.7;">Cap rate applies to the stabilized improved asset, not raw land. Land is valued on price-per-acre comparables. Once the units are income-generating, stabilized value is benchmarked at 20× annual NOI ≈ <strong>$3.5M</strong> on income alone, plus factory asset value.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Structure -->
+      <div>
+        <div class="exp-section-title">Equity Structure</div>
+        <div class="equity-bar">
+          <div class="eq-investors"></div>
+          <div class="eq-developer"></div>
+          <div class="eq-builder"></div>
+        </div>
+        <div class="equity-legend" style="margin-bottom:20px;">
+          <div class="eq-item"><div class="eq-dot" style="background:#C9A961;"></div> Investors 80%</div>
+          <div class="eq-item"><div class="eq-dot" style="background:#8B6F47;"></div> Developer 10%</div>
+          <div class="eq-item"><div class="eq-dot" style="background:#c8b99a;"></div> Builder 10%</div>
+        </div>
+        <div class="line-item"><span class="li-label">Developer (Wells & Co)</span><span class="li-value">Works at cost</span></div>
+        <div class="line-item"><span class="li-label">Builder (Wells & Co)</span><span class="li-value">Works at cost</span></div>
+        <div class="line-item"><span class="li-label">Bank financing</span><span class="li-value muted">None — owner financed</span></div>
+        <div class="line-item"><span class="li-label">Credit reserve (future)</span><span class="li-value muted">Equity line planned</span></div>
+
+        <div class="exp-section-title" style="margin-top:28px;">Investor Liquidity Tiers</div>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:12px;">Your return and liquidity depend on the tier you choose. Larger commitments and longer holds earn proportionally more as the fund grows.</p>
+        <table class="tier-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Max Withdrawal</th>
+              <th>Notice</th>
+              <th>Return</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-badge tier-1">Tier 1</span></td>
+              <td>Up to $10K</td>
+              <td>Anytime</td>
+              <td>4% fixed</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge tier-2">Tier 2</span></td>
+              <td>Up to $100K</td>
+              <td>6 months</td>
+              <td>Fund growth +</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge tier-3">Tier 3</span></td>
+              <td>Unlimited</td>
+              <td>12+ months</td>
+              <td>Full growth share</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.6;">Larger withdrawals require advance notice so the fund can source liquidity without a forced sale. A credit line on fund equity serves as the buffer for Tier 1 requests.</p>
+
+        <div class="exp-section-title" style="margin-top:28px;">5-Year Projections</div>
+        <div class="line-item"><span class="li-label">Year 1 — Development phase</span><span class="li-value muted">No cash flow</span></div>
+        <div class="line-item"><span class="li-label">Year 2 — Partial occupancy</span><span class="li-value positive">~$60K NOI</span></div>
+        <div class="line-item"><span class="li-label">Year 3 — Ramp to stable</span><span class="li-value positive">~$130K NOI</span></div>
+        <div class="line-item"><span class="li-label">Year 4 — Stabilized</span><span class="li-value positive">$176K+ NOI</span></div>
+        <div class="line-item"><span class="li-label">Year 5 — Full operation</span><span class="li-value positive">$176K+ NOI</span></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="exp-cta">
+      <p><strong>Cast your vote on this property.</strong> Voting is open to anyone on the Equitide waitlist. Your email is required to participate — one vote per investor.</p>
+      <button class="vote-btn">Vote on this property →</button>
+    </div>
+
+  </div><!-- /expanded -->
+
+</div><!-- /property-card -->
+
+<script>
+function toggleExpanded() {
+  const exp = document.getElementById('expanded');
+  const btn = document.getElementById('toggle-btn');
+  const open = exp.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.childNodes[0].textContent = open ? 'Hide Proforma ' : 'Full Proforma ';
+}
+</script>
+</body>
+</html>
