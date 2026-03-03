@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3150 Dutton Ave — Equitide Proforma</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f8f7f4; color: #1e293b; }
+  .serif { font-family: 'Libre Baskerville', serif; }
+
+  /* NAV */
+  nav {
+    background: white; border-bottom: 1px solid #e2e8f0;
+    padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-left { display: flex; align-items: center; gap: 10px; }
+  .nav-logo { font-family: 'Libre Baskerville', serif; font-size: 18px; font-weight: 700; color: #1e293b; text-decoration: none; }
+  .nav-back { font-size: 13px; color: #C9A961; text-decoration: none; }
+  .nav-back:hover { color: #8B6F47; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 420px; overflow: hidden;
+    background: #c8c2b8;
+  }
+  .hero img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
+  }
+  .hero-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 32px 48px;
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: #C9A961; font-weight: 500; margin-bottom: 10px;
+  }
+  .hero-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 36px; font-weight: 700; color: white;
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .hero-sub { font-size: 15px; color: rgba(255,255,255,0.7); }
+  .status-pill {
+    position: absolute; top: 24px; right: 48px;
+    background: white; border-radius: 30px;
+    padding: 7px 16px; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: #8B6F47; display: flex; align-items: center; gap: 7px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #C9A961; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);} }
+
+  /* BODY */
+  .page { max-width: 960px; margin: 0 auto; padding: 48px 32px; }
+
+  /* KEY NUMBERS */
+  .key-numbers {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; margin-bottom: 48px;
+    background: #e2e8f0; gap: 1px;
+  }
+  .kn-item { background: white; padding: 24px; }
+  .kn-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .kn-value { font-family: 'Libre Baskerville', serif; font-size: 26px; font-weight: 700; color: #1e293b; }
+  .kn-value.gold { color: #8B6F47; }
+  .kn-sub { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+  /* SECTION */
+  .section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #C9A961; font-weight: 500; margin-bottom: 8px; }
+  .section-title { font-family: 'Libre Baskerville', serif; font-size: 22px; font-weight: 700; color: #1e293b; margin-bottom: 20px; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+
+  /* LINE ITEMS */
+  .line-items { border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+  .li-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 12px 16px; border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+  }
+  .li-row:last-child { border-bottom: none; }
+  .li-row.total {
+    background: #faf7f2; font-weight: 700; font-size: 14px;
+    border-top: 2px solid #e2e8f0;
+  }
+  .li-row.head {
+    background: #f8f7f4; font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; color: #94a3b8;
+    padding: 8px 16px;
+  }
+  .li-label { color: #475569; }
+  .li-value { font-weight: 600; color: #1e293b; }
+  .li-value.gold { color: #8B6F47; }
+  .li-value.muted { color: #94a3b8; font-weight: 400; font-style: italic; }
+
+  /* TIMELINE */
+  .timeline { margin-bottom: 48px; }
+  .tl-items { position: relative; }
+  .tl-items::before {
+    content: ''; position: absolute; left: 16px; top: 8px; bottom: 8px;
+    width: 2px; background: #e2e8f0;
+  }
+  .tl-row {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 0 0 24px 0; position: relative;
+  }
+  .tl-row:last-child { padding-bottom: 0; }
+  .tl-dot {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid #e2e8f0; background: white;
+    position: relative; z-index: 1; margin-top: 2px;
+  }
+  .tl-dot.done { background: #8B6F47; border-color: #8B6F47; }
+  .tl-dot.active { background: white; border-color: #C9A961; box-shadow: 0 0 0 3px rgba(201,169,97,0.2); }
+  .tl-dot.active::after { content:''; position:absolute; inset:3px; border-radius:50%; background:#C9A961; }
+  .tl-phase { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+  .tl-date { font-size: 12px; color: #94a3b8; }
+
+  /* EQUITY BAR */
+  .equity-bar { height: 14px; border-radius: 7px; overflow: hidden; display: flex; margin: 12px 0 8px; }
+  .eq-inv { background: #C9A961; flex: 80; }
+  .eq-dev { background: #8B6F47; flex: 10; }
+  .eq-bld { background: #d4c4a8; flex: 10; }
+  .equity-legend { display: flex; gap: 20px; flex-wrap: wrap; }
+  .eq-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #64748b; }
+  .eq-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* TIER TABLE */
+  .tier-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+  .tier-table th { padding: 10px 14px; background: #f8f7f4; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 500; border-bottom: 1px solid #e2e8f0; }
+  .tier-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #1e293b; }
+  .tier-table tr:last-child td { border-bottom: none; }
+
+  /* NARRATIVE */
+  .narrative { font-size: 15px; line-height: 1.8; color: #475569; margin-bottom: 48px; }
+  .narrative p + p { margin-top: 16px; }
+
+  /* NOTE BOX */
+  .note-box { background: #faf7f2; border: 1px solid #e8dcc8; border-radius: 10px; padding: 16px 20px; font-size: 13px; color: #8B6F47; line-height: 1.7; margin-top: 16px; }
+
+  /* TAGS */
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+  .tag { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #64748b; }
+
+  /* VOTE CTA */
+  .vote-cta {
+    background: #1e293b; border-radius: 16px;
+    padding: 36px 40px; display: flex; align-items: center;
+    justify-content: space-between; gap: 24px; margin-bottom: 48px;
+  }
+  .vote-cta-text h3 { font-family: 'Libre Baskerville', serif; font-size: 22px; color: white; margin-bottom: 8px; }
+  .vote-cta-text p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; max-width: 480px; }
+  .vote-btn {
+    background: #C9A961; border: none; border-radius: 8px;
+    padding: 14px 28px; color: white; font-size: 14px; font-weight: 600;
+    font-family: 'Inter', sans-serif; cursor: pointer; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .vote-btn:hover { background: #8B6F47; }
+
+  /* FOOTER */
+  footer { background: #1e293b; color: white; padding: 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.8; }
+  footer a { color: #C9A961; text-decoration: none; }
+
+  @media(max-width:640px) {
+    .key-numbers { grid-template-columns: repeat(2,1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .hero-content { padding: 24px; }
+    .hero-title { font-size: 26px; }
+    .vote-cta { flex-direction: column; }
+    .page { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="https://equitide.io" class="nav-logo">Equitide</a>
+  </div>
+  <a href="https://equitide.io#investment" class="nav-back">← Back to properties</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://equitide.io/dutton-aerial.png" alt="Aerial view of 3150 Dutton Ave, Santa Rosa">
+  <div class="hero-overlay"></div>
+  <div class="status-pill"><span class="status-dot"></span> Accepting Interest</div>
+  <div class="hero-content">
+    <div class="hero-label">eREIT No. 1 · General Industrial · Sonoma County</div>
+    <div class="hero-title">3150 Dutton Ave, Santa Rosa</div>
+    <div class="hero-sub">Modular construction factory + Impossible Machines Lab</div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- Tags -->
+  <div class="tags" style="margin-top:32px;">
+    <span class="tag">General Industrial</span>
+    <span class="tag">Owner Financed</span>
+    <span class="tag">Shovel Ready</span>
+    <span class="tag">SMART Train Access</span>
+    <span class="tag">5.95 acres</span>
+    <span class="tag">Santa Rosa, CA</span>
+  </div>
+
+  <!-- Key Numbers -->
+  <div class="key-numbers">
+    <div class="kn-item">
+      <div class="kn-label">Asking Price</div>
+      <div class="kn-value">$6.48M</div>
+      <div class="kn-sub">Owner financed</div>
+    </div>
+    <div class="kn-item">
+      <div class="kn-label">Total Invested</div>
+      <div class="kn-value">$10.1M</div>
+      <div class="kn-sub">Land + improvements</div>
+    </div>
+    <div class="kn-item">
+      <div class="kn-label">Projected Value</div>
+      <div class="kn-value gold">$16.4M</div>
+      <div class="kn-sub">Stabilized (est. yr 5–6)</div>
+    </div>
+    <div class="kn-item">
+      <div class="kn-label">Target ROI</div>
+      <div class="kn-value gold">25%</div>
+      <div class="kn-sub">Above total cost</div>
+    </div>
+  </div>
+
+  <!-- Narrative -->
+  <div class="section-label">About this property</div>
+  <div class="section-title">The plan for Dutton Ave</div>
+  <div class="narrative">
+    <p>3150 Dutton Ave is a 5.95-acre, level, rectangular parcel zoned IG General Industrial in South Santa Rosa — one of the most supply-constrained industrial markets in Northern California. The site is shovel-ready with full utilities including city sewer, water, PG&E gas and electric, storm drain, and fire hydrants. With ±440 feet of Dutton Ave frontage and the SMART commuter rail line running along the eastern boundary, the property has exceptional access for workers traveling from across the Bay Area.</p>
+    <p>The plan is to develop the site in two connected phases. The larger portion will house a modular construction factory — a controlled environment where building components are fabricated off-site and shipped to Equitide residential projects across Sonoma County. This approach reduces build time and cost significantly compared to traditional site construction. The second facility will house the Impossible Machines Lab, a design and engineering operation focused on automation technology for the factory and future construction applications.</p>
+    <p>This acquisition is structured as an owner-financed deal. No bank, no lender interest. The seller holds tokens representing their equity position and receives cash as new investors purchase shares — a structure that keeps capital costs low and aligns the seller's long-term interests with the success of the fund.</p>
+  </div>
+
+  <!-- Financials + Structure -->
+  <div class="two-col">
+    <div>
+      <div class="section-label">Financials</div>
+      <div class="section-title">Costs & projected income</div>
+      <div class="line-items">
+        <div class="li-row head"><span>Acquisition & Development</span></div>
+        <div class="li-row"><span class="li-label">Land purchase price</span><span class="li-value">$6,480,000</span></div>
+        <div class="li-row"><span class="li-label">Factory buildout (40–50K sq ft)</span><span class="li-value">$1,800,000</span></div>
+        <div class="li-row"><span class="li-label">Impossible Machines Lab (20K sq ft)</span><span class="li-value">$600,000</span></div>
+        <div class="li-row"><span class="li-label">Entitlements & permitting</span><span class="li-value">$270,000</span></div>
+        <div class="li-row"><span class="li-label">Soft costs & contingency</span><span class="li-value">$950,000</span></div>
+        <div class="li-row total"><span class="li-label">Total Invested</span><span class="li-value">$10,100,000</span></div>
+
+        <div class="li-row head" style="margin-top:1px;"><span>Stabilized Income (Yr 5–6)</span></div>
+        <div class="li-row"><span class="li-label">Gross annual rental income</span><span class="li-value gold">$910,000</span></div>
+        <div class="li-row"><span class="li-label">Vacancy (10%)</span><span class="li-value">−$91,000</span></div>
+        <div class="li-row"><span class="li-label">Property tax & insurance</span><span class="li-value">−$164,000</span></div>
+        <div class="li-row"><span class="li-label">Maintenance reserve</span><span class="li-value">−$82,000</span></div>
+        <div class="li-row"><span class="li-label">Equitide AUM (1%)</span><span class="li-value">−$82,000</span></div>
+        <div class="li-row total"><span class="li-label">Net Operating Income</span><span class="li-value gold">$491,000</span></div>
+      </div>
+      <div class="note-box">Stabilized value benchmarked at 20× NOI plus factory and IML asset value. Cap rate applies to the income-producing stabilized asset, not raw land.</div>
+    </div>
+
+    <div>
+      <div class="section-label">Structure</div>
+      <div class="section-title">Equity & liquidity</div>
+
+      <div class="line-items" style="margin-bottom:24px;">
+        <div class="li-row head"><span>Equity Split</span></div>
+        <div class="li-row" style="flex-direction:column;gap:10px;">
+          <div class="equity-bar">
+            <div class="eq-inv"></div>
+            <div class="eq-dev"></div>
+            <div class="eq-bld"></div>
+          </div>
+          <div class="equity-legend">
+            <div class="eq-item"><div class="eq-dot" style="background:#C9A961;"></div>Investors 80%</div>
+            <div class="eq-item"><div class="eq-dot" style="background:#8B6F47;"></div>Developer 10%</div>
+            <div class="eq-item"><div class="eq-dot" style="background:#d4c4a8;"></div>Builder 10%</div>
+          </div>
+        </div>
+        <div class="li-row"><span class="li-label">Developer (Wells & Co)</span><span class="li-value">Works at cost</span></div>
+        <div class="li-row"><span class="li-label">Builder (Wells & Co)</span><span class="li-value">Works at cost</span></div>
+        <div class="li-row"><span class="li-label">Bank financing</span><span class="li-value muted">None</span></div>
+        <div class="li-row"><span class="li-label">Investor NOI (stabilized)</span><span class="li-value gold">$393,000 / yr</span></div>
+      </div>
+
+      <div class="section-label">Liquidity Tiers</div>
+      <table class="tier-table">
+        <thead><tr><th>Tier</th><th>Max Out</th><th>Notice</th><th>Return</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>$10K</td><td>Anytime</td><td>4% fixed</td></tr>
+          <tr><td>2</td><td>$100K</td><td>6 months</td><td>Fund growth</td></tr>
+          <tr><td>3</td><td>Unlimited</td><td>12+ months</td><td>Full share</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:#94a3b8;margin-top:10px;line-height:1.6;">Larger withdrawals require advance notice. An equity credit line serves as the Tier 1 liquidity buffer.</p>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+    <div class="section-label">Timeline</div>
+    <div class="section-title">From acquisition to cash flow</div>
+    <div class="tl-items">
+      <div class="tl-row"><div class="tl-dot done"></div><div><div class="tl-phase">Property identified</div><div class="tl-date">Now</div></div></div>
+      <div class="tl-row"><div class="tl-dot active"></div><div><div class="tl-phase">Investor vote open</div><div class="tl-date">Q1 2026</div></div></div>
+      <div class="tl-row"><div class="tl-dot"></div><div><div class="tl-phase">Acquisition — owner financed</div><div class="tl-date">Q2 2026</div></div></div>
+      <div class="tl-row"><div class="tl-dot"></div><div><div class="tl-phase">Entitlements & permitting</div><div class="tl-date">2026–2027</div></div></div>
+      <div class="tl-row"><div class="tl-dot"></div><div><div class="tl-phase">Factory & IML construction</div><div class="tl-date">2027–2028</div></div></div>
+      <div class="tl-row"><div class="tl-dot"></div><div><div class="tl-phase">First cash flow</div><div class="tl-date">2028</div></div></div>
+      <div class="tl-row"><div class="tl-dot"></div><div><div class="tl-phase">Stabilized operations</div><div class="tl-date">2030</div></div></div>
+    </div>
+  </div>
+
+  <!-- Vote CTA -->
+  <div class="vote-cta">
+    <div class="vote-cta-text">
+      <h3>Cast your vote on this property.</h3>
+      <p>Voting is open to all Equitide waitlist members. One vote per investor. Your interest level directly influences which properties we pursue first.</p>
+    </div>
+    <button class="vote-btn">Vote on this property →</button>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Equitide. All investments involve risk of loss. &nbsp;·&nbsp; <a href="https://equitide.io">equitide.io</a></p>
+  <p style="margin-top:8px;">This page is for informational purposes only and does not constitute an offer to sell or solicitation of an offer to buy securities. Target returns are not guaranteed.</p>
+</footer>
+
+</body>
+</html>
