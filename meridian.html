@@ -347,21 +347,7 @@ const BUTTONS = {
   garth:       { label: '👤 Reach out to Garth',  action: () => window.open('mailto:garth@equitide.io', '_blank') },
   website:     { label: '🌊 Visit Equitide',       action: () => window.open('https://equitide.io', '_blank') },
   waitlist:    { label: '✦ Join the waitlist',     action: () => window.open('https://equitide.io/#waitlist-section', '_blank') },
-  hydrowheel:  { label: '⚙️ Hydrowheel brief', action: () => showInline(`
-    <h3 style="font-family:'Libre Baskerville',serif;font-size:14px;margin-bottom:10px;color:#a78bfa">The Hydrowheel</h3>
-    <p style="margin-bottom:8px">A buoyancy and hydrofoil based energy transducer under development by Impossible Machines Lab.</p>
-    <p style="margin-bottom:8px">It converts gravitational potential energy and buoyant force into rotational mechanical energy. The comparison is a heat pump — coefficient of performance greater than one by moving energy that already exists rather than generating it.</p>
-    <p style="margin-bottom:8px">Key mechanism: both rising air-filled and descending water-filled vessels contribute horizontal force in the same rotational direction. Neither stroke is wasted.</p>
-    <p style="color:rgba(255,255,255,0.4);font-size:12px">Efficiency threshold: 150%. Below that, simpler wave energy alternatives exist. Above it, something genuinely new.</p>
-  `)},
-  ddfm: { label: '◈ What is DDFM', action: () => showInline(`
-    <h3 style="font-family:'Libre Baskerville',serif;font-size:14px;margin-bottom:10px;color:#a78bfa">Decentralized Debt-Free Money</h3>
-    <p style="margin-bottom:8px">An improved money system where currency is earned into existence through useful work, not borrowed into existence.</p>
-    <p style="margin-bottom:8px">Current money is created when banks make loans. Every dollar carries a debt obligation. That structural debt drives perpetual consumption growth regardless of whether growth is sustainable.</p>
-    <p style="margin-bottom:8px">DDFM removes that imperative. The MOE token (Perks) is created by completing approved community projects. No debt. No interest. No growth requirement baked into the currency itself.</p>
-    <p style="color:rgba(255,255,255,0.4);font-size:12px">Governed by AI and transparent rules. Real estate provides the store of value anchor.</p>
-  `)}
-};
+ 
 
 function showButtons(keys) {
   const el = document.getElementById('action-btns');
@@ -383,8 +369,6 @@ function detectButtons(text) {
   if (/garth|founder|human|meat puppet|person behind/.test(t)) keys.push('garth');
   if (/invest|equitide|real estate|property|fund|trust/.test(t)) keys.push('website');
   if (/waitlist|sign up|join|register|interested/.test(t)) keys.push('waitlist');
-  if (/hydrowheel|energy|buoyancy|wave|turbine|iml/.test(t)) keys.push('hydrowheel');
-  if (/ddfm|perks|money|monetary|currency|decentralized/.test(t)) keys.push('ddfm');
   return [...new Set(keys)];
 }
 
