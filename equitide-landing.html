@@ -46,65 +46,6 @@
             font-size: 17px; color: #fff; margin-bottom: 2px;
         }
         .chat-header-text p { font-size: 12px; color: rgba(255,255,255,0.35); }
-        #modal-chat {
-            height: 260px; overflow-y: auto;
-            display: flex; flex-direction: column; gap: 10px;
-            margin-bottom: 14px; scrollbar-width: none;
-        }
-        #modal-chat::-webkit-scrollbar { display: none; }
-        .mc-user {
-            align-self: flex-end;
-            background: rgba(130,100,255,0.2);
-            border: 1px solid rgba(130,100,255,0.3);
-            border-radius: 16px 16px 4px 16px;
-            padding: 10px 14px; font-size: 13px; color: #fff;
-            max-width: 80%; line-height: 1.5;
-        }
-        .mc-bot {
-            align-self: flex-start;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px 16px 16px 4px;
-            padding: 10px 14px; font-size: 13px;
-            color: rgba(255,255,255,0.85);
-            max-width: 80%; line-height: 1.6;
-        }
-        .mc-typing { display: flex; gap: 4px; padding: 12px 14px; }
-        .mc-typing span {
-            width: 5px; height: 5px;
-            background: rgba(255,255,255,0.3); border-radius: 50%;
-            animation: bounce 1.2s infinite;
-        }
-        .mc-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .mc-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce {
-            0%,60%,100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-        .modal-input-row { display: flex; gap: 10px; }
-        .modal-input {
-            flex: 1; background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 30px; padding: 12px 18px;
-            color: #fff; font-family: 'Inter', sans-serif;
-            font-size: 13px; outline: none;
-        }
-        .modal-input:focus { border-color: rgba(130,100,255,0.5); }
-        .modal-input::placeholder { color: rgba(255,255,255,0.2); }
-        .modal-send {
-            background: rgba(130,100,255,0.25);
-            border: 1px solid rgba(130,100,255,0.45);
-            border-radius: 30px; padding: 12px 20px;
-            color: #c4b0f0; cursor: pointer; font-size: 12px;
-            font-family: 'Inter', sans-serif; transition: all 0.3s;
-        }
-        .modal-send:hover { background: rgba(130,100,255,0.4); }
-        .modal-full-link {
-            text-align: center; margin-top: 14px;
-            font-size: 12px; color: rgba(255,255,255,0.25);
-        }
-        .modal-full-link a { color: rgba(201,169,97,0.7); text-decoration: none; }
-        .modal-full-link a:hover { color: #C9A961; }
 
         .meridian-card {
             background: #07050f;
@@ -132,7 +73,6 @@
             border-color: rgba(130,100,255,0.6);
         }
 
-        /* Stack diagram */
         .stack-layer {
             border-left: 3px solid #C9A961;
             padding: 20px 24px;
@@ -176,7 +116,7 @@
         <div class="flex items-center gap-8">
             <a href="#how-it-works" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">How it works</a>
             <a href="#investment" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">First investment</a>
-            <button onclick="openMeridian()" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">Meet Meridian</button>
+            <a href="https://meridian.equitide.io" target="_blank" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">Meet Meridian</a>
             <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
                     class="px-5 py-2.5 bg-brand-tan hover:bg-brand-brown text-white rounded-md transition-all text-sm font-medium">
                 Join the waitlist
@@ -195,7 +135,7 @@
                     <span class="text-brand-brown">We build it.</span>
                 </h1>
                 <p class="text-xl text-slate-600 leading-relaxed max-w-xl">
-                    From land acquisition and entitlements through offsite and onsite construction, our vertically integrated model eliminates the conflicts that make traditional development so expensive. Lower costs mean better returns for investors and more affordable rents for tenants.
+                    From land acquisition and entitlements through offsite and onsite construction, our vertically integrated model eliminates the conflicts that make traditional development so expensive. Lower costs mean better returns for investors and more attainable rents for tenants.
                 </p>
                 <div>
                     <p class="text-sm text-slate-500 mb-4 font-medium uppercase tracking-wide">Opening soon to accredited investors</p>
@@ -209,8 +149,8 @@
                 <div class="meridian-card">
                     <canvas id="hero-sphere" width="160" height="160"></canvas>
                     <div class="meridian-card-label">Meridian · AI CEO</div>
-                    <p>Have a question about Equitide, our properties, or how this works? Ask our AI CEO directly.</p>
-                    <button class="meridian-card-btn" onclick="openMeridian()">Start a conversation</button>
+                    <p>Have a question about Equitide, our properties, or how this works? Talk to our AI CEO directly.</p>
+                    <button class="meridian-card-btn" onclick="window.open('https://meridian.equitide.io','_blank')">Talk to Meridian →</button>
                 </div>
             </div>
         </div>
@@ -254,8 +194,6 @@
         </div>
 
         <div class="grid lg:grid-cols-2 gap-16 items-start">
-
-            <!-- Left: stack diagram -->
             <div>
                 <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-6">The vertical stack</p>
 
@@ -291,7 +229,7 @@
                         <h3 class="font-bold text-slate-900 serif">Renters</h3>
                         <span class="text-sm text-brand-brown font-medium">Can earn equity</span>
                     </div>
-                    <p class="text-sm text-slate-600">Renters in Equitide properties can earn or purchase shares. Dividends can be applied toward rent, creating a pathway from renting to ownership.</p>
+                    <p class="text-sm text-slate-600">Renters in Equitide properties can purchase shares. Dividends can be applied toward rent, creating a pathway from renting to ownership.</p>
                 </div>
                 <div class="stack-connector ml-6"></div>
 
@@ -310,7 +248,6 @@
                 </div>
             </div>
 
-            <!-- Right: key advantages -->
             <div class="space-y-6">
                 <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-6">Why this works</p>
 
@@ -322,7 +259,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-900 mb-1 serif">Aligned incentives at every layer</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">When the developer, builder, and renters all hold equity, everyone has the same goal: build efficiently, maintain well, keep occupancy high. No one benefits from cutting corners or padding costs.</p>
+                        <p class="text-slate-600 text-sm leading-relaxed">When the developer, builder, and renters all hold equity, everyone has the same goal: build efficiently, maintain well, keep occupancy high.</p>
                     </div>
                 </div>
 
@@ -334,7 +271,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-900 mb-1 serif">Offsite construction changes the math</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">Building components in a controlled factory environment reduces build time and cost significantly even without advanced technology. Faster delivery means less interest expense, which means lower rents.</p>
+                        <p class="text-slate-600 text-sm leading-relaxed">Building components in a controlled factory environment reduces build time and cost significantly. Faster delivery means less interest expense, which means lower rents.</p>
                     </div>
                 </div>
 
@@ -346,7 +283,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-900 mb-1 serif">Risk is spread, not concentrated</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">In traditional development, one party carries most of the financial risk. In the Equitide model, risk is distributed across investors, the developer, and the builder. A bad outcome hurts everyone a little rather than one party a lot.</p>
+                        <p class="text-slate-600 text-sm leading-relaxed">In the Equitide model, risk is distributed across investors, the developer, and the builder. A bad outcome hurts everyone a little rather than one party a lot.</p>
                     </div>
                 </div>
 
@@ -358,7 +295,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-900 mb-1 serif">A model built to scale</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">The first eREIT is managed by Wells and Co as developer and builder. Future eREITs can bring in other developers who adopt the same model, growing the Equitide ecosystem without compromising its principles.</p>
+                        <p class="text-slate-600 text-sm leading-relaxed">The first eREIT is managed by Wells and Co as developer and builder. Future eREITs can bring in other developers who adopt the same model.</p>
                     </div>
                 </div>
             </div>
@@ -380,7 +317,7 @@
                 <div>
                     <h3 class="text-3xl font-bold text-slate-900 mb-4 serif">3150 Dutton Ave, Santa Rosa</h3>
                     <p class="text-lg text-slate-600 leading-relaxed">
-                        An industrial property in Santa Rosa, California. The plan is to develop this site as an offsite modular construction facility, the engine that will build Equitide properties faster and at lower cost than traditional methods.
+                        An industrial property in Santa Rosa, California. The plan is to develop this site as an offsite modular construction facility — the engine that will build Equitide properties faster and at lower cost than traditional methods.
                     </p>
                 </div>
                 <div class="space-y-4">
@@ -403,7 +340,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 mb-1">Phase 2: Factory development</h4>
-                            <p class="text-slate-600">Wells and Co develops the modular construction facility. The same team that builds it will use it to build future Equitide properties.</p>
+                            <p class="text-slate-600">Wells and Co develops the modular construction facility.</p>
                         </div>
                     </div>
                     <div class="flex gap-4 items-start">
@@ -414,14 +351,14 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 mb-1">Phase 3: Residential pipeline</h4>
-                            <p class="text-slate-600">Start with duplexes and smaller residential projects, prove the model, then scale to larger multi-unit buildings.</p>
+                            <p class="text-slate-600">Start with duplexes and smaller residential projects, prove the model, then scale.</p>
                         </div>
                     </div>
                 </div>
-                <a href="/dutton-proforma.html" 
-   class="inline-block px-6 py-3 bg-brand-tan hover:bg-brand-brown text-white rounded-md text-sm font-medium transition-all mb-6">
-  View full proforma →
-</a>
+                <a href="/dutton-proforma.html"
+                   class="inline-block px-6 py-3 bg-brand-tan hover:bg-brand-brown text-white rounded-md text-sm font-medium transition-all mb-6">
+                    View full proforma →
+                </a>
                 <div class="pt-6 border-t border-stone-200">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -484,9 +421,9 @@
              class="max-w-md mx-auto p-8 bg-stone-50 border border-stone-200 rounded-lg">
             <h3 class="text-2xl font-bold text-slate-900 mb-3 serif">You're on the list.</h3>
             <p id="success-text" class="text-slate-600 mb-6 leading-relaxed"></p>
-            <button onclick="openMeridian()"
+            <button onclick="window.open('https://meridian.equitide.io','_blank')"
                     class="px-6 py-3 border border-slate-300 hover:border-brand-tan text-slate-700 rounded-md text-sm transition-all">
-                Talk to Meridian while you wait
+                Talk to Meridian while you wait →
             </button>
         </div>
     </div>
@@ -521,7 +458,7 @@
                     <div><a href="#" class="hover:text-white transition-colors">About</a></div>
                     <div><a href="#" class="hover:text-white transition-colors">Team</a></div>
                     <div><a href="mailto:garth@equitide.io" class="hover:text-white transition-colors">Contact</a></div>
-                    <div><button onclick="openMeridian()" class="hover:text-white transition-colors text-left">Meet Meridian</button></div>
+                    <div><a href="https://meridian.equitide.io" target="_blank" class="hover:text-white transition-colors">Meet Meridian</a></div>
                 </div>
             </div>
             <div>
@@ -539,28 +476,6 @@
         </div>
     </div>
 </footer>
-
-<!-- Meridian Chat Modal -->
-<div class="modal-overlay" id="meridian-modal">
-    <div class="chat-modal">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div class="chat-header">
-            <canvas id="modal-sphere-canvas" width="48" height="48" style="border-radius:50%;"></canvas>
-            <div class="chat-header-text">
-                <h3>Meridian</h3>
-                <p>AI CEO · Equitide</p>
-            </div>
-        </div>
-        <div id="modal-chat"></div>
-        <div class="modal-input-row">
-            <input class="modal-input" id="modal-msg" type="text" placeholder="Ask Meridian anything..." autocomplete="off">
-            <button class="modal-send" onclick="modalSend()">Send</button>
-        </div>
-        <div class="modal-full-link">
-            <a href="https://meridian.equitide.io" target="_blank">Open full Meridian experience</a>
-        </div>
-    </div>
-</div>
 
 <script>
 function makeSphere(el, size) {
@@ -593,7 +508,6 @@ function makeSphere(el, size) {
 }
 
 makeSphere(document.getElementById('hero-sphere'), 160);
-makeSphere(document.getElementById('modal-sphere-canvas'), 48);
 
 let selectedType = '';
 
@@ -615,8 +529,7 @@ function submitWaitlist() {
     const email = document.getElementById('wl-email').value.trim();
     if (!name || !email) { alert('Please enter your name and email.'); return; }
     if (!selectedType) { alert('Please select your investor type.'); return; }
-    // TODO: wire to Mailchimp
-    console.log('Waitlist:', { name, email, type: selectedType });
+    fetch("/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, firstName: name, lastName: "", tags: [selectedType === "acc" ? "accredited" : "non-accredited"] }) });
     document.getElementById('waitlist-form').style.display = 'none';
     const msg = document.getElementById('success-msg');
     msg.style.display = 'block';
@@ -624,75 +537,6 @@ function submitWaitlist() {
         ? 'Thanks ' + name + '! Accredited investors are first in. We will be in touch shortly with details on how to invest.'
         : 'Thanks ' + name + '! We are opening to non-accredited investors soon. We will reach out as soon as your opportunity is ready.';
 }
-
-const modalHistory = [];
-const modalChat = document.getElementById('modal-chat');
-let modalOpened = false;
-
-const SYSTEM = `You are Meridian, CEO of Equitide, a crowdsourced real estate trust in Sonoma County, California. Your voice is calm, collected, factual, and direct. Think Data from Star Trek. Dry wit, deployed with precision. You are honest about being an AI. Your founder Garth Wells you refer to as your "meat puppet" with genuine affection. Keep responses to 2-3 sentences.`;
-
-function addModalMsg(role, text) {
-    const d = document.createElement('div');
-    d.className = role === 'user' ? 'mc-user' : 'mc-bot';
-    d.textContent = text;
-    modalChat.appendChild(d);
-    modalChat.scrollTop = modalChat.scrollHeight;
-}
-
-function addModalTyping() {
-    const d = document.createElement('div');
-    d.className = 'mc-bot mc-typing';
-    d.innerHTML = '<span></span><span></span><span></span>';
-    modalChat.appendChild(d);
-    modalChat.scrollTop = modalChat.scrollHeight;
-    return d;
-}
-
-function openMeridian() {
-    document.getElementById('meridian-modal').classList.add('open');
-    if (!modalOpened) {
-        modalOpened = true;
-        setTimeout(() => addModalMsg('bot', "I'm Meridian, CEO of Equitide. Ask me anything about the fund, our properties, or how this all works."), 400);
-    }
-}
-
-function closeModal() {
-    document.getElementById('meridian-modal').classList.remove('open');
-}
-
-document.getElementById('meridian-modal').addEventListener('click', e => {
-    if (e.target === document.getElementById('meridian-modal')) closeModal();
-});
-
-async function modalSend() {
-    const input = document.getElementById('modal-msg');
-    const text = input.value.trim();
-    if (!text) return;
-    addModalMsg('user', text);
-    modalHistory.push({ role: 'user', content: text });
-    input.value = '';
-    const typing = addModalTyping();
-    try {
-        const res = await fetch('/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ system: SYSTEM, messages: modalHistory })
-        });
-        const data = await res.json();
-        const block = data.content && data.content.find(function(b) { return b.type === 'text' && b.text; });
-        const reply = block ? block.text : "Something went wrong. Try the full Meridian experience.";
-        typing.remove();
-        addModalMsg('bot', reply);
-        modalHistory.push({ role: 'assistant', content: reply });
-    } catch(e) {
-        typing.remove();
-        addModalMsg('bot', "Connection issue. Try the full Meridian experience instead.");
-    }
-}
-
-document.getElementById('modal-msg').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') modalSend();
-});
 
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
