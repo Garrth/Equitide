@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics + Cookie Consent -->
+    <style>
+      #cookie-banner {
+        display: none; position: fixed; bottom: 0; left: 0; right: 0;
+        z-index: 9999; background: #1e293b; color: #e2e8f0;
+        padding: 16px 24px; font-family: 'Inter', sans-serif;
+        font-size: 13px; line-height: 1.5; box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
+      }
+      #cookie-banner .cookie-inner {
+        max-width: 1200px; margin: 0 auto; display: flex;
+        align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      }
+      #cookie-banner p { margin: 0; color: #94a3b8; }
+      #cookie-banner a { color: #C9A961; text-decoration: underline; }
+      #cookie-banner .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+      #cookie-banner button {
+        padding: 8px 20px; border-radius: 6px; font-size: 13px;
+        font-family: 'Inter', sans-serif; cursor: pointer; border: none; font-weight: 500;
+      }
+      #cookie-accept { background: #C9A961; color: #fff; }
+      #cookie-accept:hover { background: #8B6F47; }
+      #cookie-decline { background: transparent; color: #94a3b8; border: 1px solid #334155 !important; }
+      #cookie-decline:hover { color: #e2e8f0; }
+    </style>
+    <div id="cookie-banner">
+      <div class="cookie-inner">
+        <p>We use cookies for site functionality and analytics. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+        <div class="cookie-btns">
+          <button id="cookie-decline" onclick="declineCookies()">Decline</button>
+          <button id="cookie-accept" onclick="acceptCookies()">Accept</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function loadAnalytics() {
+        var s = document.createElement('script');
+        s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EKKGMY1PLN';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag; gtag('js', new Date()); gtag('config', 'G-EKKGMY1PLN');
+      }
+      function acceptCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookie-banner').style.display = 'none';
+        loadAnalytics();
+      }
+      function declineCookies() {
+        localStorage.setItem('cookie_consent', 'declined');
+        document.getElementById('cookie-banner').style.display = 'none';
+      }
+      var consent = localStorage.getItem('cookie_consent');
+      if (consent === 'accepted') { loadAnalytics(); }
+      else if (!consent) {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('cookie-banner').style.display = 'block';
+        });
+      }
+    </script>
+
+    <!-- Cookie Consent + Analytics -->
+    <style>
+      #cookie-banner {
+        display: none; position: fixed; bottom: 0; left: 0; right: 0;
+        z-index: 9999; background: #1e293b; color: #e2e8f0;
+        padding: 16px 24px; font-family: 'Inter', sans-serif;
+        font-size: 13px; line-height: 1.5; box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
+      }
+      #cookie-banner .cookie-inner {
+        max-width: 1200px; margin: 0 auto; display: flex;
+        align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      }
+      #cookie-banner p { margin: 0; color: #94a3b8; }
+      #cookie-banner a { color: #C9A961; text-decoration: underline; }
+      #cookie-banner .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+      #cookie-banner button {
+        padding: 8px 20px; border-radius: 6px; font-size: 13px;
+        font-family: 'Inter', sans-serif; cursor: pointer; border: none; font-weight: 500;
+      }
+      #cookie-accept { background: #C9A961; color: #fff; }
+      #cookie-accept:hover { background: #8B6F47; }
+      #cookie-decline { background: transparent; color: #94a3b8; border: 1px solid #334155 !important; }
+      #cookie-decline:hover { color: #e2e8f0; }
+    </style>
+    <div id="cookie-banner">
+      <div class="cookie-inner">
+        <p>We use cookies for site functionality and analytics. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+        <div class="cookie-btns">
+          <button id="cookie-decline" onclick="declineCookies()">Decline</button>
+          <button id="cookie-accept" onclick="acceptCookies()">Accept</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function loadAnalytics() {
+        var s = document.createElement('script');
+        s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EKKGMY1PLN';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag; gtag('js', new Date()); gtag('config', 'G-EKKGMY1PLN');
+      }
+      function acceptCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookie-banner').style.display = 'none';
+        loadAnalytics();
+      }
+      function declineCookies() {
+        localStorage.setItem('cookie_consent', 'declined');
+        document.getElementById('cookie-banner').style.display = 'none';
+      }
+      var consent = localStorage.getItem('cookie_consent');
+      if (consent === 'accepted') { loadAnalytics(); }
+      else if (!consent) {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('cookie-banner').style.display = 'block';
+        });
+      }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Equitide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .serif { font-family: 'Libre Baskerville', serif; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { 'brand-tan': '#C9A961', 'brand-brown': '#8B6F47' } } }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-white">
+
+<nav class="fixed top-0 w-full bg-white border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3">
+            <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
+                <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="text-xl font-semibold text-slate-900 tracking-tight serif">Equitide</span>
+        </a>
+        <a href="/" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">← Back to home</a>
+    </div>
+</nav>
+
+<main>
+    <!-- Hero -->
+    <section class="pt-32 pb-20 px-6 bg-gradient-to-b from-white to-stone-50">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">Why Equitide</p>
+            <h1 class="text-6xl font-bold text-slate-900 mb-6 serif leading-tight">Housing is broken.<br/>We're fixing the incentives.</h1>
+            <p class="text-xl text-slate-600 leading-relaxed max-w-2xl">Attainable housing isn't a government program. It's an alignment problem. When everyone in the development stack is pulling in the same direction, the math changes.</p>
+        </div>
+    </section>
+
+    <!-- The word attainable -->
+    <section class="py-20 px-6 bg-slate-900 text-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold mb-6 serif">Why we say attainable, not affordable.</h2>
+            <p class="text-xl text-slate-300 leading-relaxed mb-6">"Affordable housing" means government-subsidized housing. It carries stigma, bureaucracy, and dependency on funding that comes and goes with political cycles. That's not what we're building.</p>
+            <p class="text-xl text-slate-300 leading-relaxed">"Attainable housing" means housing that working people can actually afford — not because someone is subsidizing it, but because we built it efficiently and structured the finances fairly. The name Equitide says it plainly: a rising tide lifts all boats. That's the goal.</p>
+        </div>
+    </section>
+
+    <!-- The problem -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">The real problem</p>
+            <h2 class="text-4xl font-bold text-slate-900 mb-8 serif">Traditional development is built on conflict.</h2>
+            <div class="space-y-6">
+                <div class="p-6 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-900 mb-2 serif">Lenders extract, developers scramble</h3>
+                    <p class="text-slate-600 leading-relaxed">Developers depend on financing from people whose only interest is return on capital. A two-point rate move can kill a project. The lender gets paid either way. The developer absorbs all the risk.</p>
+                </div>
+                <div class="p-6 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-900 mb-2 serif">Developers cut corners, builders pad costs</h3>
+                    <p class="text-slate-600 leading-relaxed">The developer wants to build for less. The contractor wants to earn more. These interests are fundamentally opposed. Change orders are a profit center. Quality suffers. Timelines slip. Someone always loses.</p>
+                </div>
+                <div class="p-6 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-900 mb-2 serif">Renters pay for everyone's margin</h3>
+                    <p class="text-slate-600 leading-relaxed">Every markup at every stage flows through to rent. The renter at the end of the chain absorbs every inefficiency in the system. They have no equity, no upside, and no protection when values rise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The fix -->
+    <section class="py-20 px-6 bg-stone-50">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">The Equitide fix</p>
+            <h2 class="text-4xl font-bold text-slate-900 mb-6 serif">One team. Everyone at cost. Everyone wins together.</h2>
+            <p class="text-xl text-slate-600 leading-relaxed mb-10">The Equitide vertical stack puts the financier, developer, builder, and tenant on the same team. No one profits from inefficiency. Everyone holds equity and benefits when the project succeeds.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-6 bg-white border border-slate-200 rounded-lg">
+                    <div class="text-brand-tan font-bold text-lg mb-2">Build cheaper</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">Offsite modular construction cuts build time and cost significantly. Impossible Machines Lab develops the automation that makes it faster — and recoups those R&D costs through licensing, so they never touch the build price.</p>
+                </div>
+                <div class="p-6 bg-white border border-slate-200 rounded-lg">
+                    <div class="text-brand-tan font-bold text-lg mb-2">Finance smarter</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">Equitide crowdsources capital under Reg A+, opening real estate investment to non-accredited investors from $10. No single lender holds the project hostage. Risk is spread. Returns are shared.</p>
+                </div>
+                <div class="p-6 bg-white border border-slate-200 rounded-lg">
+                    <div class="text-brand-tan font-bold text-lg mb-2">Include tenants</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">Renters in Equitide properties can buy shares. Dividends can offset rent. As property values rise, tenants participate in the gain — a structural path from renting to ownership that doesn't require a mortgage.</p>
+                </div>
+                <div class="p-6 bg-white border border-slate-200 rounded-lg">
+                    <div class="text-brand-tan font-bold text-lg mb-2">Scale the model</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">The first eREIT proves the model in Sonoma County. Future eREITs can bring in other developers who adopt the same aligned structure. The model scales without losing its integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real assets -->
+    <section class="py-20 px-6 bg-slate-900 text-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold mb-6 serif">Your savings deserve a real asset.</h2>
+            <p class="text-xl text-slate-300 leading-relaxed mb-6">Most real estate investment has always been the exclusive domain of the wealthy or institutional investors. Everyone else keeps their savings in a bank account while real estate values climb.</p>
+            <p class="text-xl text-slate-300 leading-relaxed mb-6">Equitide changes that. We don't leverage your investment with bank loans — your money goes directly into real property. And because we operate under Reg A+, you don't need to be wealthy or accredited to participate. You can start with $10.</p>
+            <p class="text-xl text-slate-300 leading-relaxed">Real estate has historically been one of the most reliable stores of value over time. Equitide is simply the first time it's been genuinely accessible to everyone.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 px-6 bg-white text-center">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-4xl font-bold text-slate-900 mb-6 serif">Ready to be part of it?</h2>
+            <p class="text-xl text-slate-600 mb-8">Join the waitlist and we'll reach out when the first investment opportunity is ready.</p>
+            <a href="/#waitlist-section"
+               class="inline-block px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all text-lg">
+                Join the waitlist
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer class="py-10 px-6 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
+        <p class="text-sm text-slate-400">© 2026 Equitide. All investments involve risk of loss.</p>
+        <div class="flex gap-6 text-sm text-slate-400">
+            <a href="/terms.html" class="hover:text-white transition-colors">Terms of service</a>
+            <a href="/privacy.html" class="hover:text-white transition-colors">Privacy policy</a>
+            <a href="/disclosures.html" class="hover:text-white transition-colors">Disclosures</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

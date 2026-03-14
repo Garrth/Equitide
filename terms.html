@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — Equitide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .serif { font-family: 'Libre Baskerville', serif; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <!-- Cookie Consent + Analytics -->
+    <style>
+      #cookie-banner {
+        display: none; position: fixed; bottom: 0; left: 0; right: 0;
+        z-index: 9999; background: #1e293b; color: #e2e8f0;
+        padding: 16px 24px; font-family: 'Inter', sans-serif;
+        font-size: 13px; line-height: 1.5; box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
+      }
+      #cookie-banner .cookie-inner {
+        max-width: 1200px; margin: 0 auto; display: flex;
+        align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      }
+      #cookie-banner p { margin: 0; color: #94a3b8; }
+      #cookie-banner a { color: #C9A961; text-decoration: underline; }
+      #cookie-banner .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+      #cookie-banner button {
+        padding: 8px 20px; border-radius: 6px; font-size: 13px;
+        font-family: 'Inter', sans-serif; cursor: pointer; border: none; font-weight: 500;
+      }
+      #cookie-accept { background: #C9A961; color: #fff; }
+      #cookie-accept:hover { background: #8B6F47; }
+      #cookie-decline { background: transparent; color: #94a3b8; border: 1px solid #334155 !important; }
+      #cookie-decline:hover { color: #e2e8f0; }
+    </style>
+    <div id="cookie-banner">
+      <div class="cookie-inner">
+        <p>We use cookies for site functionality and analytics. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+        <div class="cookie-btns">
+          <button id="cookie-decline" onclick="declineCookies()">Decline</button>
+          <button id="cookie-accept" onclick="acceptCookies()">Accept</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function loadAnalytics() {
+        var s = document.createElement('script');
+        s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EKKGMY1PLN';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag; gtag('js', new Date()); gtag('config', 'G-EKKGMY1PLN');
+      }
+      function acceptCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookie-banner').style.display = 'none';
+        loadAnalytics();
+      }
+      function declineCookies() {
+        localStorage.setItem('cookie_consent', 'declined');
+        document.getElementById('cookie-banner').style.display = 'none';
+      }
+      var consent = localStorage.getItem('cookie_consent');
+      if (consent === 'accepted') { loadAnalytics(); }
+      else if (!consent) {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('cookie-banner').style.display = 'block';
+        });
+      }
+    </script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { 'brand-tan': '#C9A961', 'brand-brown': '#8B6F47' } } }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-white">
+
+<nav class="fixed top-0 w-full bg-white border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3">
+            <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
+                <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="text-xl font-semibold text-slate-900 tracking-tight serif">Equitide</span>
+        </a>
+        <a href="/" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">← Back to home</a>
+    </div>
+</nav>
+
+<main class="pt-32 pb-24 px-6">
+    <div class="max-w-3xl mx-auto">
+        <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">Legal</p>
+        <h1 class="text-5xl font-bold text-slate-900 mb-4 serif">Terms of Service</h1>
+        <p class="text-slate-500 mb-12">Last updated: March 2026</p>
+
+        <div class="space-y-10 text-slate-600 leading-relaxed">
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Acceptance of terms</h2>
+                <p>By accessing or using equitide.io (the "Site"), you agree to these Terms of Service. If you do not agree, please do not use the Site.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Informational purposes only</h2>
+                <p>The content on this Site is for informational purposes only. Nothing on this Site constitutes an offer to sell or a solicitation of an offer to buy any security. Any offering of securities by Equitide will be made only by means of an offering circular filed with the U.S. Securities and Exchange Commission (SEC) pursuant to Regulation A. Prospective investors should read the offering circular carefully before investing.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">No investment advice</h2>
+                <p>Nothing on this Site constitutes investment, legal, tax, or financial advice. You should consult qualified professionals before making any investment decision. Equitide is not a registered investment adviser, broker-dealer, or financial planner.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Forward-looking statements</h2>
+                <p>This Site may contain forward-looking statements about Equitide's plans, projections, and expected performance. These statements involve known and unknown risks and uncertainties. Actual results may differ materially from those projected. Past performance is not indicative of future results. Target returns are not guaranteed.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Investment risk</h2>
+                <p>Investing in real estate involves significant risk, including the possible loss of your entire investment. Real estate values can decline. Rental income is not guaranteed. Liquidity is limited — shares in Equitide offerings may be difficult or impossible to sell before a liquidity event. You should only invest money you can afford to lose.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Waitlist</h2>
+                <p>Joining the Equitide waitlist does not constitute an investment, a commitment to invest, or a reservation of shares. Waitlist participants will be notified when an offering becomes available and will have the opportunity to review offering materials before making any investment decision.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Intellectual property</h2>
+                <p>All content on this Site — including text, graphics, logos, and software — is the property of Equitide and may not be reproduced, distributed, or used without written permission.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Limitation of liability</h2>
+                <p>To the fullest extent permitted by law, Equitide shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of this Site or reliance on any information contained herein.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Governing law</h2>
+                <p>These Terms are governed by the laws of the State of California, without regard to its conflict of law provisions.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Changes to these terms</h2>
+                <p>We may update these Terms at any time. Continued use of the Site after changes are posted constitutes acceptance of the updated Terms.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 serif">Contact</h2>
+                <p>Questions about these terms? Email us at <a href="mailto:meridian@equitide.io" class="text-brand-brown hover:underline">meridian@equitide.io</a>.</p>
+            </section>
+
+        </div>
+    </div>
+</main>
+
+<footer class="py-10 px-6 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
+        <p class="text-sm text-slate-400">© 2026 Equitide. All investments involve risk of loss.</p>
+        <div class="flex gap-6 text-sm text-slate-400">
+            <a href="/terms.html" class="hover:text-white transition-colors">Terms of service</a>
+            <a href="/privacy.html" class="hover:text-white transition-colors">Privacy policy</a>
+            <a href="/disclosures.html" class="hover:text-white transition-colors">Disclosures</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
