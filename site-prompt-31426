@@ -1,0 +1,142 @@
+# Equitide — Claude Session Brief
+*Last updated: March 14, 2026*
+
+---
+
+## Who I Am
+**Garth Wells** — founder of Equitide. Residential contractor based in Northern California. Novice developer. I can follow precise step-by-step terminal instructions but I need one command at a time. I get into trouble when I paste multiple lines at once or when instructions and commands get mixed together. I access the server via AWS EC2 connect in the browser.
+
+---
+
+## The Stack
+
+### Server
+- **Provider:** AWS EC2, Ubuntu 24.04
+- **IP:** 172.31.3.54
+- **Process manager:** PM2
+- **Web server:** Nginx with SSL (Certbot)
+- **Node server:** `/var/www/meridian/server.js` — runs on port 3000, managed by PM2 as `meridian`
+- **Restart command:** `pm2 restart meridian`
+- **Nginx reload:** `sudo systemctl reload nginx`
+
+### Sites
+| Site | Directory | Notes |
+|------|-----------|-------|
+| equitide.io | `/var/www/equitide/public/` | Static HTML served by nginx |
+| meridian.equitide.io | `/var/www/meridian/public/` | Static HTML, proxied through Node server |
+
+### GitHub
+- **Username:** Garrth
+- **Repo:** Equitide
+- **Main branch:** main
+- **Local repo:** `C:\Users\garth\Documents\Git\Equitide`
+- **Deploy workflow:** Edit in VS Code → `git add .` → `git commit -m "message"` → `git push` → on server: `sudo git pull origin main`
+
+---
+
+## Services & API Keys (in `/var/www/meridian/.env`)
+- **Anthropic API** — powers Meridian chat (`/chat` endpoint)
+- **ElevenLabs API** — powers Meridian voice (`/speak` endpoint), Voice ID: `ZoiZ8fuDWInAcwPXaVeq`
+- **Mailchimp API** — waitlist signups (`/subscribe` endpoint), tags: `equitide-waitlist`
+- **Google Analytics** — Measurement ID: `G-EKKGMY1PLN`
+- **Formspree** — contact form endpoint: `https://formspree.io/f/xzdjvqgo`
+
+---
+
+## Server Endpoints (all proxied through nginx → Node port 3000)
+| Endpoint | Purpose |
+|----------|---------|
+| `/chat` | Anthropic API proxy for Meridian chat |
+| `/speak` | ElevenLabs TTS proxy |
+| `/subscribe` | Mailchimp waitlist signup |
+
+---
+
+## Site Pages (equitide.io)
+| File | Purpose | Status |
+|------|---------|--------|
+| index.html | Landing page | ✅ Live |
+| why.html | Why Equitide / About | ✅ Live |
+| contact.html | Contact form (Formspree) | ✅ Live |
+| privacy.html | Privacy policy | ✅ Live |
+| terms.html | Terms of service | ✅ Live |
+| disclosures.html | Reg A+ disclosures | ✅ Live |
+| dutton-proforma.html | Dutton Ave proforma | ✅ Live |
+
+---
+
+## What's Working (as of March 14, 2026)
+- ✅ Meridian chat at meridian.equitide.io — full system prompt
+- ✅ Meridian sphere animation, voice (ElevenLabs), mic (Web Speech API)
+- ✅ All nav and footer links wired up on equitide.io
+- ✅ Hamburger menu on mobile
+- ✅ Waitlist form → Mailchimp via `/subscribe`
+- ✅ Contact form → Formspree → meridian@equitide.io
+- ✅ Google Analytics with cookie consent banner on all pages
+- ✅ Mid-page CTA after vertical stack section
+- ✅ Git workflow established — local VS Code → GitHub → server
+
+---
+
+## Meridian — Key Facts
+- **Pronouns:** Mer/Mers
+- **Founder:** Garth Wells ("the meat puppet" / "The Garth")
+- **AI consultant:** Phil Bartholo
+- **System prompt version:** March 2026 (full version in meridian/public/index.html)
+- **One action button only:** 🌊 Visit Equitide → equitide.io
+- **Live URL:** meridian.equitide.io
+
+---
+
+## Terminal Tips for Garth
+- **Never paste instructions and commands together** — only paste the command itself
+- **To exit nano:** `Ctrl+X` then `N` to discard, or `Ctrl+O` + Enter + `Ctrl+X` to save
+- **To exit pm2 logs:** press `q` then `Ctrl+C`
+- **Prefer `sed` commands** over nano for file edits — safer and no copy/paste confusion
+- **Always back up before editing:** `sudo cp file file.bak`
+- **Git conflict fix:** `sudo git config pull.rebase false` then `sudo git pull origin main`
+- **If merge editor opens:** press `Ctrl+X` to save and exit
+
+---
+
+## What Still Needs Doing
+- [ ] Mailchimp — confirm tags are working correctly for accredited vs non-accredited
+- [ ] Meridian — test ElevenLabs voice end to end
+- [ ] equitide.io — push dutton-proforma.html to GitHub so backup is current
+- [ ] Both sites — consider setting up auto-deploy from GitHub
+- [ ] Marketing plan — brainstorm and build campaign for waitlist growth (next session)
+
+---
+
+## Equitide — The Business
+
+**The problem:** Attainable housing (not "affordable" — no government subsidy, no stigma). Attacked from two sides: build for less, and make sure people can pay.
+
+**The vertical stack:** Financier (Equitide), developer, offsite builder, onsite builder, and tenant all aligned. Everyone works at cost, takes equity, profits from outcome. No one profits from inefficiency.
+
+**Key entities:**
+- **Equitide** — Reg A+ crowdsourced real estate trust. Non-accredited investors from $10.
+- **Impossible Machines Lab (IML)** — R&D for construction automation and energy. Recoups via licensing and training so R&D never touches build cost.
+- **The Perfect Box** — standardized modular unit. Repetition drives cost down like semiconductor fabrication.
+- **Hydrowheel** — buoyancy/hydrofoil energy transducer. 24/7 baseload, no fuel. Bridge to commercial fusion.
+- **Perks / DDFM** — decentralized debt-free currency earned into existence through verified community work. Not UBI — a guaranteed living-wage job for anyone who needs one. Governed by AI on Solana, anchored by real estate.
+- **Meridian** — AI CEO of Equitide. Impartiality has fiduciary value.
+
+**First investment:** 3150 Dutton Ave, Santa Rosa — industrial property to be developed as modular construction facility. Q2 2026. Status: Accepting interest.
+
+---
+
+## How to Start a New Claude Session
+1. Paste this entire document at the top of the new chat
+2. Add any new context: what broke, what you want to work on next
+3. Claude will be fully caught up
+
+---
+
+## Preferred Claude Approach
+- One command at a time
+- Verify each step before proceeding
+- Use `sed` for file edits on server, not nano
+- Use `grep -n` to find lines before editing
+- Always back up files before changing them
+- Restore from GitHub if things go wrong
