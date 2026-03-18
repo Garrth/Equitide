@@ -1,0 +1,82 @@
+{
+  "_description": "FILL-02: Required air flow rate at each vessel velocity",
+  "_units": "m/s, s, m3/s, CFM, SCFM, Pa, psia, psig",
+  "_assert_convention": "unit_system=SI, flow_rate=SCFM_at_P_atm_20C, Q_free=Q_depth_CFM*P_r_Boyles_law",
+  "V_depth_m3": 0.072356,
+  "P_r": 2.766865,
+  "CFM_per_m3s": 2118.88,
+  "unit_conversion_chain": "Q_depth [m3/s] = V_depth / t_fill; Q_depth [CFM] = Q_depth [m3/s] * 2118.88; Q_free [SCFM] = Q_depth [CFM] * P_r",
+  "physical_basis": "Boyle's law for flow rates: Q_free * P_atm = Q_depth * P_bottom. SCFM = standard (free-air) equivalent at P_atm. Compressors are rated in SCFM, not CFM-at-depth. Using Q_depth_CFM as compressor spec would undersize by factor P_r = 2.77 (Pitfall).",
+  "delivery_pressure": {
+    "P_bottom_Pa": 280352.59,
+    "P_delivery_psia": 40.662,
+    "P_delivery_psig": 25.966,
+    "note": "P_delivery = P_bottom = 280352.6 Pa = 40.66 psia = 25.97 psig. Compressor specs use gauge pressure (psig). This is within the easily-achievable range of standard single-stage reciprocating and rotary-screw compressors (typical max 100-175 psig)."
+  },
+  "results": [
+    {
+      "v_vessel_ms": 2.0,
+      "t_fill_s": 2.874557,
+      "Q_depth_m3s": 0.025171,
+      "Q_depth_CFM": 53.335,
+      "Q_free_SCFM": 147.57,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    },
+    {
+      "v_vessel_ms": 2.5,
+      "t_fill_s": 2.299646,
+      "Q_depth_m3s": 0.031464,
+      "Q_depth_CFM": 66.668,
+      "Q_free_SCFM": 184.46,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    },
+    {
+      "v_vessel_ms": 3.0,
+      "t_fill_s": 1.916372,
+      "Q_depth_m3s": 0.037757,
+      "Q_depth_CFM": 80.002,
+      "Q_free_SCFM": 221.35,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    },
+    {
+      "v_vessel_ms": 3.5,
+      "t_fill_s": 1.642604,
+      "Q_depth_m3s": 0.04405,
+      "Q_depth_CFM": 93.336,
+      "Q_free_SCFM": 258.25,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    },
+    {
+      "v_vessel_ms": 3.7137,
+      "t_fill_s": 1.548083,
+      "Q_depth_m3s": 0.046739,
+      "Q_depth_CFM": 99.035,
+      "Q_free_SCFM": 274.02,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    },
+    {
+      "v_vessel_ms": 4.0,
+      "t_fill_s": 1.437279,
+      "Q_depth_m3s": 0.050342,
+      "Q_depth_CFM": 106.669,
+      "Q_free_SCFM": 295.14,
+      "P_delivery_psia": 40.662,
+      "P_delivery_psig": 25.966
+    }
+  ],
+  "cross_checks": {
+    "Q_depth_3ms_m3s": 0.03776,
+    "Q_depth_3ms_CFM": 80.0,
+    "Q_free_3ms_SCFM": 221.4,
+    "Q_free_2ms_in_range_142_152": true,
+    "Q_free_4ms_in_range_288_302": true,
+    "monotone_increasing": true,
+    "P_delivery_psia_matches": true,
+    "P_delivery_psig_matches": true
+  }
+}

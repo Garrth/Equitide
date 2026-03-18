@@ -1,0 +1,68 @@
+{
+  "_description": "FILL-01: Fill window duration at each vessel velocity",
+  "_units": "m, m/s, s",
+  "_assert_convention": "unit_system=SI, arc_geometry=quarter_circle_R_tank=3.66m, t_fill=arc_length/v_vessel",
+  "arc_length_m": 5.749115,
+  "arc_formula": "2 * pi * R_tank / 4 = pi * R_tank / 2",
+  "R_tank_m": 3.66,
+  "velocity_points_ms": [
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    3.7137,
+    4.0
+  ],
+  "results": [
+    {
+      "v_vessel_ms": 2.0,
+      "t_fill_s": 2.874557
+    },
+    {
+      "v_vessel_ms": 2.5,
+      "t_fill_s": 2.299646
+    },
+    {
+      "v_vessel_ms": 3.0,
+      "t_fill_s": 1.916372
+    },
+    {
+      "v_vessel_ms": 3.5,
+      "t_fill_s": 1.642604
+    },
+    {
+      "v_vessel_ms": 3.7137,
+      "t_fill_s": 1.548083
+    },
+    {
+      "v_vessel_ms": 4.0,
+      "t_fill_s": 1.437279
+    }
+  ],
+  "v_vessel_ms": [
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    3.7137,
+    4.0
+  ],
+  "t_fill_s": [
+    2.874557,
+    2.299646,
+    1.916372,
+    1.642604,
+    1.548083,
+    1.437279
+  ],
+  "cross_checks": {
+    "arc_length_matches_5749": true,
+    "t_fill_3ms_matches_1916": true,
+    "t_fill_3ms_value": 1.916372,
+    "t_fill_2ms_in_range": true,
+    "t_fill_4ms_in_range": true,
+    "monotone_decreasing": true,
+    "all_above_05s_valve_floor": true
+  },
+  "pitfall_note": "C7: v_vessel sweep uses full range [2.0, 4.0] m/s. v_nominal=3.714 m/s is the physics-derived terminal velocity (C_D=1.0, F_chain=0), NOT the user estimate of 3.0 m/s."
+}
