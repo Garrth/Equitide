@@ -1,0 +1,47 @@
+{
+  "_description": "BUOY-02: Buoyancy integral identity gate",
+  "_units": "SI throughout: J, Pa, m, dimensionless",
+  "_assert_convention": "unit_system=SI, coordinate_system=z=0_at_bottom, pressure=absolute_Pa, buoyancy=variable_volume_F_b=rho_w*g*V(z)",
+  "W_buoy_J": 20644.6159,
+  "W_iso_J": 20644.62,
+  "relative_error_tight": 2e-07,
+  "relative_error_loose": 2e-07,
+  "relative_error_pct_tight": 2e-05,
+  "relative_error_pct_loose": 2e-05,
+  "err_estimate_tight_J": 2e-10,
+  "err_estimate_loose_J": 0.0,
+  "gate_passed": true,
+  "gate_criteria": "|W_buoy - W_iso| / W_iso < 0.01 (1%)",
+  "scipy_settings_tight": {
+    "epsabs": 1e-06,
+    "epsrel": 1e-08,
+    "limit": 100
+  },
+  "scipy_settings_loose": {
+    "epsabs": 0.01,
+    "epsrel": 0.01,
+    "limit": 100
+  },
+  "pitfall_C1_check": {
+    "W_buoy_constant_volume_would_be": 35841.3,
+    "sentinel": "W_buoy < 25000 J",
+    "sentinel_passed": true,
+    "note": "Constant-volume integrand (Pitfall C1) would give ~35,841 J (~74% overestimate). Actual integral uses variable-volume F_b(z) = rho_w*g*V_surface*P_atm/P(z)."
+  },
+  "analytical_derivation": "SUBSTITUTION DERIVATION: W_buoy = integral_0^H F_b(z) dz = W_iso (exact). Step 1: Write integrand: F_b(z) = rho_w * g * V_surface * P_atm / P(z) where P(z) = P_atm + rho_w*g*(H-z). Step 2: Factor constant: W_buoy = rho_w*g*V_surface*P_atm * integral_0^H 1/P(z) dz. Step 3: Change variable u = P(z), du = d/dz[P_atm + rho_w*g*(H-z)] dz = -rho_w*g dz. Therefore dz = -du/(rho_w*g). Limits: z=0 => u=P_bottom; z=H => u=P_atm. Step 4: Substitute: W_buoy = rho_w*g*V_surface*P_atm * integral_{P_bottom}^{P_atm} (1/u) * (-du/(rho_w*g)) = V_surface*P_atm * integral_{P_atm}^{P_bottom} (1/u) du = V_surface*P_atm * [ln(u)]_{P_atm}^{P_bottom} = V_surface*P_atm * (ln(P_bottom) - ln(P_atm)) = P_atm * V_surface * ln(P_bottom/P_atm) = P_atm * V_surface * ln(P_r) = W_iso. QED: W_buoy = W_iso exactly for any ideal isothermal expansion.",
+  "analytical_check_J": 20644.6159,
+  "cop_statement": "W_buoy = 20644.6 J APPROXIMATELY EQUALS W_iso = 20644.6 J (relative error 0.0000%). This confirms thermodynamic BREAK-EVEN: buoyancy work equals minimum pumping cost (isothermal). COP = W_buoy / W_pump(eta_c=0.70) = 20644.6 / 34227.8 = 0.6032 < 1.0. THIS IS NOT NET POSITIVE ENERGY. Break-even means the system recovers exactly the thermodynamic minimum pumping work -- it does NOT generate surplus energy. All energy gain above break-even must come from hydrofoil work (Phase 2). Reporting W_buoy = W_iso as a 'success' without the hydrofoil contribution would be false progress. The COP_ideal_max (buoyancy only, no losses) is 0.6032, well below the 1.5 target.",
+  "W_pump_nominal_J": 34227.8,
+  "COP_at_identity": 0.603153,
+  "integrand_functions": {
+    "P_z": "P_atm + rho_w * g * (H - z)",
+    "V_z": "V_surface * P_atm / P_z(z)",
+    "F_b_z": "rho_w * g * V_z(z)"
+  },
+  "endpoint_verification": {
+    "F_b_at_z0_N": 708.321,
+    "F_b_at_zH_N": 1959.827,
+    "plan01_F_b_z0": 708.3,
+    "plan01_F_b_zH": 1959.8
+  }
+}
