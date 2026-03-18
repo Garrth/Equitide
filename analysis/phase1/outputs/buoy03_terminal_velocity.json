@@ -1,0 +1,195 @@
+{
+  "_description": "BUOY-03: Terminal velocity sweep -- 15 grid points (5 C_D x 3 F_chain)",
+  "_units": "SI throughout: m/s, N, dimensionless",
+  "_assert_convention": "unit_system=SI, F_b_avg=W_iso/H_energy_weighted_average, Re=v*d_vessel/nu_w_kinematic_only, v_terminal=steady_state_magnitude_positive_upward",
+  "F_b_avg_N": 1128.8615,
+  "F_b_avg_source": "W_iso / H = energy-weighted average buoyancy force",
+  "W_iso_J": 20644.62,
+  "H_m": 18.288,
+  "parameters": {
+    "C_D_values": [
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.2
+    ],
+    "F_chain_values_N": [
+      0.0,
+      200.0,
+      500.0
+    ],
+    "rho_w_kg_m3": 998.2,
+    "nu_w_m2_s": 1.004e-06,
+    "d_vessel_m": 0.457,
+    "A_frontal_m2": 0.164
+  },
+  "force_balance": "At terminal velocity v_t: F_net = 0. F_b_avg - F_drag(v_t) - F_chain = 0. 0.5*rho_w*C_D*A_frontal*v_t^2 = F_b_avg - F_chain. v_t = sqrt(2*(F_b_avg - F_chain)/(rho_w*C_D*A_frontal)). Note: This is analytic (single evaluation); F_b_avg is independent of v_t.",
+  "results": [
+    {
+      "C_D": 0.8,
+      "F_chain_N": 0.0,
+      "v_terminal_ms": 4.152,
+      "Re": 1889914.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 1128.8615
+    },
+    {
+      "C_D": 0.8,
+      "F_chain_N": 200.0,
+      "v_terminal_ms": 3.7663,
+      "Re": 1714341.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 928.8615
+    },
+    {
+      "C_D": 0.8,
+      "F_chain_N": 500.0,
+      "v_terminal_ms": 3.099,
+      "Re": 1410585.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 628.8615
+    },
+    {
+      "C_D": 0.9,
+      "F_chain_N": 0.0,
+      "v_terminal_ms": 3.9146,
+      "Re": 1781828.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 1128.8615
+    },
+    {
+      "C_D": 0.9,
+      "F_chain_N": 200.0,
+      "v_terminal_ms": 3.5509,
+      "Re": 1616296.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 928.8615
+    },
+    {
+      "C_D": 0.9,
+      "F_chain_N": 500.0,
+      "v_terminal_ms": 2.9217,
+      "Re": 1329912.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 628.8615
+    },
+    {
+      "C_D": 1.0,
+      "F_chain_N": 0.0,
+      "v_terminal_ms": 3.7137,
+      "Re": 1690391.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 1128.8615
+    },
+    {
+      "C_D": 1.0,
+      "F_chain_N": 200.0,
+      "v_terminal_ms": 3.3687,
+      "Re": 1533353.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 928.8615
+    },
+    {
+      "C_D": 1.0,
+      "F_chain_N": 500.0,
+      "v_terminal_ms": 2.7718,
+      "Re": 1261666.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 628.8615
+    },
+    {
+      "C_D": 1.1,
+      "F_chain_N": 0.0,
+      "v_terminal_ms": 3.5409,
+      "Re": 1611724.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 1128.8615
+    },
+    {
+      "C_D": 1.1,
+      "F_chain_N": 200.0,
+      "v_terminal_ms": 3.2119,
+      "Re": 1461995.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 928.8615
+    },
+    {
+      "C_D": 1.1,
+      "F_chain_N": 500.0,
+      "v_terminal_ms": 2.6428,
+      "Re": 1202951.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 628.8615
+    },
+    {
+      "C_D": 1.2,
+      "F_chain_N": 0.0,
+      "v_terminal_ms": 3.3901,
+      "Re": 1543109.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 1128.8615
+    },
+    {
+      "C_D": 1.2,
+      "F_chain_N": 200.0,
+      "v_terminal_ms": 3.0752,
+      "Re": 1399754.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 928.8615
+    },
+    {
+      "C_D": 1.2,
+      "F_chain_N": 500.0,
+      "v_terminal_ms": 2.5303,
+      "Re": 1151738.0,
+      "iterations": 1,
+      "feasible": true,
+      "F_net_drive_N": 628.8615
+    }
+  ],
+  "v_handoff": {
+    "v_vessel_nominal_ms": 3.7137,
+    "v_vessel_nominal_source": "C_D=1.0, F_chain=0 N (isolated vessel, center C_D estimate)",
+    "v_vessel_conservative_ms": 3.0752,
+    "v_vessel_conservative_source": "C_D=1.2, F_chain=200 N (high drag, light coupling)",
+    "v_vessel_range_ms": [
+      2.5303,
+      4.152
+    ],
+    "v_vessel_range_source": "Full C_D=[0.8,1.2], F_chain=[0,500] N envelope (feasible points only)",
+    "plan03_instruction": "Use full range [v_min, v_max] = v_vessel_range_ms for fill window calculations. Do NOT fix v = 3.0 m/s (Pitfall C7). Nominal (3.714 m/s) and conservative (3.075 m/s) values bracket the expected operating range.",
+    "user_baseline_ms": 3.0,
+    "user_baseline_within_range": true
+  },
+  "reynolds_summary": "All Re values in range [1.152e+06, 1.890e+06]. At F_chain=0: Re in [1.543e+06, 1.890e+06]. All values within [1e5, 1e7] -- Hoerner C_D=0.8-1.2 blunt cylinder regime is self-consistent (turbulent flow around blunt body at these Reynolds numbers). Expected range: ~1.1e6 to 1.9e6.",
+  "benchmark_checks": {
+    "C_D_08_F0_expected_ms": 4.152,
+    "C_D_10_F0_expected_ms": 3.714,
+    "C_D_12_F0_expected_ms": 3.39,
+    "tolerance_ms": 0.05,
+    "all_benchmarks_passed": true
+  },
+  "physics_consistency": {
+    "v_decreases_with_C_D_verified": true,
+    "v_decreases_with_F_chain_verified": true,
+    "all_Re_in_valid_regime_1e5_1e7": true,
+    "all_v_in_1_to_10_ms": true,
+    "all_iterations_eq_1_analytic": true
+  },
+  "plan03_gate": "AUTHORIZED: Identity gate (BUOY-02) PASSED. Plan 03 may execute using v_handoff range. Use v_vessel_range_ms = v_vessel_range for fill window sweep. Pitfall C7: do NOT fix v = 3.0 m/s."
+}
