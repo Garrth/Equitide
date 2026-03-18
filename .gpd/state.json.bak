@@ -1,0 +1,316 @@
+{
+  "project_reference": {
+    "project_md_updated": null,
+    "core_research_question": null,
+    "current_focus": null
+  },
+  "project_contract": {
+    "schema_version": 1,
+    "scope": {
+      "question": "Is this buoyancy + hydrofoil engine net-positive at 1.5W output per 1W pumping input under reasonable component assumptions?",
+      "in_scope": [
+        "Air pumping energy per vessel cycle",
+        "Buoyancy work during ascent at 3 m/s",
+        "Hydrofoil lift and drag analysis (parametric)",
+        "Co-rotation drag reduction model",
+        "Jet propulsion recovery from expanding air",
+        "Fill time feasibility (1/4 loop at 3 m/s)",
+        "Component-by-component energy balance",
+        "Go/no-go verdict on 1.5W/W target"
+      ],
+      "out_of_scope": [
+        "Detailed hydrofoil profile design",
+        "Tack-flip mechanism engineering",
+        "Full geometry optimization",
+        "Salt water operation",
+        "Physical prototype construction details"
+      ],
+      "unresolved_questions": [
+        "Final loop geometry needed to compute fill window duration",
+        "Hydrofoil chord length and profile to assume for L/D estimate",
+        "Co-rotation achievement mechanism"
+      ]
+    },
+    "context_intake": {
+      "must_read_refs": [],
+      "must_include_prior_outputs": [],
+      "user_asserted_anchors": [
+        "Rough calculation suggests ~150% efficiency (1.5W out per 1W in)",
+        "Vessel rise velocity estimated at 3 m/s from buoyancy",
+        "Fill window = 1/4 loop circumference at 3 m/s"
+      ],
+      "known_good_baselines": [
+        "Pumping energy for single vessel: ~20.6 kJ isothermal, ~24.0 kJ adiabatic (from initial scoping)"
+      ],
+      "context_gaps": [
+        "Benchmark reference not yet selected; no published comparison for this specific buoyancy+hydrofoil engine type",
+        "Loop geometry not yet finalized"
+      ],
+      "crucial_inputs": [
+        "User rough 150% efficiency estimate as target to validate or refute",
+        "3 m/s buoyancy velocity assumption",
+        "1/4 loop fill window constraint"
+      ]
+    },
+    "approach_policy": {
+      "formulations": [
+        "Component-by-component analytical energy balance",
+        "Parametric hydrofoil L/D analysis",
+        "Ideal gas law for air compression and expansion"
+      ],
+      "allowed_estimator_families": [
+        "Analytical fluid mechanics",
+        "Hydrofoil lift/drag theory",
+        "Thermodynamic work integrals"
+      ],
+      "forbidden_estimator_families": [
+        "Buoyancy-only analysis without hydrofoil contribution"
+      ],
+      "allowed_fit_families": [
+        "Standard hydrofoil L/D data for slow-speed water flow"
+      ],
+      "forbidden_fit_families": [
+        "Optimistic curve fits that assume perfect efficiency at any stage"
+      ],
+      "stop_and_rethink_conditions": [
+        "If complete system balance shows no plausible path to net positive output even under favorable assumptions"
+      ]
+    },
+    "observables": [
+      {
+        "id": "obs-energy-balance",
+        "name": "System energy balance ratio (output/input)",
+        "kind": "scalar",
+        "definition": "Ratio of total shaft power output to air pumping power input across all 30 vessels",
+        "regime": null,
+        "units": null
+      },
+      {
+        "id": "obs-fill-time",
+        "name": "Required air fill time per vessel",
+        "kind": "scalar",
+        "definition": "Time available to fill vessel with compressed air at 60 ft depth during 1/4 loop transit at 3 m/s",
+        "regime": null,
+        "units": null
+      },
+      {
+        "id": "obs-hydrofoil-torque",
+        "name": "Hydrofoil torque contribution per vessel",
+        "kind": "scalar",
+        "definition": "Net horizontal torque produced by ascending and descending vessels via tacked hydrofoil",
+        "regime": null,
+        "units": null
+      },
+      {
+        "id": "obs-net-power",
+        "name": "Net shaft power output",
+        "kind": "scalar",
+        "definition": "Total shaft power output minus pumping power input in watts",
+        "regime": null,
+        "units": null
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-net-positive",
+        "statement": "The system produces at least 1.5W of shaft output for every 1W of air pumping input under reasonable component assumptions",
+        "observables": [
+          "obs-energy-balance",
+          "obs-net-power"
+        ],
+        "deliverables": [
+          "deliv-energy-balance",
+          "deliv-component-table"
+        ],
+        "acceptance_tests": [
+          "test-energy-ratio",
+          "test-no-missing-losses"
+        ],
+        "references": []
+      },
+      {
+        "id": "claim-fill-feasible",
+        "statement": "The vessel can be filled with the required air volume within the 1/4 loop window at 3 m/s",
+        "observables": [
+          "obs-fill-time"
+        ],
+        "deliverables": [
+          "deliv-fill-analysis"
+        ],
+        "acceptance_tests": [
+          "test-fill-rate"
+        ],
+        "references": []
+      }
+    ],
+    "deliverables": [
+      {
+        "id": "deliv-energy-balance",
+        "kind": "table",
+        "path": null,
+        "description": "Component-by-component energy balance table: pumping, buoyancy, hydrofoil torque, co-rotation drag reduction, jet recovery, losses",
+        "must_contain": [
+          "pumping energy",
+          "buoyancy work",
+          "hydrofoil torque",
+          "net output",
+          "efficiency ratio"
+        ]
+      },
+      {
+        "id": "deliv-component-table",
+        "kind": "table",
+        "path": null,
+        "description": "Summary table of all energy inputs and outputs per cycle with go/no-go verdict on 1.5W/W target",
+        "must_contain": [
+          "go/no-go verdict",
+          "1.5W/W comparison"
+        ]
+      },
+      {
+        "id": "deliv-fill-analysis",
+        "kind": "note",
+        "path": null,
+        "description": "Fill time and flow rate analysis: required flow rate, available window, feasibility assessment",
+        "must_contain": [
+          "fill time window",
+          "required flow rate",
+          "feasibility assessment"
+        ]
+      }
+    ],
+    "acceptance_tests": [
+      {
+        "id": "test-energy-ratio",
+        "subject": "claim-net-positive",
+        "kind": "benchmark",
+        "procedure": "Sum all energy inputs and outputs per cycle; compute output/input ratio; compare against 1.5W/W target",
+        "pass_condition": "Energy ratio >= 1.5 under reasonable (not optimistic) component assumptions",
+        "evidence_required": [
+          "deliv-energy-balance",
+          "deliv-component-table"
+        ],
+        "automation": "hybrid"
+      },
+      {
+        "id": "test-no-missing-losses",
+        "subject": "claim-net-positive",
+        "kind": "consistency",
+        "procedure": "Verify all major loss mechanisms are accounted for: pump inefficiency, hydrofoil drag, bearing friction, co-rotation overhead",
+        "pass_condition": "No major loss category omitted from the energy balance",
+        "evidence_required": [
+          "deliv-energy-balance"
+        ],
+        "automation": "human"
+      },
+      {
+        "id": "test-fill-rate",
+        "subject": "claim-fill-feasible",
+        "kind": "existence",
+        "procedure": "Calculate fill window duration from loop geometry; calculate required air flow rate; check against practical equipment",
+        "pass_condition": "Required flow rate is achievable with practical equipment",
+        "evidence_required": [
+          "deliv-fill-analysis"
+        ],
+        "automation": "hybrid"
+      }
+    ],
+    "references": [],
+    "forbidden_proxies": [
+      {
+        "id": "fp-buoyancy-only",
+        "subject": "claim-net-positive",
+        "proxy": "Net positive buoyancy work alone without hydrofoil torque contribution",
+        "reason": "Buoyancy alone cannot exceed pumping energy; the gain comes from the hydrofoil L/D leverage"
+      },
+      {
+        "id": "fp-individual-components",
+        "subject": "claim-net-positive",
+        "proxy": "Individual components looking favorable without a complete system balance including all losses",
+        "reason": "Partial analysis can miss losses that eliminate the net positive result"
+      }
+    ],
+    "links": [
+      {
+        "id": "link-balance-to-verdict",
+        "source": "deliv-energy-balance",
+        "target": "deliv-component-table",
+        "relation": "supports",
+        "verified_by": [
+          "test-energy-ratio"
+        ]
+      }
+    ],
+    "uncertainty_markers": {
+      "weakest_anchors": [
+        "Hydrofoil L/D ratio in low-speed water flow \u00e2\u20ac\u201d no measured value yet, using literature estimates",
+        "Co-rotation drag reduction magnitude \u00e2\u20ac\u201d theoretical but unverified for this geometry"
+      ],
+      "unvalidated_assumptions": [
+        "3 m/s vessel velocity is achievable and maintained under hydrofoil drag load",
+        "Co-rotation of water body in 24ft cylinder is achievable and stable",
+        "Tack-flip mechanism can reverse hydrofoil angle without significant energy loss"
+      ],
+      "competing_explanations": [
+        "If hydrofoil L/D in this regime is low (less than 5), system may not reach 1.5W/W target",
+        "Co-rotation may require energy input to maintain, reducing net gain"
+      ],
+      "disconfirming_observations": [
+        "If complete system balance including all losses shows output/input less than 1.0, concept is not viable"
+      ]
+    }
+  },
+  "position": {
+    "current_phase": null,
+    "current_phase_name": null,
+    "total_phases": null,
+    "current_plan": null,
+    "total_plans_in_phase": null,
+    "status": null,
+    "last_activity": null,
+    "last_activity_desc": null,
+    "progress_percent": 0,
+    "paused_at": null
+  },
+  "active_calculations": [],
+  "intermediate_results": [],
+  "open_questions": [
+    "Final loop geometry needed to compute fill window duration",
+    "Hydrofoil chord length and profile to assume for L/D estimate",
+    "Co-rotation achievement mechanism"
+  ],
+  "performance_metrics": {
+    "rows": []
+  },
+  "decisions": [],
+  "approximations": [],
+  "convention_lock": {
+    "metric_signature": null,
+    "fourier_convention": null,
+    "natural_units": null,
+    "gauge_choice": null,
+    "regularization_scheme": null,
+    "renormalization_scheme": null,
+    "coordinate_system": null,
+    "spin_basis": null,
+    "state_normalization": null,
+    "coupling_convention": null,
+    "index_positioning": null,
+    "time_ordering": null,
+    "commutation_convention": null,
+    "levi_civita_sign": null,
+    "generator_normalization": null,
+    "covariant_derivative_sign": null,
+    "gamma_matrix_convention": null,
+    "creation_annihilation_order": null,
+    "custom_conventions": {}
+  },
+  "propagated_uncertainties": [],
+  "pending_todos": [],
+  "blockers": [],
+  "session": {
+    "last_date": null,
+    "stopped_at": null,
+    "resume_file": null
+  }
+}
