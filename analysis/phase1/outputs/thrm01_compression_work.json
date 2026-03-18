@@ -1,0 +1,86 @@
+{
+  "_description": "THRM-01/02/03: Compression work, fill volumes, and jet recovery accounting",
+  "_units": "SI throughout: J, m\u00b3, Pa, dimensionless",
+  "_assert_convention": "unit_system=SI, coordinate_system=z=0_at_bottom, pressure=absolute_Pa, energy_sign=W_pump_input_W_buoy_output",
+  "parameters": {
+    "P_atm_Pa": 101325,
+    "rho_w_kg_m3": 998.2,
+    "g_m_s2": 9.807,
+    "H_m": 18.288,
+    "V_surface_m3": 0.2002,
+    "gamma_air": 1.4,
+    "P_bottom_Pa": 280352.59,
+    "P_r": 2.766865,
+    "V_depth_m3": 0.072356,
+    "V_depth_ft3": 2.555
+  },
+  "THRM_01_compression_work": {
+    "W_iso_J": 20644.62,
+    "W_iso_kJ": 20.6446,
+    "W_adia_J": 23959.45,
+    "W_adia_kJ": 23.9595,
+    "W_adia_over_W_iso": 1.16057,
+    "note_W_iso": "Isothermal lower bound: reversible compressor (theoretical minimum). DO NOT use as W_pump in COP calculations (Pitfall M1).",
+    "note_W_adia": "Adiabatic upper bound: isentropic compressor. W_pump = W_adia / eta_c.",
+    "W_pump_table": [
+      {
+        "eta_c": 0.65,
+        "W_pump_J": 36860.7,
+        "W_pump_kJ": 36.861,
+        "COP_ideal_max": 0.5601
+      },
+      {
+        "eta_c": 0.7,
+        "W_pump_J": 34227.8,
+        "W_pump_kJ": 34.228,
+        "COP_ideal_max": 0.6032
+      },
+      {
+        "eta_c": 0.75,
+        "W_pump_J": 31945.9,
+        "W_pump_kJ": 31.946,
+        "COP_ideal_max": 0.6462
+      },
+      {
+        "eta_c": 0.8,
+        "W_pump_J": 29949.3,
+        "W_pump_kJ": 29.949,
+        "COP_ideal_max": 0.6893
+      },
+      {
+        "eta_c": 0.85,
+        "W_pump_J": 28187.6,
+        "W_pump_kJ": 28.188,
+        "COP_ideal_max": 0.7324
+      }
+    ],
+    "COP_ideal_max_note": "COP_ideal_max = W_iso / W_pump is the ideal ceiling COP if ALL buoyancy work were recovered with no losses. It is below 1.0 for all eta_c, confirming buoyancy alone cannot achieve COP > 1.0. The target COP = 1.5 requires hydrofoil contribution (Phase 2+)."
+  },
+  "THRM_02_fill_volumes": {
+    "V_surface_m3": 0.2002,
+    "V_surface_ft3": 7.0692,
+    "V_depth_m3": 0.072356,
+    "V_depth_ft3": 2.555,
+    "P_r": 2.766865,
+    "fill_condition": "Air injected at P_bottom = 280352.6 Pa (= 2.76686 atm) occupies V_depth = 0.072356 m\u00b3 = 2.5550 ft\u00b3. As vessel ascends, air expands isothermally per Boyle's law: V(z) = V_surface * P_atm / P(z). At z=H: V(H) = V_surface * P_atm / P_atm = V_surface = 0.2002 m\u00b3 \u2014 vessel is exactly full. Fill target: inject V_depth = 0.072356 m\u00b3 of air at P_bottom into open-bottom vessel. NOTE: CONVENTIONS.md displays V_depth = 0.07228 m\u00b3 (rounded); precise = 0.072356 m\u00b3.",
+    "air_fraction_at_bottom": 0.3614,
+    "water_fraction_at_bottom": 0.6386
+  },
+  "THRM_03_jet_recovery": {
+    "W_jet_J": 0,
+    "W_jet_line_item": "zero",
+    "explanation": "W_jet = 0 as a separate line item in the energy balance. Jet recovery from the expanding open-bottom air column during ascent is thermodynamically identical to the buoyancy expansion work \u2014 it is NOT an additional energy source. The buoyancy integral W_buoy = integral_0^H F_b(z) dz already accounts for ALL work done by the buoyant/expanding gas column. The buoyancy force F_b(z) = rho_w * g * V(z) includes the full volume expansion at each height, which encodes the gas expansion pressure effect. Adding W_jet separately would double-count Pitfall C6. Therefore: W_jet is NOT an additional energy source; it is the same thermodynamic expansion already included in W_buoy.",
+    "pitfall_guarded": "C6 (double-counting jet recovery with buoyancy work)"
+  },
+  "validation_checks_passed": {
+    "W_iso_within_0.1pct_of_20640J": true,
+    "W_adia_within_0.1pct_of_24040J": true,
+    "W_ratio_in_1158_to_1168": true,
+    "W_adia_gt_W_iso": true,
+    "W_pump_gt_W_iso_all_eta_c": true,
+    "COP_ideal_max_lt_1_all_eta_c": true,
+    "V_depth_within_0001_of_007228": true,
+    "V_at_H_equals_V_surface_exactly": true,
+    "all_6_sanity_checks": true
+  }
+}
