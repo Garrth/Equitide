@@ -29,7 +29,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.05483,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 6.695216,
+      "COP_partial_ascending_only": 1.110825,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     "H_m": 18.288,
@@ -54,7 +55,7 @@
       "t_cycle_s": 11.848,
       "W_foil_per_vessel_J": 20766.46,
       "W_foil_ascending_total_J": 249197.53,
-      "COP_partial_asc": 7.883713,
+      "COP_partial_asc": 1.209867,
       "note": "W_foil and COP do not depend on loop_length (t_ascending = H/v_loop is fixed)"
     },
     "48.0": {
@@ -63,7 +64,7 @@
       "t_cycle_s": 12.9251,
       "W_foil_per_vessel_J": 20766.46,
       "W_foil_ascending_total_J": 249197.53,
-      "COP_partial_asc": 7.883713,
+      "COP_partial_asc": 1.209867,
       "note": "W_foil and COP do not depend on loop_length (t_ascending = H/v_loop is fixed)"
     },
     "52.0": {
@@ -72,7 +73,7 @@
       "t_cycle_s": 14.0022,
       "W_foil_per_vessel_J": 20766.46,
       "W_foil_ascending_total_J": 249197.53,
-      "COP_partial_asc": 7.883713,
+      "COP_partial_asc": 1.209867,
       "note": "W_foil and COP do not depend on loop_length (t_ascending = H/v_loop is fixed)"
     }
   },
@@ -80,7 +81,7 @@
     "lambda_max_P_shaft": 0.9,
     "max_P_shaft_per_vessel_W": 5054.219,
     "lambda_max_COP_asc": 0.9,
-    "max_COP_partial_asc": 9.329219,
+    "max_COP_partial_asc": 1.330326,
     "lambda_min_positive_F_tan": 0.3,
     "lambda_max_positive_F_tan": 1.2,
     "note": "COP_partial_asc includes ascending foils only. Full COP with descending foils computed in Plan 02."
@@ -98,7 +99,7 @@
     "F_vert_N": -1298.116,
     "F_vert_fraction_of_Fb": 1.14994,
     "F_vert_flag": "FLAG_LARGE",
-    "COP_partial_ascending_only": 7.88376,
+    "COP_partial_ascending_only": 1.209871,
     "rpm_check": "omega=v_tan/r_arm=lambda*v_loop/r_arm=1.0*3.7137/3.66=1.0147 rad/s = 9.69 RPM"
   },
   "pitfall_guards": {
@@ -122,7 +123,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.45657,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 2.942485,
+      "COP_partial_ascending_only": 0.798098,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     {
@@ -140,7 +142,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.58593,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 3.78439,
+      "COP_partial_ascending_only": 0.868257,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     {
@@ -158,7 +161,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.72754,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 4.683498,
+      "COP_partial_ascending_only": 0.943182,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     {
@@ -176,7 +180,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.88332,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 5.65121,
+      "COP_partial_ascending_only": 1.023825,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     {
@@ -194,7 +199,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.05483,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 6.695216,
+      "COP_partial_ascending_only": 1.110825,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "STALL"
     },
     {
@@ -212,7 +218,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.26969,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 8.065444,
+      "COP_partial_ascending_only": 1.225011,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "NEAR_STALL"
     },
     {
@@ -230,7 +237,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.42767,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 9.329219,
+      "COP_partial_ascending_only": 1.330326,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -248,7 +256,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.14994,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 7.88376,
+      "COP_partial_ascending_only": 1.209871,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -266,7 +275,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.81858,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 5.930977,
+      "COP_partial_ascending_only": 1.047139,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -284,7 +294,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.39655,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": 3.151931,
+      "COP_partial_ascending_only": 0.815552,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -302,7 +313,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.08759,
       "F_vert_flag": "OK",
-      "COP_partial_ascending_only": -0.327458,
+      "COP_partial_ascending_only": 0.525602,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -320,7 +332,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 0.63866,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -4.541081,
+      "COP_partial_ascending_only": 0.174467,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -338,7 +351,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.25709,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -9.572587,
+      "COP_partial_ascending_only": -0.244825,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -356,7 +370,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 1.9162,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -15.233302,
+      "COP_partial_ascending_only": -0.716551,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -374,7 +389,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 2.64243,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -21.718316,
+      "COP_partial_ascending_only": -1.256969,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -392,7 +408,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 3.40573,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -28.778096,
+      "COP_partial_ascending_only": -1.845284,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -410,7 +427,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 4.23509,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -36.708313,
+      "COP_partial_ascending_only": -2.506135,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -428,7 +446,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 4.84973,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -42.776506,
+      "COP_partial_ascending_only": -3.011818,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -446,7 +465,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 5.28433,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -47.617599,
+      "COP_partial_ascending_only": -3.415243,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -464,7 +484,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 5.50372,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -50.958284,
+      "COP_partial_ascending_only": -3.693633,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -482,7 +503,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 5.86144,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -55.201548,
+      "COP_partial_ascending_only": -4.047238,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -500,7 +522,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 6.35393,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -60.293679,
+      "COP_partial_ascending_only": -4.471583,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -518,7 +541,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 6.8675,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -65.66102,
+      "COP_partial_ascending_only": -4.918861,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -536,7 +560,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 7.4022,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -71.308078,
+      "COP_partial_ascending_only": -5.389449,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -554,7 +579,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 7.95804,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -77.24158,
+      "COP_partial_ascending_only": -5.883908,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -572,7 +598,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 8.53506,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -83.466026,
+      "COP_partial_ascending_only": -6.402612,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -590,7 +617,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 9.13327,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -89.985754,
+      "COP_partial_ascending_only": -6.945922,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -608,7 +636,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 9.75268,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -96.807644,
+      "COP_partial_ascending_only": -7.514413,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -626,7 +655,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 10.39332,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -103.936025,
+      "COP_partial_ascending_only": -8.108445,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -644,7 +674,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 11.05519,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -111.375142,
+      "COP_partial_ascending_only": -8.728371,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -662,7 +693,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 11.7383,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -119.131996,
+      "COP_partial_ascending_only": -9.374776,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -680,7 +712,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 12.44267,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -127.210802,
+      "COP_partial_ascending_only": -10.048009,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -698,7 +731,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 13.1683,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -135.615658,
+      "COP_partial_ascending_only": -10.748414,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -716,7 +750,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 13.91521,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -144.353762,
+      "COP_partial_ascending_only": -11.476589,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -734,7 +769,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 14.68339,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -153.429208,
+      "COP_partial_ascending_only": -12.232877,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -752,7 +788,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 15.47285,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -162.847155,
+      "COP_partial_ascending_only": -13.017706,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -770,7 +807,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 16.2836,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -172.6115,
+      "COP_partial_ascending_only": -13.831401,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -788,7 +826,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 17.11565,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -182.729727,
+      "COP_partial_ascending_only": -14.674587,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -806,7 +845,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 17.96899,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -193.205747,
+      "COP_partial_ascending_only": -15.547588,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -824,7 +864,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 18.84363,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -204.043418,
+      "COP_partial_ascending_only": -16.450727,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -842,7 +883,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 19.73957,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -215.250387,
+      "COP_partial_ascending_only": -17.384642,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -860,7 +902,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 20.65682,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -226.830526,
+      "COP_partial_ascending_only": -18.349653,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -878,7 +921,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 21.59538,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -238.78747,
+      "COP_partial_ascending_only": -19.346065,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -896,7 +940,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 22.55526,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -251.129143,
+      "COP_partial_ascending_only": -20.374538,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -914,7 +959,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 23.53644,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -263.859293,
+      "COP_partial_ascending_only": -21.435384,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -932,7 +978,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 24.53895,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -276.982983,
+      "COP_partial_ascending_only": -22.529025,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -950,7 +997,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 25.56277,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -290.503719,
+      "COP_partial_ascending_only": -23.655753,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     },
     {
@@ -968,7 +1016,8 @@
       "N_ascending": 12,
       "F_vert_fraction_of_Fb": 26.60791,
       "F_vert_flag": "FLAG_LARGE",
-      "COP_partial_ascending_only": -304.429779,
+      "COP_partial_ascending_only": -24.816258,
+      "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
       "stall_flag": "OK"
     }
   ],

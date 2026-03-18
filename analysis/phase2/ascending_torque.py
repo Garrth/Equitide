@@ -167,7 +167,13 @@ for row in results_7deg:
     F_vert_flag = "FLAG_LARGE" if F_vert_fraction > 0.20 else "OK"
 
     # COP_partial: ascending foil contribution only
-    COP_partial_asc = (W_buoy + W_foil_ascending_total) / W_pump
+    # IMPORTANT: W_buoy and W_pump are per-vessel values (from Phase 1).
+    # For consistent COP, compare per-vessel output to per-vessel input:
+    #   COP_partial_per_vessel = (W_buoy + W_foil_per_vessel) / W_pump
+    # This equals the system COP since all vessels are identical (COP_system = COP_per_vessel).
+    # W_foil_ascending_total = N_ascending * W_foil_per_vessel is for reporting total shaft energy,
+    # but must NOT be mixed with per-vessel W_buoy in a single COP formula.
+    COP_partial_asc = (W_buoy + W_foil_per_vessel) / W_pump  # per-vessel COP (= system COP)
 
     # RPM for reporting
     rpm = omega_arm * 60.0 / (2.0 * math.pi)
@@ -188,6 +194,7 @@ for row in results_7deg:
         "F_vert_fraction_of_Fb": round(F_vert_fraction, 5),
         "F_vert_flag": F_vert_flag,
         "COP_partial_ascending_only": round(COP_partial_asc, 6),
+        "COP_note": "Per-vessel COP = (W_buoy + W_foil_per_vessel) / W_pump_per_vessel. Equals system COP (all vessels identical).",
         "stall_flag": row["stall_flag"],
     })
 
@@ -206,7 +213,7 @@ for ll in loop_length_sensitivity:
     t_cyc_ll = ll / v_loop
     W_foil_pv = P_shaft_lam1 * t_asc_ll
     W_foil_total = N_ascending * W_foil_pv
-    COP_ll = (W_buoy + W_foil_total) / W_pump
+    COP_ll = (W_buoy + W_foil_pv) / W_pump  # per-vessel COP
     loop_sensitivity[ll] = {
         "loop_length_m": ll,
         "t_ascending_s": round(t_asc_ll, 4),
