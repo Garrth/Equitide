@@ -1,0 +1,60 @@
+{
+  "_description": "BUOY-01: Buoyancy force profile F_b(z) at 5 heights along ascent",
+  "_units": "SI: m, Pa, m\u00b3, N",
+  "_assert_convention": "unit_system=SI, buoyancy=variable_volume_F_b=rho_w*g*V(z), z=0_at_bottom_z_up, pressure=absolute_Pa",
+  "parameters": {
+    "H_m": 18.288,
+    "P_atm_Pa": 101325,
+    "rho_w_kg_m3": 998.2,
+    "g_m_s2": 9.807,
+    "V_surface_m3": 0.2002
+  },
+  "z_m": [
+    0.0,
+    4.572,
+    9.144,
+    13.716,
+    18.288
+  ],
+  "P_z_Pa": [
+    280352.59,
+    235595.69,
+    190838.79,
+    146081.9,
+    101325.0
+  ],
+  "V_z_m3": [
+    0.072356,
+    0.086102,
+    0.106295,
+    0.138862,
+    0.2002
+  ],
+  "F_b_N": [
+    708.321,
+    842.883,
+    1040.562,
+    1359.371,
+    1959.827
+  ],
+  "F_b_avg_N": 1128.861,
+  "W_iso_J": 20644.62,
+  "H_m": 18.288,
+  "open_bottom_vessel_note": "V(z) is the air column volume; remaining volume V_surface - V(z) is water. At z=0: vessel is 36.1% air and 63.9% water by volume.",
+  "integrand_functions": {
+    "P_z": "P_atm + rho_w * g * (H - z)",
+    "V_z": "V_surface * P_atm / P_z(z)",
+    "F_b_z": "rho_w * g * V_z(z)",
+    "note": "These functions are defined in this script and ready for scipy.integrate.quad integration in Plan 02 BUOY-02 mandatory gate."
+  },
+  "validation_checks_passed": {
+    "F_b_z0_707p6_pm4N": true,
+    "F_b_zH_1959p8_pm10N": true,
+    "F_b_strictly_increasing": true,
+    "F_b_avg_between_min_and_max": true,
+    "P_z0_280500_pm100Pa": true,
+    "P_zH_101325_exact": true,
+    "V_z0_07228_pm0001": true,
+    "V_zH_equals_V_surface_exact": true
+  }
+}
