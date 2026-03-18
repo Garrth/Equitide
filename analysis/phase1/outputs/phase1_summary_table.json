@@ -1,0 +1,76 @@
+{
+  "_description": "Phase 1 summary: all key results for THRM-01 through FILL-03",
+  "_units": "SI throughout; SCFM for flow rate; psig/psia for pressure",
+  "_assert_convention": "unit_system=SI, energy_sign=W_pump_input_W_buoy_output",
+  "phase": "01-air-buoyancy-and-fill",
+  "completion_date": "2026-03-17",
+  "requirements_satisfied": [
+    "THRM-01",
+    "THRM-02",
+    "THRM-03",
+    "BUOY-01",
+    "BUOY-02",
+    "BUOY-03",
+    "FILL-01",
+    "FILL-02",
+    "FILL-03"
+  ],
+  "W_iso_J": 20644.62,
+  "W_adia_J": 23959.45,
+  "W_pump_min_J": 28187.6,
+  "W_pump_max_J": 36860.7,
+  "W_pump_nominal_J": 34227.8,
+  "W_pump_note": "W_pump = W_adia / eta_c; NOT W_iso (Pitfall M1 guard)",
+  "V_depth_m3": 0.072356,
+  "V_surface_m3": 0.2002,
+  "P_r": 2.766865,
+  "fill_condition": "Air injected at P_bottom expands isothermally (Boyle's law) to V_surface exactly at z=H",
+  "W_jet_J": 0,
+  "W_jet_note": "W_jet = 0 as separate line item; jet recovery is contained within W_buoy integral (Pitfall C6 guard). Do not add W_jet to energy balance.",
+  "F_b_min_N": 708.3,
+  "F_b_max_N": 1959.8,
+  "F_b_avg_N": 1128.86,
+  "F_b_profile": "Strictly increasing from F_b_min at z=0 to F_b_max at z=H; profile in buoy01_force_profile.json",
+  "W_buoy_J": 20644.6159,
+  "identity_error_pct": 2e-05,
+  "identity_gate": "PASS",
+  "identity_note": "W_buoy = W_iso to machine precision (2e-7% relative error). This is thermodynamic BREAK-EVEN, NOT net-positive energy. COP = W_buoy/W_pump < 1.0 for all eta_c.",
+  "v_terminal_nominal_ms": 3.7137,
+  "v_terminal_conservative_ms": 3.0752,
+  "v_terminal_range_ms": [
+    2.5303,
+    4.152
+  ],
+  "v_terminal_note": "v_nominal = C_D=1.0, F_chain=0 (upper bound); v_conservative = C_D=1.2, F_chain=200N",
+  "arc_length_m": 5.7491,
+  "t_fill_at_nominal_s": 1.5481,
+  "t_fill_at_conservative_s": 1.8695,
+  "t_fill_range_s": [
+    1.3847,
+    2.2721
+  ],
+  "Q_free_at_nominal_SCFM": 274.0,
+  "Q_free_range_SCFM": [
+    186.7,
+    306.4
+  ],
+  "P_delivery_psia": 40.66,
+  "P_delivery_psig": 25.97,
+  "fill_go_nogo": "GO",
+  "compressor_class_at_nominal": "Medium industrial rotary screw (150-300 SCFM)",
+  "fill_note": "All velocity cases are commercially feasible. Fill system is not a blocking constraint.",
+  "COP_ideal_max_at_eta_70": 0.6032,
+  "COP_break_even_statement": "W_buoy = W_iso confirms break-even: buoyancy alone COP = W_iso / W_pump < 1.0 for all eta_c. COP = 0.603 at eta_c=0.70. The 1.5 target requires hydrofoil contribution (Phase 2+). Buoyancy alone cannot achieve COP >= 1.5 regardless of compressor efficiency.",
+  "phase2_inputs": {
+    "v_vessel_nominal_ms": 3.7137,
+    "v_vessel_conservative_ms": 3.0752,
+    "v_vessel_range_ms": [
+      2.5303,
+      4.152
+    ],
+    "W_pump_table": "see analysis/phase1/outputs/thrm01_compression_work.json",
+    "F_b_z_function": "verified; P(z) = P_atm + rho_w*g*(H-z); V(z) = V_surface*P_atm/P(z); F_b(z) = rho_w*g*V(z)",
+    "identity_gate_passed": true,
+    "note": "v_vessel values loaded from buoy03_terminal_velocity.json v_handoff (not hardcoded per Pitfall C7)"
+  }
+}

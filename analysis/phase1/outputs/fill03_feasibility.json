@@ -1,0 +1,65 @@
+{
+  "_description": "FILL-03: Fill feasibility assessment",
+  "_units": "m/s, SCFM, psig, psia",
+  "_assert_convention": "unit_system=SI, flow_rate=SCFM_at_P_atm_20C, pressure=absolute_or_gauge_labeled",
+  "feasibility_threshold_SCFM": 300.0,
+  "threshold_rationale": "300 SCFM is the upper end of standard medium-industrial rotary screw compressors; above this, only large industrial units apply, but not infeasible",
+  "results": [
+    {
+      "v_vessel_ms": 2.0,
+      "t_fill_s": 2.874557,
+      "Q_free_SCFM": 147.57,
+      "compressor_class": "Large portable / small industrial (50-150 SCFM)",
+      "feasible": true
+    },
+    {
+      "v_vessel_ms": 2.5,
+      "t_fill_s": 2.299646,
+      "Q_free_SCFM": 184.46,
+      "compressor_class": "Medium industrial rotary screw (150-300 SCFM)",
+      "feasible": true
+    },
+    {
+      "v_vessel_ms": 3.0,
+      "t_fill_s": 1.916372,
+      "Q_free_SCFM": 221.35,
+      "compressor_class": "Medium industrial rotary screw (150-300 SCFM)",
+      "feasible": true
+    },
+    {
+      "v_vessel_ms": 3.5,
+      "t_fill_s": 1.642604,
+      "Q_free_SCFM": 258.25,
+      "compressor_class": "Medium industrial rotary screw (150-300 SCFM)",
+      "feasible": true
+    },
+    {
+      "v_vessel_ms": 3.7137,
+      "t_fill_s": 1.548083,
+      "Q_free_SCFM": 274.02,
+      "compressor_class": "Medium industrial rotary screw (150-300 SCFM)",
+      "feasible": true
+    },
+    {
+      "v_vessel_ms": 4.0,
+      "t_fill_s": 1.437279,
+      "Q_free_SCFM": 295.14,
+      "compressor_class": "Medium industrial rotary screw (150-300 SCFM)",
+      "feasible": true
+    }
+  ],
+  "delivery_pressure_note": "Delivery pressure is 40.66 psia (25.97 psig). This is within the rated range of standard single-stage reciprocating and rotary-screw compressors (typical max 100-175 psig for these classes). No special high-pressure equipment is required.",
+  "pipe_friction_note": "This analysis assumes ideal air delivery with no line losses. Real installation adds 10-20% to pump energy for pipe friction, check valves, and nozzle losses. Phase 4 COP calculation will include a pipe friction factor of 1.10-1.20 x W_adia / eta_c. This does NOT affect fill feasibility -- a larger compressor rating margin already covers line losses. (Pitfall M5)",
+  "go_nogo": "GO",
+  "verdict_note": "All velocity cases are commercially feasible. Fill system is not a blocking constraint.",
+  "compressor_class_at_nominal": "Medium industrial rotary screw (150-300 SCFM)",
+  "Q_free_range_SCFM": [
+    147.6,
+    295.1
+  ],
+  "forbidden_proxy_notes": {
+    "not_Q_depth_as_compressor_rating": "Compressor rating MUST be in SCFM (free air). Q_depth_CFM is flow at depth pressure; specifying a compressor by Q_depth_CFM would undersize it by factor P_r = 2.77.",
+    "not_fill_feasibility_as_COP_contribution": "Fill feasibility answers: can we physically fill the vessel in time? The compressor energy is entirely on the INPUT side of the COP balance. It does NOT contribute energy to the output side.",
+    "pipe_friction_separate": "Pipe friction is a Phase 4 COP correction (10-20% on W_pump), not a fill feasibility blocker."
+  }
+}
