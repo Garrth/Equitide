@@ -6,7 +6,7 @@ Component-by-component energy feasibility study of a 30-vessel buoyancy + hydrof
 
 ## Phases
 
-- [ ] **Phase 1: Air, Buoyancy & Fill** — Pumping energy, buoyancy work, jet recovery, and fill window feasibility
+- [x] **Phase 1: Air, Buoyancy & Fill** — Pumping energy, buoyancy work, jet recovery, and fill window feasibility
 - [ ] **Phase 2: Hydrofoil & Torque** — Lift/drag analysis, torque from ascending and descending vessels with tacking
 - [ ] **Phase 3: Co-rotation** — Drag reduction model, lift preservation, energy cost of maintaining co-rotation
 - [ ] **Phase 4: System Energy Balance** — Integrate all components, compute energy ratio, deliver go/no-go verdict
@@ -32,9 +32,13 @@ Component-by-component energy feasibility study of a 30-vessel buoyancy + hydrof
 3. Fill window duration calculated from loop geometry; required flow rate computed; practical feasibility assessed
 4. Terminal velocity of vessel under buoyancy alone computed; 3 m/s confirmed as physically achievable
 
+**Plans:** 3 plans in 3 waves
+
 Plans:
 
-- [ ] 01-01: [TBD — created during /gpd:plan-phase 1]
+- [ ] 01-01-PLAN.md -- Thermodynamic compression work bounds + buoyancy force profile (THRM-01, THRM-02, THRM-03, BUOY-01)
+- [ ] 01-02-PLAN.md -- Buoyancy integral identity gate + terminal velocity sweep (BUOY-02, BUOY-03)
+- [ ] 01-03-PLAN.md -- Fill window, flow rate, feasibility assessment, Phase 1 summary (FILL-01, FILL-02, FILL-03)
 
 ---
 
@@ -115,7 +119,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 | ----- | -------------- | ------ | --------- |
-| 1. Air, Buoyancy & Fill | 0/TBD | Not started | - |
+| 1. Air, Buoyancy & Fill | 3/3 | ✓ Complete | 2026-03-17 |
 | 2. Hydrofoil & Torque | 0/TBD | Not started | - |
 | 3. Co-rotation | 0/TBD | Not started | - |
 | 4. System Energy Balance | 0/TBD | Not started | - |
