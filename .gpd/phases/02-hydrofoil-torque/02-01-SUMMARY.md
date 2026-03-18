@@ -479,6 +479,18 @@ Critical: F_vert/F_b_avg=1.15 — the foil significantly slows the vessel; Phase
 | --- | --- | --- | --- |
 | None — all Phase 1 conventions preserved | — | — | — |
 
+## Self-Check: PASSED
+
+- Files exist: foil_forces.py, ascending_torque.py, foil01_force_sweep.json, foil02_ascending_torque.json ✓
+- Commits exist: 01bf56b, 57105dd, d38caaa ✓
+- geometry_model = "rotating_arm" in both JSON files ✓
+- v_loop = 3.7137 m/s (from JSON, not hardcoded) ✓
+- Phase 1 anchor: COP(W_foil=0) = 0.6032 (error=4.65e-5) ✓
+- F_tan > 0 at lambda=0.3: F_tan=1216 N ✓
+- N_ascending=12, t_ascending=4.924 s, omega=9.69 RPM at lambda=1 ✓
+- No v=3.0 hardcoded, no L/D as power multiplier ✓
+- (L/D)_min discrepancy resolved: cot(beta)=lambda (not sqrt(1+1/lambda^2)) ✓
+
 ---
 
 _Phase: 02-hydrofoil-torque_
