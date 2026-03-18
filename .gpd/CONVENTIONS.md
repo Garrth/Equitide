@@ -97,7 +97,7 @@
 | **Introduced**   | Phase 0 (initialization)                                                                                        |
 | **Rationale**    | Air behaves as ideal gas at pressures up to ~3 atm; gamma = 1.4 is standard for dry air                        |
 | **Dependencies** | W_pump, buoyancy work equivalence, fill volume at depth                                                         |
-| **Test value**   | W_iso = 101325 * 0.2002 * ln(2.770) = 20,640 J; W_adia = 3.5 * 101325 * 0.2002 * (2.770^0.2857 - 1) = 24,040 J |
+| **Test value**   | W_iso = 101325 * 0.2002 * ln(2.770) = 20,640 J; W_adia = 3.5 * 101325 * 0.2002 * (2.770^0.2857 - 1) = 23,960 J (precise: 23,959.45 J; Phase 0 estimate 24,040 J was rounded) |
 
 ---
 
@@ -167,11 +167,12 @@
 
 | Field            | Value                                                                   |
 | ---------------- | ----------------------------------------------------------------------- |
-| **Convention**   | N_vessels = 30 (10 vessels per vertical loop × 3 loops)                 |
-| **Introduced**   | Phase 0 (initialization)                                                |
-| **Rationale**    | User specification; approximately 15 ascending, 15 descending at any time |
-| **Dependencies** | Total power calculations; fill rate (one vessel injected per loop per cycle) |
-| **Test value**   | N_ascending ≈ 15 (half of 30); actual distribution depends on loop geometry |
+| **Convention**   | N_vessels_total = 30 (10 per loop × 3 loops); N_active_foil = 24 (12 ascending + 12 descending); N_per_arm = 4 active foils per arm |
+| **Introduced**   | Phase 0 (N_vessels=30); refined Phase 2 (rotating-arm geometry: N_ascending=12, N_descending=12) |
+| **Rationale**    | Rotating-arm geometry: 3 arms × 4 vessels per arm contributing foil torque. 30 total vessels on chains; 6 are in transition arcs at bottom/top and do not contribute shaft torque. |
+| **Dependencies** | Phase 2/3/4 COP formula uses N_active_foil=24; fill rate uses N_vessels_total=30 (one fill per cycle) |
+| **Test value**   | N_ascending = N_per_arm × N_arms = 4 × 3 = 12; N_descending = 12; N_active_foil = 24; N_total = 30 |
+| **Convention change** | Phase 2: rotating-arm geometry clarifies N_ascending=N_descending=12 (not 15 each). Use 24 for foil torque calculations; use 30 for fill rate and total vessel count. |
 
 ### Tank Radius
 
@@ -288,7 +289,7 @@
 | Symbol     | Definition                                                                                              | Units | Sign in Balance |
 | ---------- | ------------------------------------------------------------------------------------------------------- | ----- | --------------- |
 | W_iso      | Isothermal compression work per vessel = P_atm * V_surface * ln(P_r) = 20,640 J                        | J     | Input (cost)    |
-| W_adia     | Adiabatic compression work per vessel = 3.5 * P_atm * V_surface * (P_r^0.2857 - 1) = 24,040 J         | J     | Input (cost)    |
+| W_adia     | Adiabatic compression work per vessel = 3.5 * P_atm * V_surface * (P_r^0.2857 - 1) = 23,960 J (precise: 23,959.45 J from Phase 1 JSON; Phase 0 estimate 24,040 J was documentation rounding) | J | Input (cost) |
 | W_pump     | Actual pumping work per vessel = W_adia / eta_c where eta_c = compressor isentropic efficiency         | J     | Input (cost)    |
 | W_buoy     | Buoyancy work extracted per ascending vessel = integral of F_b(z) dz from 0 to H = W_iso (ideal)       | J     | Output (gain)   |
 | W_shaft    | Net shaft work extracted per cycle (all vessels, all mechanisms)                                        | J     | Output (net)    |
@@ -493,15 +494,22 @@ convention_tests:
     P_atm_Pa: 101325
     P_bottom_Pa: 280500
     P_r: 2.770
-    N_vessels: 30
+    N_vessels_total: 30
+    N_active_foil: 24
+    N_ascending: 12
+    N_descending: 12
+    N_per_arm: 4
+    N_arms: 3
+    N_vessels_note: "Use N_active_foil=24 for foil torque COP; use N_vessels_total=30 for fill rate and total energy"
     R_tank_m: 3.66
     v_vessel_m_s: 3.0
     v_vessel_status: "preliminary; to be confirmed Phase 1"
     eta_target: 1.5
 
   thermodynamic_work:
-    W_iso_J: 20640
-    W_adia_J: 24040
+    W_iso_J: 20644.62
+    W_adia_J: 23959.45
+    W_adia_note: "Precise Phase 1 values; Phase 0 estimates (20640 J, 24040 J) were rounded"
     gamma_air: 1.4
     formula_iso: "P_atm * V_surface * ln(P_r)"
     formula_adia: "3.5 * P_atm * V_surface * (P_r^0.2857 - 1)"

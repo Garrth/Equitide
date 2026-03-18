@@ -5,24 +5,24 @@
 See: .gpd/PROJECT.md (updated 2026-03-16)
 
 **Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** Phase 2 — Hydrofoil & Torque
+**Current focus:** Phase 3 — Co-rotation
 
 ## Current Position
 
 **Current Phase:** 2
 **Current Phase Name:** Hydrofoil & Torque
 **Total Phases:** 4
-**Current Plan:** 0
-**Total Plans in Phase:** TBD
-**Status:** Phase 1 complete — ready to plan Phase 2
+**Current Plan:** 2
+**Total Plans in Phase:** 2
+**Status:** Phase 2 complete — verified 4/4, consistent
 **Last Activity:** 2026-03-17
-**Last Activity Description:** Phase 1 all 3 plans complete, verified 12/12, consistent
+**Last Activity Description:** Phase 2 Plan 02 complete — tacking CONFIRMED, COP_partial=2.06 at λ=0.9, GREEN light
 
-**Progress:** [██░░░░░░░░] 25%
+**Progress:** [████░░░░░░] 50%
 
 ## Active Calculations
 
-None — between phases.
+None — Phase 2 complete, verification pending.
 
 ## Intermediate Results
 
@@ -51,12 +51,29 @@ None — between phases.
 - F_b(z) function: verified; P(z) = P_atm + rho_w*g*(H-z); V(z) = V_surface*P_atm/P(z)
 - W_foil_net required for COP=1.5 at η_c=0.70: ≥ 30,697 J per cycle (= 1.5 × 34,228 − 20,645)
 
+### Phase 2 Locked Values (authoritative — use JSON files for exact values)
+
+- v_loop = 3.7137 m/s (from Phase 1 JSON; never hardcoded)
+- (L/D)_min = cot(β) = λ (algebraically correct; CONTEXT.md √(1+1/λ²) is kinematic ratio, not force threshold)
+- mount_angle = 38° at λ=1, AoA_target=7°; F_tan > 0 for λ ∈ [0.3, 1.27] with fixed mount
+- Tacking sign CONFIRMED: explicit rotating-arm vector geometry; F_tan_D = L·sin(β) − D·cos(β) > 0 at position D
+- Darrieus VAWT analogy CONFIRMED: C_T identical formula, both passes positive
+- F_tan at λ=1: 1135.5 N (ascending = descending, exact symmetry); shaft torque = 4156 N·m
+- W_foil_ascending per vessel at λ=1: 20,767 J; W_foil_descending per vessel: 20,766 J
+- COP_partial (24 vessels, λ=0.9): **2.057** — design operating point
+- COP_partial_nominal (λ=1): 1.817
+- lambda_min for COP ≥ 1.5 (OK, non-stall): λ = 0.9 → ω = 0.913 rad/s = 8.72 RPM
+- **FLAG: F_vert/F_b_avg = 1.15 at λ=1** >> 0.20 — all Phase 2 COP are upper bounds; Phase 4 coupled solution mandatory
+- Phase 2 feasibility verdict: **GREEN** — proceed to Phase 3
+- Phase 1 anchor PASS: COP(W_foil=0) = 0.6032 (error 4.65×10⁻⁵)
+
 ## Open Questions
 
-- Hydrofoil chord length, span, and profile for L/D parametric estimate
 - Co-rotation achievement mechanism and energy cost
-- Does 3 m/s vessel velocity hold under hydrofoil drag loading?
 - What is the chain coupling force F_chain in practice? (affects v_terminal)
+- Phase 4: F_vert/F_b_avg = 1.15 requires coupled (v_loop, ω) solution — v_loop baseline is an upper bound
+- Co-rotation achievement mechanism and energy cost (Phase 3 primary question)
+- If f_corot > 0.3, effective λ drops below 0.9 — must check in Phase 3
 
 ## Performance Metrics
 
@@ -65,6 +82,8 @@ None — between phases.
 | Phase 1 Plan 01 | ~35 min | 2 | 6 |
 | Phase 1 Plan 02 | ~20 min | 2 | 6 |
 | Phase 1 Plan 03 | ~25 min | 2 | 7 |
+| Phase 2 Plan 01 | ~35 min | 2 | 5 |
+| Phase 2 Plan 02 | ~40 min | 2 | 8 |
 
 ## Accumulated Context
 
@@ -83,6 +102,13 @@ None — between phases.
 - [Phase 1 Plan 02]: v_handoff conservative = C_D=1.2, F_chain=200N
 - [Phase 1 Plan 03]: P_bottom = 280,352.6 Pa (precise from JSON), not rounded 280,500 Pa
 - [Phase 1 Plan 03]: Feasibility threshold 300 SCFM; all expected values below this
+- [Phase 2 Plan 01]: (L/D)_min = cot(β) = λ (not √(1+1/λ²)); algebraic proof in foil01_force_sweep.json
+- [Phase 2 Plan 01]: COP formula uses per-vessel units: (W_buoy + W_foil_pv) / W_pump
+- [Phase 2 Plan 01]: Fixed mount_angle=38° at λ=1; F_tan > 0 only for λ ∈ [0.3, 1.27] with fixed mount
+- [Phase 2 Plan 01]: F_vert/F_b_avg = 1.15 >> 0.20 — Phase 4 coupled solution mandatory before final COP
+- [Phase 2 Plan 02]: Tacking sign CONFIRMED by explicit vector geometry (not assumed); Darrieus analogy confirmed
+- [Phase 2 Plan 02]: Design operating point λ=0.9, ω=0.913 rad/s, 8.72 RPM, v_tan=3.34 m/s
+- [Phase 2 Plan 02]: lambda_min for COP≥1.5 reported at 3 levels: any(λ=0.7 stall), non-stall(λ=0.8), OK-only(λ=0.9)
 
 ### Active Approximations
 
@@ -92,17 +118,20 @@ None — between phases.
 - F_b_avg = W_iso/H for terminal velocity (energy-weighted average; correct for energy accounting)
 - C_D = 0.8–1.2 for blunt cylinder (Hoerner; self-consistent with Re ~ 10⁶)
 - Circular loop geometry for fill arc (1/4 circumference; ±5% uncertainty)
+- Quasi-steady foil forces (k ~ 0.01–0.05 << 0.1; validated)
+- Prandtl lifting-line elliptic load (AR=4; C_L_3D = C_L_2D/1.5)
+- v_loop = Phase 1 v_terminal (upper bound — F_vert/F_b_avg=1.15 flags Phase 4 coupled correction needed)
 
 ### Pending Todos
 
-- Update CONVENTIONS.md W_adia display value from 24,040 J to 23,960 J (documentation)
+- None
 
 ### Blockers/Concerns
 
-None — Phase 1 complete.
+- F_vert/F_b_avg=1.15 means Phase 2 COP values are upper bounds — addressed in Phase 4
 
 ## Session Continuity
 
 **Last session:** 2026-03-17
-**Stopped at:** Phase 1 complete — verified, consistent
+**Stopped at:** Phase 2 complete — verified 4/4, consistent; ready to plan Phase 3
 **Resume file:** —

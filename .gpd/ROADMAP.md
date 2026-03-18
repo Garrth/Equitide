@@ -7,7 +7,7 @@ Component-by-component energy feasibility study of a 30-vessel buoyancy + hydrof
 ## Phases
 
 - [x] **Phase 1: Air, Buoyancy & Fill** — Pumping energy, buoyancy work, jet recovery, and fill window feasibility
-- [ ] **Phase 2: Hydrofoil & Torque** — Lift/drag analysis, torque from ascending and descending vessels with tacking
+- [x] **Phase 2: Hydrofoil & Torque** — Lift/drag analysis, torque from ascending and descending vessels with tacking
 - [ ] **Phase 3: Co-rotation** — Drag reduction model, lift preservation, energy cost of maintaining co-rotation
 - [ ] **Phase 4: System Energy Balance** — Integrate all components, compute energy ratio, deliver go/no-go verdict
 
@@ -123,6 +123,6 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 | ----- | -------------- | ------ | --------- |
 | 1. Air, Buoyancy & Fill | 3/3 | ✓ Complete | 2026-03-17 |
-| 2. Hydrofoil & Torque | 0/2 | Not started | - |
+| 2. Hydrofoil & Torque | 2/2 | ✓ Complete | 2026-03-17 |
 | 3. Co-rotation | 0/TBD | Not started | - |
 | 4. System Energy Balance | 0/TBD | Not started | - |
