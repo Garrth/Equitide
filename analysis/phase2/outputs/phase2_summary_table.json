@@ -1,0 +1,134 @@
+{
+  "_description": "Phase 2 summary: all key results FOIL-01 through FOIL-04, formatted for Phase 3/4 loading",
+  "_units": "SI throughout: m, kg, s, N, J, W, rad/s, RPM, dimensionless",
+  "_assert_convention": "unit_system=SI, geometry=rotating_arm, COP_label=COP_partial",
+  "phase": "02-hydrofoil-torque",
+  "completion_date": "2026-03-17",
+  "requirements_satisfied": [
+    "FOIL-01",
+    "FOIL-02",
+    "FOIL-03",
+    "FOIL-04"
+  ],
+  "phase1_inputs": {
+    "W_buoy_J": 20644.6159,
+    "W_pump_nominal_J": 34227.8,
+    "F_b_avg_N": 1128.86,
+    "v_loop_nominal_ms": 3.7137,
+    "v_loop_conservative_ms": 3.0752,
+    "COP_buoy_only_at_eta70": 0.6032
+  },
+  "geometry": {
+    "r_arm_m": 3.66,
+    "H_m": 18.288,
+    "N_arms": 3,
+    "N_ascending": 12,
+    "N_descending": 12,
+    "N_total": 24,
+    "foil_span_m": 1.0,
+    "foil_chord_m": 0.25,
+    "foil_AR": 4.0,
+    "foil_profile": "NACA 0012",
+    "mount_angle_deg": 38.0,
+    "mount_angle_note": "Designed at lambda=1 for AoA_target=7 deg"
+  },
+  "ascending_foils": {
+    "lambda_design": 1.0,
+    "F_tan_N": 1135.524,
+    "shaft_torque_per_vessel_Nm": 4156.018,
+    "omega_rad_s": 1.01467,
+    "rpm": 9.689,
+    "P_shaft_per_vessel_W": 4216.995,
+    "W_foil_ascending_per_vessel_J": 20766.59,
+    "W_foil_ascending_total_J": 249199.08000000002,
+    "F_vert_fraction_of_Fb": 1.14994,
+    "F_vert_flag": "FLAG_LARGE",
+    "F_vert_note": "F_vert/F_b_avg = 1.15 >> 0.20 threshold. v_loop baseline is upper bound. Phase 4 coupled solution mandatory.",
+    "COP_partial_ascending_only": 1.209871
+  },
+  "descending_foils": {
+    "tacking_verdict": "CONFIRMED",
+    "tacking_geometry_summary": "Explicit rotating-arm vector geometry (not assumed by symmetry). Position D (arm at 180 deg from ascending): v_vessel=(-v_tan, 0, -v_loop). After tack-flip about span axis: lift direction rotated 90 CCW in x-z plane gives -x component -> drives CCW rotation same as ascending. F_tan_D = L*sin(beta) - D*cos(beta) = F_tan_A > 0. CONFIRMED.",
+    "F_tan_dn_N": 1135.523595969481,
+    "W_foil_descending_per_vessel_J": 20766.45552308987,
+    "W_foil_descending_total_J": 249197.46627707843,
+    "N_descending": 12,
+    "symmetry_verdict": "PASS",
+    "darrieus_analogy": "CONFIRMED: C_T = C_L*sin(phi) - C_D*cos(phi) > 0 on both ascending and descending passes when L/D > lambda. Reference: Paraschivoiu 2002, Wind Turbine Design, Ch. 2."
+  },
+  "W_foil_ascending_total_J": 249199.08000000002,
+  "W_foil_descending_total_J": 249197.46627707843,
+  "W_foil_combined_total_J": 498396.54627707845,
+  "COP_partial_nominal": 1.8165836373675746,
+  "COP_partial_at_lambda_0p9": 2.0574996822044653,
+  "lambda_min_for_COP_1p5": 0.7,
+  "lambda_min_note": "lambda_min=0.7 is at stall (AoA>15 deg for both asc and desc). First reliable non-stall: lambda=0.8 (NEAR_STALL, COP=1.85). Design target: lambda=0.9 (OK, COP=2.06).",
+  "lambda_min_for_COP_1p5_non_stall": 0.8,
+  "lambda_min_for_COP_1p5_OK_only": 0.9,
+  "omega_min_rad_s": 0.7102704918032785,
+  "rpm_min": 6.782583582168199,
+  "v_tangential_min_ms": 2.5995899999999996,
+  "LD_min_at_lambda_min": 0.7,
+  "LD_min_note": "(L/D)_min = cot(beta) = lambda [Plan 01 algebraic proof]; at lambda=0.7: L/D_min=0.70 << NACA achievable ~9",
+  "max_COP_partial": 2.0574996822044653,
+  "lambda_at_max_COP": 0.9,
+  "recommended_design_lambda": 0.9,
+  "omega_design_rad_s": 0.9132049180327868,
+  "rpm_design": 8.720464605644828,
+  "v_tangential_design_ms": 3.34233,
+  "COP_at_recommended_design_lambda": 2.0574996822044653,
+  "green_light_verdict": "GREEN: COP_partial >= 1.5 at lambda=0.7 (v_tan=2.60 m/s, omega=0.710 rad/s, 6.8 RPM, (L/D)_min=0.7 << achievable NACA L/D)",
+  "stop_conditions": {
+    "STOP_A_COP_below_1_for_all_lambda": {
+      "triggered": false,
+      "max_COP_partial": 2.0574996822044653,
+      "min_COP_partial": -17.41743018832359,
+      "verdict": "PASS \u2014 COP_partial >= 1.0 achieved"
+    },
+    "STOP_B_v_tangential_exceeds_30ms": {
+      "triggered": false,
+      "v_tangential_at_lambda_min": 2.5995899999999996,
+      "limit_ms": 30.0,
+      "verdict": "PASS \u2014 v_tan=2.60 m/s < 30.0 m/s"
+    },
+    "STOP_C_required_LD_min_exceeds_25": {
+      "triggered": false,
+      "LD_min_at_lambda_min": 0.7,
+      "LD_min_note": "(L/D)_min = cot(beta) = lambda [Plan 01 algebraic proof]",
+      "limit": 25.0,
+      "verdict": "PASS \u2014 (L/D)_min = 0.7 << 25.0"
+    }
+  },
+  "F_vert_flag_PROPAGATED": "FLAG_LARGE: F_vert/F_b_avg = 1.15 at lambda=1.0. All Phase 2 COP_partial values are UPPER BOUNDS. Phase 4 coupled (v_loop, omega) solution mandatory before final feasibility verdict.",
+  "stall_note": "lambda_min=0.7 (from sweep) has STALL condition for both ascending and descending (AoA~17 deg > 15 deg threshold). NACA model clamped at 14 deg -> forces overestimated. First reliable (non-stall) lambda with COP>=1.5: lambda=0.8 (NEAR_STALL, COP=1.85). Design target: lambda=0.9 (OK, COP=2.06) \u2014 best-credible operating point.",
+  "phase1_anchor_check": {
+    "COP_computed": 0.6031534571313376,
+    "COP_phase1_reference": 0.6032,
+    "error": 4.6542868662347026e-05,
+    "pass": true,
+    "formula": "W_buoy/W_pump = 20644.6159/34227.8"
+  },
+  "phase3_inputs": {
+    "lambda_design": 0.9,
+    "omega_design_rad_s": 0.9132049180327868,
+    "rpm_design": 8.720464605644828,
+    "COP_partial_at_design": 2.0574996822044653,
+    "v_tangential_design_ms": 3.34233,
+    "v_tangential_range_ms": [
+      2.27727,
+      3.7368
+    ],
+    "note": "Phase 3 models water co-rotation at omega_design. Effective v_tangential_eff = v_tangential * (1 - f_corot) where f_corot TBD. If co-rotation reduces effective lambda significantly, COP_partial will decrease.",
+    "warning_F_vert": "F_vert/F_b_avg=1.15: Phase 4 coupled solution will reduce v_loop and reduce COP from Phase 2 values"
+  },
+  "uncertainty_markers": {
+    "weakest_anchors": [
+      "F_vert/F_b_avg=1.15 at design: v_loop baseline is NOT self-consistent with foil loading",
+      "NACA 0012 data at Re~1.3e6 interpolated: ~5-10% uncertainty in C_L, C_D",
+      "Prandtl LL for AR=4: ~5-15% uncertainty in C_L_3D, C_D_i",
+      "Water co-rotation f_corot=0: Phase 3 may significantly reduce effective v_tangential",
+      "Tack mechanism treated as lossless: actual energy cost unknown"
+    ],
+    "all_COP_are_upper_bounds": true
+  }
+}
