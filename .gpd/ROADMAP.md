@@ -60,9 +60,12 @@ Plans:
 3. Torque from descending vessels (tacked foil) computed per cycle; confirmed same rotational direction
 4. Minimum L/D for 1.5W/W identified; assessed against realistic hydrofoil performance data
 
+**Plans:** 2 plans in 2 waves
+
 Plans:
 
-- [ ] 02-01: [TBD — created during /gpd:plan-phase 2]
+- [ ] 02-01-PLAN.md -- Loop geometry + foil forces + ascending torque (FOIL-01, FOIL-02)
+- [ ] 02-02-PLAN.md -- Descending tacking sign verification + minimum L/D + Phase 2 summary (FOIL-03, FOIL-04)
 
 ---
 
@@ -120,6 +123,6 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 | ----- | -------------- | ------ | --------- |
 | 1. Air, Buoyancy & Fill | 3/3 | ✓ Complete | 2026-03-17 |
-| 2. Hydrofoil & Torque | 0/TBD | Not started | - |
+| 2. Hydrofoil & Torque | 0/2 | Not started | - |
 | 3. Co-rotation | 0/TBD | Not started | - |
 | 4. System Energy Balance | 0/TBD | Not started | - |
