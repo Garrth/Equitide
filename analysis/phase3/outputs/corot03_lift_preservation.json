@@ -1,0 +1,100 @@
+{
+  "_description": "Phase 3 Plan 01 Task 2: Lift preservation geometric argument (COROT-03)",
+  "_units": "SI throughout: m/s, dimensionless",
+  "_assert_convention": "unit_system=SI, co_rotation_fraction=f in [0,1], v_water_v=0 (no vertical entrainment)",
+  "_lambda_max_source": "loaded from corot01_angular_momentum_model.json (not independently recomputed)",
+  "_f_stall_source": "loaded from corot01_angular_momentum_model.json (not independently recomputed)",
+  "velocity_decomposition": {
+    "v_vessel_horizontal_ms": "v_tan = lambda_design * v_loop = 0.9 * 3.7137 = 3.3423 m/s (from phase2_summary_table.json)",
+    "v_vessel_vertical_ms": "v_loop = 3.7137 m/s (from phase2_summary_table.json)",
+    "v_water_horizontal_ms": "f * v_tan  [horizontal co-rotation only; f in [0,1]]",
+    "v_water_vertical_ms": 0,
+    "v_water_vertical_note": "No vertical water entrainment by horizontal rotation; water recirculates in the tank horizontally only.",
+    "v_rel_horizontal_ms": "v_tan * (1-f) = 3.3423 * (1-f)  [reduced by co-rotation factor (1-f)]",
+    "v_rel_vertical_ms": "v_loop = 3.7137 m/s  [UNCHANGED for all f in [0,1]]",
+    "v_rel_vertical_independence_proof": "v_rel_v = v_vessel_v - v_water_v = v_loop - 0 = v_loop. This holds for ALL f because v_water_v = 0 identically (horizontal co-rotation has no vertical component). Therefore v_rel_v is independent of f."
+  },
+  "v_rel_vertical_preserved": true,
+  "v_rel_vertical_ms": 3.7137,
+  "v_rel_horizontal_reduced_factor": "(1-f)",
+  "v_rel_vertical_reduced_factor": 1.0,
+  "lift_preservation_argument": "v_rel_v = v_loop = 3.7137 m/s > 0 for all f. Lift L = 0.5*rho_w*C_L*A_foil*v_rel^2 where v_rel = sqrt(v_rel_h^2 + v_rel_v^2) >= v_loop > 0. Therefore L > 0 for all f < 1 (even if v_rel_h -> 0, v_rel >= v_loop > 0). The stall constraint (AoA limit) restricts f, not the lift formula.",
+  "numerical_demonstration": {
+    "description": "v_rel_v = v_loop at multiple f values confirms independence",
+    "points": [
+      {
+        "f": 0.0,
+        "v_rel_h_ms": 3.3423,
+        "v_rel_v_ms": 3.7137,
+        "v_rel_total_ms": 4.9963,
+        "beta_eff_deg": 48.01,
+        "lambda_eff": 0.9,
+        "v_rel_v_unchanged": true
+      },
+      {
+        "f": 0.1,
+        "v_rel_h_ms": 3.0081,
+        "v_rel_v_ms": 3.7137,
+        "v_rel_total_ms": 4.7791,
+        "beta_eff_deg": 50.99,
+        "lambda_eff": 1.0,
+        "v_rel_v_unchanged": true
+      },
+      {
+        "f": 0.2,
+        "v_rel_h_ms": 2.6739,
+        "v_rel_v_ms": 3.7137,
+        "v_rel_total_ms": 4.5761,
+        "beta_eff_deg": 54.25,
+        "lambda_eff": 1.125,
+        "v_rel_v_unchanged": true
+      },
+      {
+        "f": 0.294003,
+        "v_rel_h_ms": 2.3597,
+        "v_rel_v_ms": 3.7137,
+        "v_rel_total_ms": 4.4,
+        "beta_eff_deg": 57.57,
+        "lambda_eff": 1.2748,
+        "v_rel_v_unchanged": true
+      }
+    ]
+  },
+  "lambda_eff_formula": "lambda_design / (1-f)",
+  "lambda_eff_formula_numeric": "0.9 / (1-f)",
+  "lambda_eff_physical_meaning": "lambda_eff = v_tan / v_rel_h = v_tan / [v_tan*(1-f)] = 1/(1-f) * lambda_design. As f increases, lambda_eff increases. At f=f_stall, lambda_eff = lambda_max = 1.2748.",
+  "f_stall_calculation": {
+    "lambda_design_from_phase2": 0.9,
+    "lambda_design_source": "phase2_summary_table.json phase3_inputs.lambda_design",
+    "lambda_max_from_phase2": 1.2748,
+    "lambda_max_source": "corot01_angular_momentum_model.json (interpolated from foil01_force_sweep.json)",
+    "formula": "f_stall = 1 - lambda_design / lambda_max",
+    "f_stall_from_corot01": 0.294003,
+    "f_stall_source": "loaded from corot01_angular_momentum_model.json (not independently recomputed)",
+    "f_stall_note": "f_stall = 1 - 0.9/1.2748 = 0.294003; consistent with plan reference 0.291 (difference 0.0030 due to lambda interpolation vs 1.27)"
+  },
+  "lift_preservation_verdict": "PRESERVED: v_rel_v = v_loop = 3.7137 m/s independent of f. Hydrofoil lift is nonzero for all f < f_stall = 0.2940.",
+  "stall_implication": "Stall at f_stall = 0.2940 limits useful co-rotation range. Above f_stall, lambda_eff > lambda_max = 1.2748 and ascending foil AoA exceeds stall angle (~15 deg). The stall is not a lift-going-to-zero event; it is an AoA-exceeding-stall-angle event.",
+  "consistency_checks": {
+    "f_stall_vs_lambda_eff_max": {
+      "f_stall": 0.294003,
+      "lambda_eff_at_f_stall": 1.2748,
+      "lambda_max": 1.2748,
+      "match": true,
+      "note": "lambda_eff(f_stall) should equal lambda_max by definition of f_stall"
+    },
+    "v_rel_v_at_f_stall": {
+      "f": 0.294003,
+      "v_rel_v_ms": 3.7137,
+      "unchanged": true
+    }
+  },
+  "requirement": "COROT-03",
+  "requirements_satisfied": [
+    "COROT-03"
+  ],
+  "references": {
+    "phase2_summary_table_json": "Provides lambda_design, v_tan_design, v_loop",
+    "corot01_angular_momentum_model_json": "Provides f_stall, lambda_max (loaded, not recomputed)"
+  }
+}
