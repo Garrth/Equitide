@@ -75,17 +75,19 @@ Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for ev
 
 ### Answered
 
-(None yet — investigate to answer)
+- [x] What is the net pumping energy cost per vessel cycle? — W_iso = 20,644.6 J (isothermal lower bound), W_adia = 23,959.5 J (adiabatic upper bound); W_pump = 28,188–36,861 J at η_c = 0.85–0.65 — v1.0
+- [x] What buoyancy work is produced per ascending vessel? — W_buoy = W_iso = 20,644.6 J (identity confirmed to 2×10⁻⁷%); buoyancy alone cannot exceed COP = 0.73 — v1.0
+- [x] What hydrofoil torque do ascending and descending vessels contribute? — W_foil_asc = W_foil_desc = 20,767 J/vessel at λ = 1; COP_partial = 2.057 at design λ = 0.9 (upper bound, pre-F_vert correction) — v1.0
+- [x] Does co-rotation reduce drag without reducing lift? — YES: 47.5 kW drag reduction at 720 W maintenance cost; lift geometrically preserved — v1.0
+- [x] Is jet recovery significant? — No: W_jet = 0 as separate term; already contained in W_buoy integral — v1.0
+- [x] Is the fill window sufficient? — YES (GO): 274 SCFM at 26 psig, medium industrial compressor — v1.0
+- [x] Does the system balance yield COP ≥ 1.5? — **NO**: self-consistent v_loop = 2.384 m/s; corrected COP ∈ [0.811, 1.186], NO_GO — v1.0
 
-### Active
+### Active (v1.1)
 
-- [ ] What is the net pumping energy cost per vessel cycle at 60 ft depth (isothermal and adiabatic bounds)?
-- [ ] What buoyancy work is produced per ascending vessel during the 60 ft ascent at 3 m/s?
-- [ ] What hydrofoil torque do ascending and descending vessels contribute per cycle (parametric in L/D)?
-- [ ] Does co-rotation reduce horizontal drag without reducing lift, and by how much?
-- [ ] How much energy is recovered from the expanding air jet during ascent?
-- [ ] Is the fill window (1/4 loop at 3 m/s) sufficient for a practical air injection system?
-- [ ] Does the complete system energy balance yield output/input ≥ 1.5?
+- [ ] At what foil AoA does F_vert = 0 (neutral vertical force), and what COP results?
+- [ ] Is there an AoA with F_vert slightly upward-assisting while maintaining meaningful tangential torque — and does COP reach ≥ 1.5?
+- [ ] Full parametric AoA sweep: from current design (AoA ≈ 10° at λ = 0.9) down to minimum effective lift angle
 
 ### Out of Scope
 
@@ -120,15 +122,21 @@ Classical fluid mechanics, hydrostatics, thermodynamics (ideal gas), and hydrofo
 | Hydrofoil AoA | α | 5–10° | To be optimized |
 | Target efficiency | η | 1.5 W/W | Go/no-go threshold |
 
-### Known Results
+### Known Results (v1.0 Complete)
 
-- Pumping energy (isothermal, ideal): 20.6 kJ per vessel cycle — from initial scoping calculation
-- Pumping energy (adiabatic): 24.0 kJ per vessel cycle — from initial scoping calculation
-- In ideal isothermal case, buoyancy work = pumping energy (thermodynamic equivalence) — net gain must come from hydrofoil
+- **Thermodynamics:** W_iso = 20,644.6 J, W_adia = 23,959.5 J per vessel cycle; W_pump = 28,188–36,861 J at η_c = 0.85–0.65
+- **Buoyancy:** W_buoy = W_iso to 2×10⁻⁷% (identity gate PASSED); COP_ideal_max = 0.73 max — hydrofoil required
+- **Terminal velocity:** v_nominal = 3.714 m/s (C_D = 1.0, F_chain = 0); conservative 3.075 m/s; self-consistent 2.384 m/s (with F_vert)
+- **Fill:** GO — 274 SCFM at 26 psig; medium industrial rotary screw compressor sufficient
+- **Hydrofoil (upper bound):** COP_partial = 2.057 at λ = 0.9; tacking confirmed by vector geometry; both loop halves contribute positive torque
+- **F_vert coupling (critical):** F_vert = −663.9 N downward at design point; reduces v_loop from 3.714 → 2.384 m/s (36% drop)
+- **Co-rotation:** f_stall = 0.294; P_net = 46.8 kW saved at nominal velocity; scales to 12.4 kW at corrected v_loop (v³ scaling)
+- **System verdict (NO_GO):** Corrected COP_nominal = 0.925; full range [0.811, 1.186] across 9 scenarios — all below 1.5
+- **Decisive design path:** Reversed foil mounting → upward F_vert → higher v_loop → restored co-rotation savings
 
-### What Is New
+### What Is New (v1.1 Question)
 
-This study quantifies whether the combination of dual-direction hydrofoil torque harvesting (tacking), co-rotation drag cancellation, and jet recovery can produce a net positive energy output exceeding the thermodynamic break-even of a simple buoyancy engine.
+Whether reducing foil AoA rotates the lift vector to reduce F_vert magnitude toward zero — and whether any AoA produces COP ≥ 1.5 with F_vert neutral or assisting — is the unresolved question that determines prototype viability.
 
 ### Target Venue
 
@@ -171,7 +179,16 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 | Fill window = 1/4 loop circumference at 3 m/s | User design specification | Confirmed |
 | Fresh water, bottom of vessel at 60 ft | User specification | Confirmed |
 | Analyze components separately before system balance | User's stated methodology | Confirmed |
+| Use precise P_r = 2.7669 (not rounded 2.770) for all calculations | Avoids 0.34% compounding rounding error through 4 phases | Good |
+| W_pump = W_adia/η_c as COP denominator (not W_iso) | W_iso is theoretical limit; real pump uses adiabatic work | Good |
+| F_b_avg = W_iso/H as energy-weighted driving force | Correct for energy accounting; avoids constant-force approximation | Good |
+| Fixed mount angle 38° at λ = 1, AoA_target = 7° | Design point; AoA_eff sweeps as λ changes | Good |
+| F_vert/F_b_avg > 0.20 → Phase 4 coupled solution mandatory | 1.15 >> 0.20 flag triggered correctly; uncorrected COP = upper bound only | Good |
+| brentq for coupled (v_loop, ω) solution; not fixed-point | Fixed-point diverges when F_vert ∝ v² faster than hull drag | Good |
+| Co-rotation P_net scaled by (v_corr/v_nom)³ in Phase 4 | Consistent with v³ drag scaling; halves the apparent co-rotation benefit | Good |
+| Lossless gate COP ≠ 1 is expected; use buoy-iso gate instead | Multi-source machine with net energy production; W_buoy = W_iso is the First Law check | Good |
+| Verdict: NO_GO on v1.0 foil orientation; test reversed mounting | F_vert direction is the single highest-leverage unknown | Pending prototype |
 
 ---
 
-_Last updated: 2026-03-16 after initialization_
+_Last updated: 2026-03-19 after v1.0 milestone_

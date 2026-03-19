@@ -2,10 +2,10 @@
 
 ## Project Reference
 
-See: .gpd/PROJECT.md (updated 2026-03-16)
+See: .gpd/PROJECT.md (updated 2026-03-19)
 
-**Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** Phase 4 complete — milestone verification and prototype decision
+**Core research question:** At what foil AoA does F_vert = 0, and does COP reach ≥ 1.5 at that operating point?
+**Current focus:** v1.0 milestone complete (NO_GO) — planning v1.1 AoA parametric sweep
 
 ## Current Position
 
