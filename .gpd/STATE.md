@@ -5,24 +5,24 @@
 See: .gpd/PROJECT.md (updated 2026-03-16)
 
 **Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** Phase 3 — Co-rotation
+**Current focus:** Phase 4 complete — milestone verification and prototype decision
 
 ## Current Position
 
-**Current Phase:** 3
-**Current Phase Name:** Co-rotation
+**Current Phase:** 4
+**Current Phase Name:** System Energy Balance
 **Total Phases:** 4
 **Current Plan:** 2
 **Total Plans in Phase:** 2
-**Status:** Phase 3 complete — net_positive verdict; P_net=46.8 kW at f_stall; all COROT requirements satisfied
+**Status:** Phase 4 complete — NO_GO verdict (corrected); COP_nominal=0.925 at nominal conditions; all SYS requirements satisfied
 **Last Activity:** 2026-03-18
-**Last Activity Description:** Phase 3 Plan 02 complete — P_net sweep net_positive, P_corot=720 W (negligible), phase3_summary_table.json for Phase 4
+**Last Activity Description:** Phase 4 Plans 01+02 complete — coupled v_loop=2.384 m/s (F_vert downward), corrected COP range [0.811, 1.186], NO_GO, reversed foil as design path
 
-**Progress:** [███████░░░] 75%
+**Progress:** [██████████] 100%
 
 ## Active Calculations
 
-None — Phase 3 complete, verification in progress.
+None — Phase 4 complete, milestone ready for review.
 
 ## Intermediate Results
 
@@ -101,6 +101,20 @@ None — Phase 3 complete, verification in progress.
 - lambda_max = 1.2748 (interpolated from foil01 ascending F_tan zero-crossing)
 - COROT-01 and COROT-03 requirements satisfied
 
+### Phase 4 Locked Values (authoritative — use phase4_summary_table.json for exact values)
+
+- phase4_verdict = **NO_GO** (corrected for v_loop = 2.384 m/s co-rotation scaling)
+- v_loop_corrected = 2.3835 m/s (F_vert = −663.86 N downward; Phase 2 sign convention)
+- F_vert_direction = downward (opposing buoyancy; reduces terminal velocity from 3.71 m/s)
+- co-rotation_correction_scale = (2.384/3.714)³ = 0.264 (drag ∝ v³)
+- P_net_corot_corrected = 12,380 W (vs Phase 3 nominal 46,826 W at v=3.71 m/s)
+- COP_system_nominal_corrected = 0.925 (eta_c=0.70, loss=10%)
+- COP_range_corrected = [0.811, 1.186] across 9 scenarios — all below 1.5 threshold
+- COP_lossless = 2.204 (lossless gate ≠ 1.0; buoy-iso gate W_buoy/W_iso = 1.000 PASS)
+- All three SYS requirements satisfied: SYS-01, SYS-02, SYS-03
+- Decisive design path: reversed foil mounting (upward F_vert) → increases v_loop and COP
+- Prototype measurement priorities: (1) F_vert sign, (2) tack-flip loss, (3) mechanical loss fraction
+
 ## Performance Metrics
 
 | Label | Duration | Tasks | Files |
@@ -112,6 +126,8 @@ None — Phase 3 complete, verification in progress.
 | Phase 2 Plan 02 | ~40 min | 2 | 8 |
 | Phase 3 Plan 01 | ~35 min | 2 | 4 |
 | Phase 3 Plan 02 | ~45 min | 2 | 5 |
+| Phase 4 Plan 01 | ~45 min | 2 | 4 |
+| Phase 4 Plan 02 | ~45 min | 2 | 5 |
 
 ## Accumulated Context
 
@@ -144,6 +160,12 @@ None — Phase 3 complete, verification in progress.
 - [Phase 3 Plan 02]: f_optimal = f_stall = 0.294003 (P_corot too small to create interior maximum; stall bounds sweep)
 - [Phase 3 Plan 02]: COP_corot per-vessel formula — no N_ascending multiplier (all quantities are per-vessel ratios)
 - [Phase 3 Plan 02]: Phase 3 verdict = net_positive; P_corot negligible vs drag saved; Phase 4 F_vert coupling mandatory
+- [Phase 4 Plan 01]: F_vert is downward (Phase 2 sign convention) — v_loop and COP LOWER than Phase 2 partial values
+- [Phase 4 Plan 01]: Lossless COP gate (COP=1.0) does not apply to multi-source machine; use buoy-iso gate (W_buoy/W_iso=1.000)
+- [Phase 4 Plan 01]: Fixed-point iteration diverges at constant lambda; brentq is the correct solver
+- [Phase 4 Plan 01]: e_oswald = 0.85 (Phase 2 rectangular planform, not 0.9 from plan pseudocode)
+- [Phase 4 Plan 02]: Co-rotation P_net must be scaled by (v_loop_corr/v_loop_nom)³ = 0.264 at corrected velocity
+- [Phase 4 Plan 02]: Verdict = NO_GO (corrected COP_nominal=0.925); reversed foil mounting is decisive design path
 
 ### Active Approximations
 
@@ -156,6 +178,7 @@ None — Phase 3 complete, verification in progress.
 - Quasi-steady foil forces (k ~ 0.01–0.05 << 0.1; validated)
 - Prandtl lifting-line elliptic load (AR=4; C_L_3D = C_L_2D/1.5)
 - v_loop = Phase 1 v_terminal (upper bound — F_vert/F_b_avg=1.15 flags Phase 4 coupled correction needed)
+- Phase 3 P_net_corot at v_loop_nominal only — must scale by (v_corr/v_nom)³ for self-consistent Phase 4 balance
 
 ### Pending Todos
 
@@ -168,5 +191,5 @@ None — Phase 3 complete, verification in progress.
 ## Session Continuity
 
 **Last session:** 2026-03-18
-**Stopped at:** Phase 3 complete — net_positive; ready for Phase 4 plan
-**Resume file:** analysis/phase3/outputs/phase3_summary_table.json
+**Stopped at:** Phase 4 complete — NO_GO verdict delivered; milestone ready for review
+**Resume file:** analysis/phase4/outputs/phase4_summary_table.json

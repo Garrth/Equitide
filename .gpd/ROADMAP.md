@@ -131,4 +131,4 @@ Plans:
 | 1. Air, Buoyancy & Fill | 3/3 | ✓ Complete | 2026-03-17 |
 | 2. Hydrofoil & Torque | 2/2 | ✓ Complete | 2026-03-17 |
 | 3. Co-rotation | 2/2 | ✓ Complete | 2026-03-18 |
-| 4. System Energy Balance | 0/TBD | Not started | - |
+| 4. System Energy Balance | 2/2 | ✓ Complete | 2026-03-18 |
