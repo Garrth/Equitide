@@ -87,9 +87,12 @@ Plans:
 3. Vertical relative velocity (and thus hydrofoil lift) shown to be preserved under co-rotation
 4. Any energy input required to maintain co-rotation estimated and included in system balance
 
+**Plans:** 2 plans in 2 waves
+
 Plans:
 
-- [ ] 03-01: [TBD — created during /gpd:plan-phase 3]
+- [ ] 03-01-PLAN.md -- Angular momentum balance (f_ss, P_corot, reconciliation) + lift preservation (COROT-01, COROT-03)
+- [ ] 03-02-PLAN.md -- P_net(f) sweep, COP_corot(f) curve, phase3_verdict, Phase 4 handoff (COROT-02)
 
 ---
 
@@ -124,5 +127,5 @@ Plans:
 | ----- | -------------- | ------ | --------- |
 | 1. Air, Buoyancy & Fill | 3/3 | ✓ Complete | 2026-03-17 |
 | 2. Hydrofoil & Torque | 2/2 | ✓ Complete | 2026-03-17 |
-| 3. Co-rotation | 0/TBD | Not started | - |
+| 3. Co-rotation | 0/2 | Planned | - |
 | 4. System Energy Balance | 0/TBD | Not started | - |
