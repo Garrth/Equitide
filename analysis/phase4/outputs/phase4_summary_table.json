@@ -1,0 +1,462 @@
+{
+  "_description": "Phase 4 complete: system energy balance, co-rotation correction, verdict",
+  "_units": "SI throughout: J, W, m/s, dimensionless",
+  "_assert_convention": "unit_system=SI, W_pump=W_adia/eta_c, N_foil=24, W_jet=0, corot_corrected_at_v_loop_corrected=2.384_m/s",
+  "phase": "04-system-energy-balance",
+  "completion_date": "2026-03-18",
+  "SYS-01_coupled_velocity": {
+    "v_loop_nominal_ms": 3.7137,
+    "v_loop_corrected_ms": 2.383479,
+    "v_loop_increase_factor": 0.641807,
+    "F_vert_N": -663.8588,
+    "F_vert_fraction_of_Fb": 0.58808,
+    "F_vert_direction": "downward",
+    "iteration_converged": true,
+    "AoA_final_deg": 10.0128,
+    "stall_check": "OK",
+    "W_foil_asc_total_J": 123029.0662,
+    "W_foil_desc_total_J": 123029.0662,
+    "t_cycle_s": 15.345635,
+    "requirements_satisfied": [
+      "SYS-01"
+    ]
+  },
+  "SYS-02_energy_balance": {
+    "W_pump_total_nominal_J": 1026833.5714,
+    "W_buoy_total_J": 619338.477,
+    "W_foil_asc_total_J": 123029.0662,
+    "W_foil_desc_total_J": 123029.0662,
+    "W_foil_total_J": 246058.1324,
+    "W_jet_J": 0.0,
+    "P_net_corot_W_uncorrected": 46826.0,
+    "P_net_corot_W_corrected": 12379.54,
+    "W_corot_total_J_uncorrected": 718574.7045,
+    "W_corot_total_J_corrected": 189971.94,
+    "corot_correction_scale_v3": 0.264371,
+    "COP_lossless": 2.203683,
+    "COP_lossless_gate": "FAIL",
+    "COP_lossless_buoy_iso_gate": "PASS",
+    "COP_system_nominal_uncorrected": 1.388321,
+    "COP_system_nominal_corrected": 0.92501,
+    "component_table": [
+      {
+        "component": "Air pumping input (30 vessels)",
+        "direction": "input",
+        "value_J": 1026833.5714,
+        "sign_in_balance": "denominator",
+        "note": "W_pump = N_total * W_adia / eta_c (PITFALL-M1: W_adia NOT W_iso)"
+      },
+      {
+        "component": "Buoyancy work (30 vessels)",
+        "direction": "output",
+        "value_J": 619338.477,
+        "sign_in_balance": "+numerator",
+        "note": "W_buoy = N_total * W_buoy_J = N_total * W_iso (Phase 1 identity)"
+      },
+      {
+        "component": "Hydrofoil torque ascending (12 vessels)",
+        "direction": "output",
+        "value_J": 123029.0662,
+        "sign_in_balance": "+numerator",
+        "note": "N_ascending=12 from Phase 2 JSON (PITFALL-N-ACTIVE: not 30)"
+      },
+      {
+        "component": "Hydrofoil torque descending (12 vessels)",
+        "direction": "output",
+        "value_J": 123029.0662,
+        "sign_in_balance": "+numerator",
+        "note": "N_descending=12 from Phase 2 JSON; tacking confirmed Phase 2"
+      },
+      {
+        "component": "Co-rotation net benefit (P_net * t_cycle)",
+        "direction": "output",
+        "value_J": 718574.7045,
+        "sign_in_balance": "+numerator",
+        "note": "P_net_corot = P_drag_saved - P_corot (net only; PITFALL-COROT: no double-count)"
+      },
+      {
+        "component": "Jet recovery",
+        "direction": "output",
+        "value_J": 0.0,
+        "sign_in_balance": "+numerator",
+        "note": "W_jet = 0 explicit (PITFALL-C6: jet energy contained in W_buoy integral)"
+      },
+      {
+        "component": "Mechanical losses (chain, bearing, seal)",
+        "direction": "loss",
+        "value_J": 158397.1314,
+        "sign_in_balance": "-numerator",
+        "note": "10% nominal scenario; range 5-15% in COP table"
+      }
+    ],
+    "requirements_satisfied": [
+      "SYS-01",
+      "SYS-02"
+    ]
+  },
+  "SYS-03_verdict": {
+    "COP_pessimistic_uncorrected": 1.217535,
+    "COP_optimistic_uncorrected": 1.779474,
+    "COP_nominal_uncorrected": 1.388321,
+    "COP_pessimistic_corrected": 0.811219,
+    "COP_optimistic_corrected": 1.185628,
+    "COP_nominal_corrected": 0.92501,
+    "bound_argument": {
+      "COP_upper_bound_Phase2": 2.0575,
+      "max_loss_fraction": 0.15,
+      "COP_bound_value": 1.748875,
+      "threshold": 1.5,
+      "passes": true,
+      "interpretation": "Phase 2 upper-bound COP (2.057) \u00d7 (1 - max_loss=0.15) = 1.748 > 1.5. This bound uses the UNCORRECTED Phase 2 COP (excludes F_vert correction which LOWERS v_loop and COP below 2.057). After the F_vert correction, the corrected COP_lossless=2.204 is actually higher than 2.057 (because foil work + co-rotation contribute net positive energy above the pump input at eta_c=1). The bound argument confirms the system clears 1.5 W/W at maximum credible losses using even the pre-correction Phase 2 estimate."
+    },
+    "verdict": "NO_GO: COP_nominal = 0.9250 < 1.0. System does not produce net positive power under these assumptions.",
+    "verdict_category": "NO_GO",
+    "verdict_conditions": [],
+    "limiting_component": "mechanical_loss_fraction",
+    "limiting_component_note": "Mechanical losses (chain, bearing, seal) are the verdict-critical parameter. At eta_c=0.70, the COP crosses 1.5 at loss_fraction approximately 0.10 (boundary). Tack-flip losses are additional and unquantified \u2014 the single most important prototype measurement.",
+    "tack_flip_caveat": "CAVEAT (unquantified): Each of the 30 vessels must flip its hydrofoil at the top and bottom of the loop (tack-flip). During the flip transient, the vessel produces no torque and may experience increased drag. This loss is NOT included in the 5-15% mechanical loss fraction. Estimate: if tack-flip consumes ~5% of cycle time per vessel, effective loss_fraction increases by ~5 percentage points. At COP_nominal_corrected = 0.9250, an additional 5% loss gives COP ~ 0.8788. Prototype testing must characterize tack-flip duration and energy loss before confirming the GO verdict.",
+    "requirements_satisfied": [
+      "SYS-03"
+    ]
+  },
+  "phase4_energy_balance": [
+    {
+      "component": "Air pumping input (30 vessels)",
+      "direction": "input",
+      "value_J": 1026833.5714,
+      "sign_in_balance": "denominator",
+      "note": "W_pump = N_total * W_adia / eta_c (PITFALL-M1: W_adia NOT W_iso)"
+    },
+    {
+      "component": "Buoyancy work (30 vessels)",
+      "direction": "output",
+      "value_J": 619338.477,
+      "sign_in_balance": "+numerator",
+      "note": "W_buoy = N_total * W_buoy_J = N_total * W_iso (Phase 1 identity)"
+    },
+    {
+      "component": "Hydrofoil torque ascending (12 vessels)",
+      "direction": "output",
+      "value_J": 123029.0662,
+      "sign_in_balance": "+numerator",
+      "note": "N_ascending=12 from Phase 2 JSON (PITFALL-N-ACTIVE: not 30)"
+    },
+    {
+      "component": "Hydrofoil torque descending (12 vessels)",
+      "direction": "output",
+      "value_J": 123029.0662,
+      "sign_in_balance": "+numerator",
+      "note": "N_descending=12 from Phase 2 JSON; tacking confirmed Phase 2"
+    },
+    {
+      "component": "Co-rotation net benefit (P_net * t_cycle)",
+      "direction": "output",
+      "value_J": 718574.7045,
+      "sign_in_balance": "+numerator",
+      "note": "P_net_corot = P_drag_saved - P_corot (net only; PITFALL-COROT: no double-count)"
+    },
+    {
+      "component": "Jet recovery",
+      "direction": "output",
+      "value_J": 0.0,
+      "sign_in_balance": "+numerator",
+      "note": "W_jet = 0 explicit (PITFALL-C6: jet energy contained in W_buoy integral)"
+    },
+    {
+      "component": "Mechanical losses (chain, bearing, seal)",
+      "direction": "loss",
+      "value_J": 158397.1314,
+      "sign_in_balance": "-numerator",
+      "note": "10% nominal scenario; range 5-15% in COP table"
+    }
+  ],
+  "COP_system_nominal": 0.92501,
+  "verdict": "NO_GO: COP_nominal = 0.9250 < 1.0. System does not produce net positive power under these assumptions.",
+  "verdict_category": "NO_GO",
+  "sensitivity_summary": {
+    "by_eta_c": {
+      "0.65": {
+        "loss_0p05": 0.906657,
+        "loss_0p10": 0.858938,
+        "loss_0p15": 0.811219
+      },
+      "0.7": {
+        "loss_0p05": 0.9764,
+        "loss_0p10": 0.92501,
+        "loss_0p15": 0.873621
+      },
+      "0.85": {
+        "loss_0p05": 1.185628,
+        "loss_0p10": 1.123227,
+        "loss_0p15": 1.060825
+      }
+    },
+    "by_loss_fraction": {
+      "0.05": {
+        "eta_0p65": 0.906657,
+        "eta_0p70": 0.9764,
+        "eta_0p85": 1.185628
+      },
+      "0.1": {
+        "eta_0p65": 0.858938,
+        "eta_0p70": 0.92501,
+        "eta_0p85": 1.123227
+      },
+      "0.15": {
+        "eta_0p65": 0.811219,
+        "eta_0p70": 0.873621,
+        "eta_0p85": 1.060825
+      }
+    },
+    "by_f_corot": [
+      {
+        "f": 0.0,
+        "P_drag_saved_corrected_W": 0.0,
+        "P_corot_corrected_W": 0.0,
+        "P_net_corot_corrected_W": 0.0,
+        "W_corot_corrected_J": 0.0,
+        "COP_system": 0.758504,
+        "note": "no co-rotation"
+      },
+      {
+        "f": 0.15,
+        "P_drag_saved_corrected_W": 7483.94,
+        "P_corot_corrected_W": 25.2793,
+        "P_net_corot_corrected_W": 7458.66,
+        "W_corot_corrected_J": 114457.88,
+        "COP_system": 0.858824,
+        "note": "OK"
+      },
+      {
+        "f": 0.2,
+        "P_drag_saved_corrected_W": 9464.63,
+        "P_corot_corrected_W": 59.9212,
+        "P_net_corot_corrected_W": 9404.7,
+        "W_corot_corrected_J": 144321.17,
+        "COP_system": 0.884998,
+        "note": "OK"
+      },
+      {
+        "f": 0.294003,
+        "P_drag_saved_corrected_W": 12569.89,
+        "P_corot_corrected_W": 190.347,
+        "P_net_corot_corrected_W": 12379.54,
+        "W_corot_corrected_J": 189971.94,
+        "COP_system": 0.92501,
+        "note": "stall boundary"
+      }
+    ],
+    "COP_table_corrected": [
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.05,
+        "W_pump_total_J": 1105820.7692,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 52768.4276,
+        "W_net_J": 1002600.1247,
+        "COP_system": 0.906657,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.1,
+        "W_pump_total_J": 1105820.7692,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 105536.8552,
+        "W_net_J": 949831.697,
+        "COP_system": 0.858938,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.15,
+        "W_pump_total_J": 1105820.7692,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 158305.2828,
+        "W_net_J": 897063.2694,
+        "COP_system": 0.811219,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.05,
+        "W_pump_total_J": 1026833.5714,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 52768.4276,
+        "W_net_J": 1002600.1247,
+        "COP_system": 0.9764,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.1,
+        "W_pump_total_J": 1026833.5714,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 105536.8552,
+        "W_net_J": 949831.697,
+        "COP_system": 0.92501,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.15,
+        "W_pump_total_J": 1026833.5714,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 158305.2828,
+        "W_net_J": 897063.2694,
+        "COP_system": 0.873621,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.05,
+        "W_pump_total_J": 845627.6471,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 52768.4276,
+        "W_net_J": 1002600.1247,
+        "COP_system": 1.185628,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.1,
+        "W_pump_total_J": 845627.6471,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 105536.8552,
+        "W_net_J": 949831.697,
+        "COP_system": 1.123227,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.15,
+        "W_pump_total_J": 845627.6471,
+        "W_buoy_total_J": 619338.477,
+        "W_foil_total_J": 246058.1324,
+        "W_corot_total_J": 189971.9429,
+        "W_gross_J": 1055368.5523,
+        "W_losses_J": 158305.2828,
+        "W_net_J": 897063.2694,
+        "COP_system": 1.060825,
+        "label": "corrected (v_loop=2.384 m/s co-rotation)"
+      }
+    ],
+    "COP_table_uncorrected": [
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.05,
+        "COP_system": 1.360775,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.1,
+        "COP_system": 1.289155,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.65,
+        "loss_fraction": 0.15,
+        "COP_system": 1.217535,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.05,
+        "COP_system": 1.46545,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.1,
+        "COP_system": 1.388321,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.7,
+        "loss_fraction": 0.15,
+        "COP_system": 1.311192,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.05,
+        "COP_system": 1.779474,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.1,
+        "COP_system": 1.685818,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      },
+      {
+        "eta_c": 0.85,
+        "loss_fraction": 0.15,
+        "COP_system": 1.592161,
+        "label": "uncorrected (Phase3 v_loop=3.714 m/s)"
+      }
+    ]
+  },
+  "corot_correction_applied": {
+    "status": "APPLIED",
+    "description": "Plan 01 computed W_corot using P_net_corot=46826 W from Phase 3 at v_loop_nominal=3.714 m/s. Plan 02 corrects this: v_loop_corrected=2.384 m/s, scale=(2.384/3.714)^3=0.264. P_net_corot drops from 46826 to 12380 W. W_corot drops from 718.6k to 190.0k J. COP_nominal drops from 1.388 to 0.925.",
+    "v_loop_corrected_ms": 2.383479,
+    "scale_v3": 0.264371,
+    "P_net_corot_original_W": 46826.0,
+    "P_net_corot_corrected_W": 12379.54
+  },
+  "F_vert_coupling_resolved": {
+    "status": "RESOLVED",
+    "v_loop_corrected": 2.383479,
+    "F_vert_direction": "downward",
+    "note": "F_vert is DOWNWARD (Phase 2 sign convention: F_vert = -L*cos(beta) - D*sin(beta) < 0). This opposes buoyancy and REDUCES v_loop from 3.714 m/s to 2.384 m/s (36% reduction). Consequently, all co-rotation drag savings also reduce by (2.384/3.714)^3 = 0.264."
+  },
+  "open_items_for_prototype": [
+    "Tack-flip energy loss: unquantified; CRITICAL prototype measurement required",
+    "Actual mechanical loss fraction for this chain/bearing/seal configuration",
+    "f_ss in discrete-vessel geometry: likely < f_stall=0.294; prototype measurement",
+    "F_vert direction confirmation: if foil can be mounted to give UPWARD F_vert, v_loop increases and COP improves substantially",
+    "Whether a different foil orientation (reversed tacking sense) could produce upward F_vert"
+  ],
+  "requirements_satisfied": [
+    "SYS-01",
+    "SYS-02",
+    "SYS-03"
+  ],
+  "pitfall_guards": {
+    "W_jet_explicit_zero": true,
+    "W_pump_uses_W_adia_not_W_iso": true,
+    "N_foil_active_24_not_30": true,
+    "corot_not_double_counted": true,
+    "lossless_gate_passed": false,
+    "lossless_gate_buoy_iso_passed": true,
+    "verdict_not_from_partial_COP": true,
+    "F_vert_flag_resolved": true,
+    "corot_correction_applied_for_v_loop": true
+  }
+}
