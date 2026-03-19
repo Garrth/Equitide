@@ -1,0 +1,105 @@
+{
+  "_description": "Phase 3 complete summary: COROT-01, COROT-02, COROT-03 results for Phase 4 loading",
+  "_units": "SI throughout: m, kg, s, N, J, W, Pa, rad/s, dimensionless",
+  "_assert_convention": "unit_system=SI, f=co_rotation_fraction in [0,f_stall], power_saving_formula=CUBIC, all_inputs_from_JSON",
+  "phase": "03-co-rotation",
+  "generated_by": "analysis/phase3/corot02_net_benefit_sweep.py",
+
+  "COROT-01_angular_momentum": {
+    "f_ss_upper_bound": 0.634675,
+    "f_ss_note": "Upper bound from smooth-cylinder approximation (vessel chain treated as continuous rotating inner cylinder). Discrete-vessel geometry correction reduces coupling by approximately factor of 2. Actual f_ss likely 0.3-0.5 * f_ss_upper_bound.",
+    "P_corot_W": 22193.98,
+    "P_corot_range_W": [11096.99, 44387.95],
+    "P_corot_note": "Nominal P_corot at omega_design. Range spans factor-of-2 uncertainty from Prandtl C_f ±50%.",
+    "Re_wall": 12184191.04,
+    "C_f_nominal": 0.002832,
+    "tau_w_Pa": 15.7891,
+    "T_wall_Nm": 24303.39,
+    "f_stall": 0.294003,
+    "f_stall_note": "f_stall = 1 - lambda_design/lambda_max = 1 - 0.9/1.2748. Binding stall constraint.",
+    "spin_up_time_s": 70.98,
+    "spin_up_note": "tau_spinup ~ R^2/nu_T = 71 s; marginal quasi-steady; steady-state analysis is an approximation.",
+    "SUMMARY_reconciliation": "SUMMARY.md used ~1300 W. This derivation gives P_corot_nominal = 22194 W (factor 17.07x). Discrepancy from different C_f assumption and A_wall geometry. This derivation uses tau_w=0.5*rho_w*C_f*(omega*R)^2 consistently (Schlichting §21.2).",
+    "requirements_satisfied": ["COROT-01"]
+  },
+
+  "COROT-02_net_benefit": {
+    "P_drag_full_total_W": 73361.82,
+    "P_drag_full_note": "Baseline drag power for 24 vessels at v_tan_design=3.34233 m/s with C_D=1.0, A_frontal=0.164 m².",
+    "P_drag_saved_at_fss_W": 47546.0,
+    "P_drag_saved_at_fss_note": "Cubic formula P_drag_saved = P_drag_full * [1-(1-f_stall)^3] at f=f_stall=0.294003.",
+    "P_corot_at_fss_W": 720.0,
+    "P_corot_at_fss_note": "P_corot at f_stall (much less than nominal 22194 W at design omega; omega_w = f_stall * omega_design = 0.268 rad/s).",
+    "P_net_at_fss_W": 46826.0,
+    "P_net_at_fss_note": "PITFALL-C3 compliant: P_corot always subtracted. P_net = P_drag_saved - P_corot.",
+    "P_net_range_at_fss_W": [47186.0, 46105.0],
+    "P_net_range_note": "[optimistic: P_corot×0.5, pessimistic: P_corot×2.0]. Both positive → net_positive verdict.",
+    "P_drag_saved_at_fss_W_detailed": 47546.0,
+    "f_optimal": 0.294003,
+    "P_net_at_f_optimal_W": 46826.0,
+    "f_optimal_note": "f_optimal = f_stall; P_net is stall-limited (P_corot remains small relative to P_drag_saved across entire achievable f range).",
+    "f_breakeven": null,
+    "f_breakeven_note": "No breakeven within [0, f_stall]; P_net > 0 throughout achievable domain.",
+    "COP_corot_at_fss": 0.6032,
+    "COP_corot_at_fss_note": "COP_corot at f_stall ≈ 0.603 (buoyancy-only COP). Foil contribution → 0 as lambda_eff → lambda_max at stall. COP_corot decreases from 2.057 at f=0 to 0.603 at f_stall.",
+    "phase3_verdict": "net_positive",
+    "phase3_verdict_explanation": "P_net_lo=47.186 kW > 0 and P_net_hi=46.105 kW > 0 across full ±50% P_corot uncertainty range. Co-rotation saves ~47.5 kW of drag power while costing only ~0.72 kW in maintenance at maximum achievable f.",
+    "power_saving_formula": "CUBIC: P_drag_saved = P_drag_full * [1-(1-f)^3]. NOT (1-f)^2 (force-only formula).",
+    "validation_summary": "All 5 validation checks PASS: P_net(f=0)=0, cubic(0.3)=0.657, cubic(0.5)=0.875, COP(f=0)=2.057, monotonicity(stall-limited).",
+    "requirements_satisfied": ["COROT-02"]
+  },
+
+  "COROT-03_lift_preservation": {
+    "v_rel_vertical_preserved": true,
+    "v_rel_vertical_ms": 3.7137,
+    "v_rel_vertical_independence_proof": "v_rel_v = v_vessel_v - v_water_v = v_loop - 0 = v_loop. Water co-rotation is horizontal only; v_water_v = 0 identically. v_rel_v = v_loop for all f in [0,1].",
+    "lift_preservation_verdict": "PRESERVED: v_rel_v = v_loop = 3.7137 m/s independent of f. Hydrofoil lift is nonzero for all f < f_stall = 0.2940.",
+    "stall_implication": "Stall at f_stall = 0.2940 is AoA-exceeding-limit event, not lift-going-to-zero.",
+    "f_stall": 0.294003,
+    "requirements_satisfied": ["COROT-03"]
+  },
+
+  "phase4_inputs": {
+    "co_rotation_f_ss": 0.294003,
+    "co_rotation_f_ss_note": "Use f_stall as the effective maximum achievable f_ss (f_ss_upper_bound=0.635 from smooth-cylinder model exceeds stall boundary). Actual f_ss in practice likely lower than f_stall due to discrete-vessel geometry.",
+    "P_corot_W": 720.0,
+    "P_corot_W_note": "P_corot at achievable f_ss = f_stall = 0.294003. Much less than nominal 22194 W at design omega because omega_w = f_stall * omega_design = 0.268 rad/s.",
+    "P_corot_range_W": [360.0, 1440.0],
+    "P_corot_range_note": "[P_corot×0.5, P_corot×2.0] at f_stall. All values negligible compared to P_drag_saved.",
+    "P_net_at_fss_W": 46826.0,
+    "P_net_range_at_fss_W": [47186.0, 46105.0],
+    "P_net_range_note": "[optimistic, pessimistic]. Both strongly positive.",
+    "COP_corot_at_fss": 0.6032,
+    "COP_partial_Phase2": 2.0575,
+    "COP_partial_Phase2_note": "Phase 2 COP at lambda=0.9 before co-rotation effect. COP_corot decreases at higher f (foil forces reduce near stall).",
+    "phase3_verdict": "net_positive",
+    "F_vert_flag_propagated": true,
+    "F_vert_note": "From Phase 2: F_vert/F_b_avg=1.15 >> 0.20; Phase 4 coupled (v_loop, omega) solution mandatory; Phase 2 and Phase 3 COP values are upper bounds.",
+    "phase3_uncertainty_note": "P_corot and f_ss have factor-of-2 uncertainty from smooth-cylinder Taylor-Couette approximation. Net verdict net_positive is robust: P_net >> P_corot across all uncertainty cases.",
+    "COP_corot_trend_note": "COP_corot is monotonically decreasing in f (from 2.057 at f=0 to 0.603 at f_stall). Phase 4 must use COP_corot_at_fss (not COP_partial_Phase2) for system balance at the co-rotating operating point."
+  },
+
+  "P_net_table": {
+    "description": "P_net(f) at key f values for Phase 4 reference. All values in W.",
+    "columns": ["f", "P_drag_saved_W", "P_corot_W", "P_net_W", "COP_corot"],
+    "rows": [
+      {"f": 0.00, "P_drag_saved_W":     0.0, "P_corot_W":    0.0,   "P_net_W":     0.0, "COP_corot": 2.0575},
+      {"f": 0.05, "P_drag_saved_W": 10463.0, "P_corot_W":    5.1,   "P_net_W": 10458.0, "COP_corot": 1.8859},
+      {"f": 0.10, "P_drag_saved_W": 19881.0, "P_corot_W":   35.2,   "P_net_W": 19846.0, "COP_corot": 1.6952},
+      {"f": 0.15, "P_drag_saved_W": 28308.0, "P_corot_W":  109.5,   "P_net_W": 28199.0, "COP_corot": 1.4802},
+      {"f": 0.20, "P_drag_saved_W": 35800.0, "P_corot_W":  245.0,   "P_net_W": 35555.0, "COP_corot": 1.2277},
+      {"f": 0.25, "P_drag_saved_W": 42412.0, "P_corot_W":  457.6,   "P_net_W": 41955.0, "COP_corot": 0.9217},
+      {"f": 0.29, "P_drag_saved_W": 47105.0, "P_corot_W":  693.4,   "P_net_W": 46411.0, "COP_corot": 0.6338}
+    ],
+    "note": "f=0.29 ≈ f_stall=0.294003 (last achievable operating point before hydrofoil stall). P_corot is negligible compared to P_drag_saved throughout."
+  },
+
+  "requirements_satisfied": ["COROT-01", "COROT-02", "COROT-03"],
+  "pitfall_guards": {
+    "PITFALL_C3_P_corot_always_included": true,
+    "power_formula_cubic_v3": true,
+    "stall_domain_enforced": true,
+    "phase2_inputs_loaded_from_JSON": true,
+    "F_vert_flag_propagated": true
+  }
+}
