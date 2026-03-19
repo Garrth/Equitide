@@ -9,20 +9,20 @@ See: .gpd/PROJECT.md (updated 2026-03-16)
 
 ## Current Position
 
-**Current Phase:** 2
-**Current Phase Name:** Hydrofoil & Torque
+**Current Phase:** 3
+**Current Phase Name:** Co-rotation
 **Total Phases:** 4
 **Current Plan:** 2
 **Total Plans in Phase:** 2
-**Status:** Phase 2 complete — verified 4/4, consistent
-**Last Activity:** 2026-03-17
-**Last Activity Description:** Phase 2 Plan 02 complete — tacking CONFIRMED, COP_partial=2.06 at λ=0.9, GREEN light
+**Status:** Phase 3 complete — net_positive verdict; P_net=46.8 kW at f_stall; all COROT requirements satisfied
+**Last Activity:** 2026-03-18
+**Last Activity Description:** Phase 3 Plan 02 complete — P_net sweep net_positive, P_corot=720 W (negligible), phase3_summary_table.json for Phase 4
 
-**Progress:** [████░░░░░░] 50%
+**Progress:** [███████░░░] 75%
 
 ## Active Calculations
 
-None — Phase 2 complete, verification pending.
+None — Phase 3 complete, verification in progress.
 
 ## Intermediate Results
 
@@ -73,7 +73,33 @@ None — Phase 2 complete, verification pending.
 - What is the chain coupling force F_chain in practice? (affects v_terminal)
 - Phase 4: F_vert/F_b_avg = 1.15 requires coupled (v_loop, ω) solution — v_loop baseline is an upper bound
 - Co-rotation achievement mechanism and energy cost (Phase 3 primary question)
-- If f_corot > 0.3, effective λ drops below 0.9 — must check in Phase 3
+- If f_corot > 0.3, effective λ drops below 0.9 — must check in Phase 3 [RESOLVED: f_stall=0.294 limits useful range]
+
+### Phase 3 Locked Values (authoritative — use phase3_summary_table.json for exact values)
+
+- phase3_verdict = **net_positive** (robust across ±50% P_corot uncertainty)
+- f_stall = 0.294003 = 1 − 0.9/1.2748 (stall-limited operating boundary)
+- f_ss_upper_bound = 0.635 (smooth-cylinder; actual f_ss ~0.3 after discrete-vessel correction)
+- P_corot at f_stall = 720 W; P_corot_range = [360, 1440] W (±50% C_f)
+- P_drag_saved at f_stall = 47,546 W; P_net = 46,826 W (co-rotation benefit dominates by ~65×)
+- P_net_range at f_stall = [46,105, 47,186] W — robust net_positive across all uncertainty cases
+- COP_corot at f_stall = 0.603 (foil near stall; COP decreases as lambda_eff → lambda_max)
+- COP_partial Phase 2 = 2.057 (f=0 anchor PASS to 4 decimal places)
+- F_vert_flag_propagated = true (F_vert/F_b_avg=1.15 >> 0.20; Phase 4 coupled solution mandatory)
+- All three COROT requirements satisfied: COROT-01, COROT-02, COROT-03
+
+### Phase 3 Intermediate Values (from Plan 01)
+
+- f_ss_upper_bound = 0.635 (smooth-cylinder upper bound — overestimates by ~2× vs discrete-vessel geometry)
+- f_eff = 0.294 (stall-limited: f_stall = 1 − 0.9/1.2748)
+- f_stall = 0.294003 (consistent between corot01 and corot03 JSONs)
+- P_corot_nominal = 22.19 kW; P_corot_range = [11.1, 44.4] kW (±50% C_f uncertainty)
+- Re_wall = 1.22×10⁷; C_f = 0.00283 (Prandtl 1/5-power, Schlichting §21.2)
+- SUMMARY.md ~1.3 kW discrepancy factor = 17.07 (documented in corot01 JSON)
+- tau_spinup = 71 s (marginal quasi-steady; acceptable for steady-state analysis)
+- v_rel_vertical = v_loop = 3.7137 m/s PRESERVED for all f (COROT-03 geometric proof)
+- lambda_max = 1.2748 (interpolated from foil01 ascending F_tan zero-crossing)
+- COROT-01 and COROT-03 requirements satisfied
 
 ## Performance Metrics
 
@@ -84,6 +110,8 @@ None — Phase 2 complete, verification pending.
 | Phase 1 Plan 03 | ~25 min | 2 | 7 |
 | Phase 2 Plan 01 | ~35 min | 2 | 5 |
 | Phase 2 Plan 02 | ~40 min | 2 | 8 |
+| Phase 3 Plan 01 | ~35 min | 2 | 4 |
+| Phase 3 Plan 02 | ~45 min | 2 | 5 |
 
 ## Accumulated Context
 
@@ -109,6 +137,13 @@ None — Phase 2 complete, verification pending.
 - [Phase 2 Plan 02]: Tacking sign CONFIRMED by explicit vector geometry (not assumed); Darrieus analogy confirmed
 - [Phase 2 Plan 02]: Design operating point λ=0.9, ω=0.913 rad/s, 8.72 RPM, v_tan=3.34 m/s
 - [Phase 2 Plan 02]: lambda_min for COP≥1.5 reported at 3 levels: any(λ=0.7 stall), non-stall(λ=0.8), OK-only(λ=0.9)
+- [Phase 3 Plan 01]: f_eff = 0.294 (stall-limited from f_ss_upper_bound=0.635); P_corot = 22.19 kW for Phase 3 Plan 02
+- [Phase 3 Plan 01]: C_f = 0.00283 at Re=1.22e7 (not 0.00181 as in plan notes — formula correct, note imprecise)
+- [Phase 3 Plan 01]: lambda_max = 1.2748 (interpolated from foil01 ascending F_tan zero-crossing)
+- [Phase 3 Plan 02]: CUBIC power saving formula P_drag_saved = P_drag_full × [1-(1-f)³] — not force formula (1-f)²
+- [Phase 3 Plan 02]: f_optimal = f_stall = 0.294003 (P_corot too small to create interior maximum; stall bounds sweep)
+- [Phase 3 Plan 02]: COP_corot per-vessel formula — no N_ascending multiplier (all quantities are per-vessel ratios)
+- [Phase 3 Plan 02]: Phase 3 verdict = net_positive; P_corot negligible vs drag saved; Phase 4 F_vert coupling mandatory
 
 ### Active Approximations
 
@@ -132,6 +167,6 @@ None — Phase 2 complete, verification pending.
 
 ## Session Continuity
 
-**Last session:** 2026-03-17
-**Stopped at:** Phase 2 complete — verified 4/4, consistent; ready to plan Phase 3
-**Resume file:** —
+**Last session:** 2026-03-18
+**Stopped at:** Phase 3 complete — net_positive; ready for Phase 4 plan
+**Resume file:** analysis/phase3/outputs/phase3_summary_table.json
