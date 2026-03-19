@@ -115,9 +115,12 @@ Plans:
 3. Explicit go/no-go verdict delivered: ratio ≥ 1.5 → proceed to prototype; ratio < 1.0 → concept not viable; 1.0–1.5 → marginal, identify limiting component
 4. Sensitivity table shows which parameter (L/D, velocity, co-rotation) most controls the result
 
+**Plans:** 2 plans in 2 waves
+
 Plans:
 
-- [ ] 04-01: [TBD — created during /gpd:plan-phase 4]
+- [ ] 04-01-PLAN.md -- Coupled (v_loop, omega) velocity iteration with F_vert correction + complete signed energy balance with lossless COP gate (SYS-01, SYS-02)
+- [ ] 04-02-PLAN.md -- Sensitivity analysis (eta_c, loss_fraction, f_corot) + go/no-go verdict + Phase 4 summary and final results report (SYS-03)
 
 ---
 
