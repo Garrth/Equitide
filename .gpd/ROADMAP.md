@@ -73,9 +73,12 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 
 ### Phase 6: Full AoA Parametric Sweep and Go/No-Go Verdict
 
-**Status:** Pending
-**Started:** —
+**Status:** Planned (1/1 plan created)
+**Started:** 2026-03-19
 **Completed:** —
+
+**Plans:** 1 plan
+- [ ] 06-01-PLAN.md — Full AoA sweep (≥10 points, 1°–15°), AoA_optimal identification, nine-scenario COP grid, go/no-go verdict
 
 **Goal:** The net COP is computed across AoA ∈ [1°, 15°] using the validated solver, the AoA at which COP is maximized is identified, and the go/no-go verdict on COP ≥ 1.5 is delivered under the same nine-scenario grid as Phase 4.
 
