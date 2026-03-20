@@ -132,4 +132,4 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 | Milestone | Phases | Plans | Status | Date |
 | --------- | ------ | ----- | ------ | ---- |
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
-| v1.1 AoA Parametric Sweep | 5–6 | 0/TBD | Active | 2026-03-19 |
+| v1.1 AoA Parametric Sweep | 5–6 | 0/TBD (Phase 5: 1 plan) | Active | 2026-03-19 |
