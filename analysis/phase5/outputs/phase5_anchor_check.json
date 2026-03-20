@@ -1,0 +1,77 @@
+{
+  "_description": "Phase 5 anchor validation at AoA=10.0128 deg",
+  "_assert_convention": "unit_system=SI, F_vert_sign=Phase2 (negative=downward=opposing_buoyancy), AoA_parameterization=mount_angle_computed_as_beta_minus_AoA_target_at_each_v_loop, NACA=table_interpolation_NACA_TR824, lambda_held_constant=0.9, brentq_xtol=1e-8_rtol=1e-8, all_inputs_from_JSON, PITFALL-M1=W_pump_uses_W_adia_not_W_iso, PITFALL-N-ACTIVE=N_foil=24_not_30, PITFALL-C6=W_jet_equals_zero_explicit, PITFALL-COROT=P_net_corot_scaled_by_(v_loop/v_nom)^3",
+  "_generated_by": "analysis/phase5/aoa_sweep_solver.py",
+  "anchor_AoA_deg": 10.0128,
+  "v_loop_phase5_ms": 2.383484,
+  "v_loop_phase4_anchor_ms": 2.383479,
+  "v_loop_pct_diff": 0.000224,
+  "v_loop_anchor_pass": true,
+  "v_loop_tolerance_pct": 0.5,
+  "F_vert_phase5_N": -663.862,
+  "F_vert_note": "Per-vessel value; Phase 4 JSON stores F_vert_N as per-vessel (get_foil_forces output, not multiplied by N_ascending=12). F_vert_total_N = N_ascending * F_vert_phase5_N.",
+  "F_vert_total_12vessels_N": -7966.3444,
+  "F_vert_phase4_anchor_N": -663.8588,
+  "F_vert_pct_diff": 0.000487,
+  "F_vert_anchor_pass": true,
+  "F_vert_tolerance_pct": 1.0,
+  "COP_nominal_phase5": 0.92501,
+  "COP_nominal_phase4_anchor": 0.92501,
+  "COP_pct_diff": 6.8e-05,
+  "COP_anchor_pass": true,
+  "COP_tolerance_pct": 0.5,
+  "overall_anchor_pass": true,
+  "corot_scale_at_anchor": 0.264373,
+  "t_cycle_s_at_anchor": 15.345601,
+  "W_foil_total_J_at_anchor": 246059.3208,
+  "W_corot_total_J_at_anchor": 189971.0501,
+  "limiting_case_AoA0": {
+    "v_loop_ms": 3.69106,
+    "F_vert_N": -164.6651,
+    "COP_nominal": 0.93787,
+    "note": "AoA=0: C_L=0, pure drag; limiting case diagnostic only (not a pass/fail gate)"
+  },
+  "sign_checks_AoA_1_5_10_15_deg": {
+    "1": {
+      "v_loop_ms": 3.465008,
+      "F_vert_N": -146.1283,
+      "sign": "negative",
+      "pass": true
+    },
+    "5": {
+      "v_loop_ms": 2.832484,
+      "F_vert_N": -472.1687,
+      "sign": "negative",
+      "pass": true
+    },
+    "10": {
+      "v_loop_ms": 2.383859,
+      "F_vert_N": -663.716,
+      "sign": "negative",
+      "pass": true
+    },
+    "15": {
+      "v_loop_ms": 2.372734,
+      "F_vert_N": -668.0471,
+      "sign": "negative",
+      "pass": true
+    }
+  },
+  "pitfall_guards_verified": {
+    "W_pump_uses_W_adia_not_W_iso": true,
+    "N_foil_active_24_not_30": true,
+    "W_jet_explicit_zero": true,
+    "corot_scaled_by_v_loop_ratio_cubed": true,
+    "F_vert_sign_negative_confirmed": true,
+    "brentq_not_fixed_vloop": true,
+    "inputs_from_JSON_not_hardcoded": true
+  },
+  "inputs_loaded_from": [
+    "analysis/phase1/outputs/phase1_summary_table.json",
+    "analysis/phase2/outputs/phase2_summary_table.json",
+    "analysis/phase2/outputs/foil01_force_sweep.json",
+    "analysis/phase3/outputs/phase3_summary_table.json",
+    "analysis/phase4/outputs/sys01_coupled_velocity.json",
+    "analysis/phase4/outputs/phase4_summary_table.json"
+  ]
+}
