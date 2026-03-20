@@ -4,7 +4,7 @@
 
 See: .gpd/PROJECT.md (updated 2026-03-19)
 
-**Core research question:** Does reversing the foil mount (upward F_vert) yield COP ≥ 1.5, and at what AoA is F_vert neutral or upward-assisting?
+**Core research question:** Does any AoA (1°–15°) achieve COP ≥ 1.5 when the F_vert vs. horizontal torque trade-off is optimized?
 **Current focus:** v1.1 AoA Parametric Sweep — defining objectives
 
 ## Current Position
@@ -112,7 +112,7 @@ None — Phase 4 complete, milestone ready for review.
 - COP_range_corrected = [0.811, 1.186] across 9 scenarios — all below 1.5 threshold
 - COP_lossless = 2.204 (lossless gate ≠ 1.0; buoy-iso gate W_buoy/W_iso = 1.000 PASS)
 - All three SYS requirements satisfied: SYS-01, SYS-02, SYS-03
-- Decisive design path: reversed foil mounting (upward F_vert) → increases v_loop and COP
+- Corrected: reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves (kinematic: lift ⊥ v_rel); AoA optimization is the only remaining lever
 - Prototype measurement priorities: (1) F_vert sign, (2) tack-flip loss, (3) mechanical loss fraction
 
 ## Performance Metrics
@@ -165,7 +165,7 @@ None — Phase 4 complete, milestone ready for review.
 - [Phase 4 Plan 01]: Fixed-point iteration diverges at constant lambda; brentq is the correct solver
 - [Phase 4 Plan 01]: e_oswald = 0.85 (Phase 2 rectangular planform, not 0.9 from plan pseudocode)
 - [Phase 4 Plan 02]: Co-rotation P_net must be scaled by (v_loop_corr/v_loop_nom)³ = 0.264 at corrected velocity
-- [Phase 4 Plan 02]: Verdict = NO_GO (corrected COP_nominal=0.925); reversed foil mounting is decisive design path
+- [Phase 4 Plan 02]: Verdict = NO_GO (corrected COP_nominal=0.925); reversed foil mounting is NOT a valid design path — F_vert opposes motion on both sides (kinematic); AoA optimization is the correct v1.1 investigation
 
 ### Active Approximations
 

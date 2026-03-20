@@ -6,13 +6,13 @@ A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 3
 
 ## Current Milestone: v1.1 AoA Parametric Sweep
 
-**Goal:** Determine whether adjusting the hydrofoil angle of attack — specifically reversing the foil mount to flip F_vert upward — yields COP ≥ 1.5 and constitutes a viable path to prototype.
+**Goal:** Find the AoA that maximizes net COP by balancing two competing effects: smaller AoA reduces the F_vert penalty (raising v_loop and co-rotation savings) but also reduces horizontal torque. Reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves regardless of foil orientation, because lift is perpendicular to v_rel and the vertical component always opposes the direction of travel.
 
 **Target results:**
 
-- AoA at which F_vert = 0 (neutral vertical force) and resulting COP
-- Full parametric COP(AoA) sweep from current design point (AoA ≈ 10° at λ = 0.9) through reversed-mount geometry
-- Go/no-go verdict on reversed foil mounting as prototype design path
+- Full parametric AoA sweep from 1° to 15°: F_vert(AoA), v_loop_corrected(AoA), co-rotation savings(AoA), horizontal torque(AoA), net COP(AoA)
+- AoA at which net COP is maximized
+- Go/no-go verdict: does any AoA achieve COP ≥ 1.5 under realistic assumptions?
 
 ## Core Research Question
 
@@ -95,9 +95,9 @@ Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for ev
 
 ### Active (v1.1)
 
-- [ ] At what foil AoA does F_vert = 0 (neutral vertical force), and what COP results?
-- [ ] Is there an AoA with F_vert slightly upward-assisting while maintaining meaningful tangential torque — and does COP reach ≥ 1.5?
-- [ ] Full parametric AoA sweep: from current design (AoA ≈ 10° at λ = 0.9) down to minimum effective lift angle
+- [ ] Full parametric AoA sweep (1°–15°): what is F_vert(AoA), v_loop_corrected(AoA), horizontal torque(AoA), and net COP(AoA)?
+- [ ] At what AoA is net COP maximized — where does the trade-off between reduced F_vert penalty and reduced horizontal torque balance out?
+- [ ] Does any AoA achieve COP ≥ 1.5 under realistic assumptions?
 
 ### Out of Scope
 
@@ -142,11 +142,11 @@ Classical fluid mechanics, hydrostatics, thermodynamics (ideal gas), and hydrofo
 - **F_vert coupling (critical):** F_vert = −663.9 N downward at design point; reduces v_loop from 3.714 → 2.384 m/s (36% drop)
 - **Co-rotation:** f_stall = 0.294; P_net = 46.8 kW saved at nominal velocity; scales to 12.4 kW at corrected v_loop (v³ scaling)
 - **System verdict (NO_GO):** Corrected COP_nominal = 0.925; full range [0.811, 1.186] across 9 scenarios — all below 1.5
-- **Decisive design path:** Reversed foil mounting → upward F_vert → higher v_loop → restored co-rotation savings
+- **Corrected understanding:** Reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves (fundamental kinematics: lift ⊥ v_rel). AoA optimization is the only remaining analytical lever.
 
 ### What Is New (v1.1 Question)
 
-Whether reducing foil AoA rotates the lift vector to reduce F_vert magnitude toward zero — and whether any AoA produces COP ≥ 1.5 with F_vert neutral or assisting — is the unresolved question that determines prototype viability.
+F_vert is a fundamental kinematic consequence of lift (⊥ to v_rel) and opposes vessel motion on both loop halves regardless of foil orientation — reversed mounting does not fix this. The v1.1 question is whether reducing AoA from the current 10° design point lowers F_vert enough to raise v_loop and co-rotation savings more than the loss in horizontal torque, and whether the optimal AoA yields COP ≥ 1.5.
 
 ### Target Venue
 
@@ -197,7 +197,7 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 | brentq for coupled (v_loop, ω) solution; not fixed-point | Fixed-point diverges when F_vert ∝ v² faster than hull drag | Good |
 | Co-rotation P_net scaled by (v_corr/v_nom)³ in Phase 4 | Consistent with v³ drag scaling; halves the apparent co-rotation benefit | Good |
 | Lossless gate COP ≠ 1 is expected; use buoy-iso gate instead | Multi-source machine with net energy production; W_buoy = W_iso is the First Law check | Good |
-| Verdict: NO_GO on v1.0 foil orientation; test reversed mounting | F_vert direction is the single highest-leverage unknown | Pending prototype |
+| Verdict: NO_GO on v1.0 design; reversed mounting invalid design path | F_vert opposes motion on both loop halves (kinematic, not orientation-dependent); AoA optimization is the only analytical lever remaining | Corrected v1.1 |
 
 ---
 
