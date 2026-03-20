@@ -62,17 +62,17 @@
 
 | Requirement | Phase | Status |
 | ----------- | ----- | ------ |
-| ANAL-01 | Phase 5 | Pending |
-| ANAL-02 | Phase 5 | Pending |
-| SWEEP-01 | Phase 5 | Pending |
-| SWEEP-02 | Phase 5 | Pending |
-| VALD-01 | Phase 5 | Pending |
-| VERD-01 | Phase 5 | Pending |
+| ANAL-01 | Phase 5 — AoA Sweep Formulation and Anchor Validation | Pending |
+| ANAL-02 | Phase 5 — AoA Sweep Formulation and Anchor Validation | Pending |
+| VALD-01 | Phase 5 — AoA Sweep Formulation and Anchor Validation | Pending |
+| SWEEP-01 | Phase 6 — Full AoA Parametric Sweep and Verdict | Pending |
+| SWEEP-02 | Phase 6 — Full AoA Parametric Sweep and Verdict | Pending |
+| VERD-01 | Phase 6 — Full AoA Parametric Sweep and Verdict | Pending |
 
 **Coverage:**
 
 - Primary requirements: 6 total
-- Mapped to phases: 6
+- Mapped to phases: 6 (Phase 5: 3, Phase 6: 3)
 - Unmapped: 0
 
 ---

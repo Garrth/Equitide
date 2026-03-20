@@ -5,24 +5,24 @@
 See: .gpd/PROJECT.md (updated 2026-03-19)
 
 **Core research question:** Does any AoA (1°–15°) achieve COP ≥ 1.5 when the F_vert vs. horizontal torque trade-off is optimized?
-**Current focus:** v1.1 AoA Parametric Sweep — defining objectives
+**Current focus:** v1.1 AoA Parametric Sweep — Phase 5: AoA Sweep Formulation and Anchor Validation
 
 ## Current Position
 
 **Current Phase:** 5
-**Current Phase Name:** AoA Parametric Sweep (v1.1)
-**Total Phases:** TBD
+**Current Phase Name:** AoA Sweep Formulation and Anchor Validation
+**Total Phases:** 6 (v1.1 milestone)
 **Current Plan:** 0
 **Total Plans in Phase:** TBD
-**Status:** Defining objectives
+**Status:** Ready for planning
 **Last Activity:** 2026-03-19
-**Last Activity Description:** Started milestone v1.1: AoA Parametric Sweep — carry forward v1.0 NO_GO verdict and reversed-foil design path
+**Last Activity Description:** v1.1 roadmap created — Phase 5 and Phase 6 defined; ROADMAP.md and STATE.md updated
 
-**Progress:** [░░░░░░░░░░] 0%
+**Progress (v1.1):** [░░░░░░░░░░] 0%
 
 ## Active Calculations
 
-None — Phase 4 complete, milestone ready for review.
+None — Phase 5 ready to begin planning.
 
 ## Intermediate Results
 
@@ -69,11 +69,9 @@ None — Phase 4 complete, milestone ready for review.
 
 ## Open Questions
 
-- Co-rotation achievement mechanism and energy cost
-- What is the chain coupling force F_chain in practice? (affects v_terminal)
-- Phase 4: F_vert/F_b_avg = 1.15 requires coupled (v_loop, ω) solution — v_loop baseline is an upper bound
-- Co-rotation achievement mechanism and energy cost (Phase 3 primary question)
-- If f_corot > 0.3, effective λ drops below 0.9 — must check in Phase 3 [RESOLVED: f_stall=0.294 limits useful range]
+- At what AoA in [1°, 15°] is COP maximized, and does it reach 1.5? (v1.1 primary question)
+- Does the F_vert reduction at low AoA outpace the horizontal torque reduction, or vice versa?
+- Does λ_eff = ω·R/v_loop_corrected(AoA) stay below the stall boundary (λ_max ≈ 1.2748) across all AoA in the sweep?
 
 ### Phase 3 Locked Values (authoritative — use phase3_summary_table.json for exact values)
 
@@ -105,10 +103,11 @@ None — Phase 4 complete, milestone ready for review.
 
 - phase4_verdict = **NO_GO** (corrected for v_loop = 2.384 m/s co-rotation scaling)
 - v_loop_corrected = 2.3835 m/s (F_vert = −663.86 N downward; Phase 2 sign convention)
+- AoA_final at convergence = 10.0128° (brentq result; not exactly 10°)
 - F_vert_direction = downward (opposing buoyancy; reduces terminal velocity from 3.71 m/s)
 - co-rotation_correction_scale = (2.384/3.714)³ = 0.264 (drag ∝ v³)
 - P_net_corot_corrected = 12,380 W (vs Phase 3 nominal 46,826 W at v=3.71 m/s)
-- COP_system_nominal_corrected = 0.925 (eta_c=0.70, loss=10%)
+- COP_system_nominal_corrected = 0.925 (η_c=0.70, loss=10%)
 - COP_range_corrected = [0.811, 1.186] across 9 scenarios — all below 1.5 threshold
 - COP_lossless = 2.204 (lossless gate ≠ 1.0; buoy-iso gate W_buoy/W_iso = 1.000 PASS)
 - All three SYS requirements satisfied: SYS-01, SYS-02, SYS-03
@@ -156,7 +155,7 @@ None — Phase 4 complete, milestone ready for review.
 - [Phase 3 Plan 01]: f_eff = 0.294 (stall-limited from f_ss_upper_bound=0.635); P_corot = 22.19 kW for Phase 3 Plan 02
 - [Phase 3 Plan 01]: C_f = 0.00283 at Re=1.22e7 (not 0.00181 as in plan notes — formula correct, note imprecise)
 - [Phase 3 Plan 01]: lambda_max = 1.2748 (interpolated from foil01 ascending F_tan zero-crossing)
-- [Phase 3 Plan 02]: CUBIC power saving formula P_drag_saved = P_drag_full × [1-(1-f)³] — not force formula (1-f)²
+- [Phase 3 Plan 02]: CUBIC power saving formula P_drag_saved = P_drag_full × [1−(1−f)³] — not force formula (1−f)²
 - [Phase 3 Plan 02]: f_optimal = f_stall = 0.294003 (P_corot too small to create interior maximum; stall bounds sweep)
 - [Phase 3 Plan 02]: COP_corot per-vessel formula — no N_ascending multiplier (all quantities are per-vessel ratios)
 - [Phase 3 Plan 02]: Phase 3 verdict = net_positive; P_corot negligible vs drag saved; Phase 4 F_vert coupling mandatory
@@ -166,6 +165,7 @@ None — Phase 4 complete, milestone ready for review.
 - [Phase 4 Plan 01]: e_oswald = 0.85 (Phase 2 rectangular planform, not 0.9 from plan pseudocode)
 - [Phase 4 Plan 02]: Co-rotation P_net must be scaled by (v_loop_corr/v_loop_nom)³ = 0.264 at corrected velocity
 - [Phase 4 Plan 02]: Verdict = NO_GO (corrected COP_nominal=0.925); reversed foil mounting is NOT a valid design path — F_vert opposes motion on both sides (kinematic); AoA optimization is the correct v1.1 investigation
+- [v1.1 Roadmap]: Phase 5 = formulation + anchor validation; Phase 6 = full sweep + verdict; anchor check (VALD-01) is the first computation in Phase 5 before any new AoA points are computed
 
 ### Active Approximations
 
@@ -177,8 +177,7 @@ None — Phase 4 complete, milestone ready for review.
 - Circular loop geometry for fill arc (1/4 circumference; ±5% uncertainty)
 - Quasi-steady foil forces (k ~ 0.01–0.05 << 0.1; validated)
 - Prandtl lifting-line elliptic load (AR=4; C_L_3D = C_L_2D/1.5)
-- v_loop = Phase 1 v_terminal (upper bound — F_vert/F_b_avg=1.15 flags Phase 4 coupled correction needed)
-- Phase 3 P_net_corot at v_loop_nominal only — must scale by (v_corr/v_nom)³ for self-consistent Phase 4 balance
+- Phase 3 P_net_corot at v_loop_nominal only — scaled by (v_corr/v_nom)³ for self-consistent balance (applied in Phase 4; must be re-applied at each AoA in Phase 6)
 
 ### Pending Todos
 
@@ -186,10 +185,10 @@ None — Phase 4 complete, milestone ready for review.
 
 ### Blockers/Concerns
 
-- F_vert/F_b_avg=1.15 means Phase 2 COP values are upper bounds — addressed in Phase 4
+- None — Phase 4 closed; Phase 5 ready to plan
 
 ## Session Continuity
 
-**Last session:** 2026-03-18
-**Stopped at:** Phase 4 complete — NO_GO verdict delivered; milestone ready for review
+**Last session:** 2026-03-19
+**Stopped at:** v1.1 roadmap created — ready for Phase 5 planning
 **Resume file:** analysis/phase4/outputs/phase4_summary_table.json
