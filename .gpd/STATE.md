@@ -12,17 +12,17 @@ See: .gpd/PROJECT.md (updated 2026-03-19)
 **Current Phase:** 5
 **Current Phase Name:** AoA Sweep Formulation and Anchor Validation
 **Total Phases:** 6 (v1.1 milestone)
-**Current Plan:** 0
-**Total Plans in Phase:** TBD
-**Status:** Ready for planning
+**Current Plan:** 1
+**Total Plans in Phase:** 1
+**Status:** Phase complete — pending verification
 **Last Activity:** 2026-03-19
-**Last Activity Description:** v1.1 roadmap created — Phase 5 and Phase 6 defined; ROADMAP.md and STATE.md updated
+**Last Activity Description:** Phase 5 Plan 01 complete — AoA-parameterized brentq solver implemented and anchor validated (v_loop 0.0002%, COP 0.00007%, F_vert 0.0005% — all tolerances passed)
 
-**Progress (v1.1):** [░░░░░░░░░░] 0%
+**Progress (v1.1):** [█████░░░░░] 50%
 
 ## Active Calculations
 
-None — Phase 5 ready to begin planning.
+None — Phase 5 execution complete; verification in progress.
 
 ## Intermediate Results
 
@@ -114,6 +114,20 @@ None — Phase 5 ready to begin planning.
 - Corrected: reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves (kinematic: lift ⊥ v_rel); AoA optimization is the only remaining lever
 - Prototype measurement priorities: (1) F_vert sign, (2) tack-flip loss, (3) mechanical loss fraction
 
+### Phase 5 Locked Values (authoritative — use phase5_anchor_check.json for exact values)
+
+- phase5_status = **anchor validated** — brentq solver reproduces Phase 4 anchor to 0.001%
+- solver_module = analysis/phase5/aoa_sweep_solver.py (importable by Phase 6)
+- v_loop_at_anchor = 2.383484 m/s (0.0002% error vs Phase 4; tolerance 0.5%)
+- F_vert_at_anchor = −663.862 N per vessel (0.0005% error vs Phase 4; tolerance 1.0%)
+- COP_at_anchor = 0.92501 (0.00007% error vs Phase 4; tolerance 0.5%)
+- F_vert sign confirmed negative (downward) at AoA = 1, 5, 10, 15 deg: −146.1, −472.2, −663.7, −668.0 N per vessel
+- Limiting case AoA=0: v_loop=3.691 m/s (≈ v_nom, C_L=0 pure drag), F_vert=−164.7 N
+- Key deviation: per-vessel force balance in F_net_residual (plan pseudocode had N_ascending multiplier — auto-corrected)
+- phase6_ready = **true** (overall_anchor_pass=true in phase5_anchor_check.json)
+- All three claims PASS: claim-ANAL-01, claim-ANAL-02, claim-VALD-01
+- All 7 pitfall guards confirmed: PITFALL-M1, PITFALL-N-ACTIVE, PITFALL-C6, PITFALL-COROT, F_vert_sign, brentq_not_fixed, inputs_from_JSON
+
 ## Performance Metrics
 
 | Label | Duration | Tasks | Files |
@@ -127,6 +141,7 @@ None — Phase 5 ready to begin planning.
 | Phase 3 Plan 02 | ~45 min | 2 | 5 |
 | Phase 4 Plan 01 | ~45 min | 2 | 4 |
 | Phase 4 Plan 02 | ~45 min | 2 | 5 |
+| Phase 5 Plan 01 | ~45 min | 2 | 3 |
 
 ## Accumulated Context
 
@@ -166,6 +181,10 @@ None — Phase 5 ready to begin planning.
 - [Phase 4 Plan 02]: Co-rotation P_net must be scaled by (v_loop_corr/v_loop_nom)³ = 0.264 at corrected velocity
 - [Phase 4 Plan 02]: Verdict = NO_GO (corrected COP_nominal=0.925); reversed foil mounting is NOT a valid design path — F_vert opposes motion on both sides (kinematic); AoA optimization is the correct v1.1 investigation
 - [v1.1 Roadmap]: Phase 5 = formulation + anchor validation; Phase 6 = full sweep + verdict; anchor check (VALD-01) is the first computation in Phase 5 before any new AoA points are computed
+- [Phase 5 Plan 01]: Per-vessel force balance in F_net_residual — plan pseudocode had N_ascending multiplier (gives 63% v_loop error); correct is per-vessel (confirmed by anchor match to 0.0002%)
+- [Phase 5 Plan 01]: F_vert_N in Phase 4 JSON stores per-vessel value; anchor comparison uses per-vessel throughout
+- [Phase 5 Plan 01]: e_oswald=0.85 loaded from foil01_force_sweep.json (not from phase2_summary_table.json)
+- [Phase 5 Plan 01]: AoA parameterization confirmed: mount_angle = beta_deg - AoA_target_deg computed dynamically at each brentq evaluation; NOT pre-fixed at 38 deg
 
 ### Active Approximations
 

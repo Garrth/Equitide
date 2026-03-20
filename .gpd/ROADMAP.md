@@ -39,9 +39,9 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 
 ### Phase 5: AoA Sweep Formulation and Anchor Validation
 
-**Status:** Pending
-**Started:** —
-**Completed:** —
+**Status:** Complete ✓
+**Started:** 2026-03-19
+**Completed:** 2026-03-19
 
 **Goal:** The functional relationships F_vert(AoA) and v_loop(AoA) are derived from the Phase 2 rotating-arm vector geometry, and the coupled brentq solver is verified to reproduce the Phase 4 anchor at AoA ≈ 10° before any new AoA points are computed.
 
@@ -132,4 +132,4 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 | Milestone | Phases | Plans | Status | Date |
 | --------- | ------ | ----- | ------ | ---- |
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
-| v1.1 AoA Parametric Sweep | 5–6 | 0/TBD (Phase 5: 1 plan) | Active | 2026-03-19 |
+| v1.1 AoA Parametric Sweep | 5–6 | 1/TBD (Phase 5: 1/1) | Active | 2026-03-19 |
