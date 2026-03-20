@@ -1,0 +1,81 @@
+# Requirements: Hydrowheel Buoyancy Engine — v1.1 AoA Parametric Sweep
+
+**Defined:** 2026-03-19
+**Core Research Question:** Does any AoA (1°–15°) achieve COP ≥ 1.5 when the F_vert vs. horizontal torque trade-off is optimized?
+
+## Primary Requirements
+
+### Analytical Extensions
+
+- [ ] **ANAL-01**: Derive F_vert(AoA) as a function of foil angle of attack at fixed λ = 0.9, carrying through the rotating-arm vector geometry from Phase 2
+- [ ] **ANAL-02**: Derive the coupled (v_loop, ω) self-consistent solution as a function of AoA — using the same brentq solver from Phase 4, sweeping AoA as the free parameter
+
+### Parametric Sweep
+
+- [ ] **SWEEP-01**: Compute the full AoA sweep from 1° to 15° (≥ 10 points): F_vert(AoA), v_loop_corrected(AoA), horizontal torque(AoA), co-rotation savings scaled by (v_loop/v_nom)³, and net COP(AoA)
+- [ ] **SWEEP-02**: Identify the AoA at which net COP is maximized — where the gain from reduced F_vert penalty exceeds the loss in horizontal torque
+
+### Validation
+
+- [ ] **VALD-01**: Verify the sweep reproduces the Phase 4 result at AoA ≈ 10° (λ = 0.9): v_loop = 2.384 m/s, COP_nominal = 0.925 — anchor check against locked Phase 4 values
+
+### Verdict
+
+- [ ] **VERD-01**: Deliver go/no-go verdict: does any AoA in [1°, 15°] achieve COP ≥ 1.5 under realistic assumptions (η_c = 0.70, 10% mechanical loss)?
+
+## Follow-up Requirements
+
+### Extended Analysis
+
+- **EXTD-01**: If COP < 1.5 at all AoA, map the envelope of what geometric or operational changes would be required to reach 1.5 (sensitivity analysis)
+- **EXTD-02**: λ sensitivity — does the optimal AoA shift significantly at λ = 0.8 or λ = 1.0?
+
+## Out of Scope
+
+| Topic | Reason |
+| ----- | ------- |
+| Reversed foil mounting | F_vert opposes motion on both loop halves regardless of orientation — kinematic, not design-dependent |
+| Detailed foil profile optimization | Requires physical model; parametric AoA sufficient for feasibility verdict |
+| Tack-flip mechanism engineering | Deferred to physical prototype |
+| Salt water operation | Out of scope for this study |
+
+## Accuracy and Validation Criteria
+
+| Requirement | Accuracy Target | Validation Method |
+| ----------- | --------------- | ----------------- |
+| ANAL-01 | Exact vector algebra (no approximation) | Reproduce F_vert at AoA=10°, λ=0.9: check against Phase 4 F_vert = −663.9 N |
+| ANAL-02 | brentq convergence tol = 1e-6 m/s | Reproduce Phase 4 v_loop = 2.384 m/s at AoA=10° |
+| SWEEP-01 | ≥ 10 AoA points, 4 significant figures per output | Monotonicity checks on F_vert(AoA) and torque(AoA) |
+| VALD-01 | COP within 0.5% of Phase 4 anchor (0.925) | Direct comparison with phase4_summary_table.json |
+| VERD-01 | COP verdict under η_c = 0.70, loss = 10% | Same scenario set as Phase 4 (9-scenario grid) |
+
+## Contract Coverage
+
+| Requirement | Decisive Output | Anchor / Benchmark | Prior Inputs | False Progress To Reject |
+| ----------- | --------------- | ------------------ | ------------ | ------------------------ |
+| ANAL-01 | F_vert(AoA) curve | Phase 4 F_vert = −663.9 N at AoA=10° | foil01_force_sweep.json (Phase 2) | F_vert = 0 claim without kinematic proof |
+| SWEEP-01 | COP(AoA) table | Phase 4 COP_nominal = 0.925 at AoA≈10° | phase4_summary_table.json | COP at any single AoA without full sweep |
+| VALD-01 | Anchor match note | phase4_summary_table.json v_loop=2.384 m/s | Phase 4 JSON outputs | "Qualitative agreement" without numeric match |
+| VERD-01 | Go/no-go verdict | COP ≥ 1.5 threshold | All Phase 1–4 locked values | COP_lossless or upper-bound COP only |
+
+## Traceability
+
+| Requirement | Phase | Status |
+| ----------- | ----- | ------ |
+| ANAL-01 | Phase 5 | Pending |
+| ANAL-02 | Phase 5 | Pending |
+| SWEEP-01 | Phase 5 | Pending |
+| SWEEP-02 | Phase 5 | Pending |
+| VALD-01 | Phase 5 | Pending |
+| VERD-01 | Phase 5 | Pending |
+
+**Coverage:**
+
+- Primary requirements: 6 total
+- Mapped to phases: 6
+- Unmapped: 0
+
+---
+
+_Requirements defined: 2026-03-19_
+_Last updated: 2026-03-19 after v1.1 milestone start_
