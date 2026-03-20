@@ -4,21 +4,21 @@
 
 See: .gpd/PROJECT.md (updated 2026-03-19)
 
-**Core research question:** At what foil AoA does F_vert = 0, and does COP reach ≥ 1.5 at that operating point?
-**Current focus:** v1.0 milestone complete (NO_GO) — planning v1.1 AoA parametric sweep
+**Core research question:** Does reversing the foil mount (upward F_vert) yield COP ≥ 1.5, and at what AoA is F_vert neutral or upward-assisting?
+**Current focus:** v1.1 AoA Parametric Sweep — defining objectives
 
 ## Current Position
 
-**Current Phase:** 4
-**Current Phase Name:** System Energy Balance
-**Total Phases:** 4
-**Current Plan:** 2
-**Total Plans in Phase:** 2
-**Status:** Phase 4 complete — NO_GO verdict (corrected); COP_nominal=0.925 at nominal conditions; all SYS requirements satisfied
-**Last Activity:** 2026-03-18
-**Last Activity Description:** Phase 4 Plans 01+02 complete — coupled v_loop=2.384 m/s (F_vert downward), corrected COP range [0.811, 1.186], NO_GO, reversed foil as design path
+**Current Phase:** 5
+**Current Phase Name:** AoA Parametric Sweep (v1.1)
+**Total Phases:** TBD
+**Current Plan:** 0
+**Total Plans in Phase:** TBD
+**Status:** Defining objectives
+**Last Activity:** 2026-03-19
+**Last Activity Description:** Started milestone v1.1: AoA Parametric Sweep — carry forward v1.0 NO_GO verdict and reversed-foil design path
 
-**Progress:** [██████████] 100%
+**Progress:** [░░░░░░░░░░] 0%
 
 ## Active Calculations
 

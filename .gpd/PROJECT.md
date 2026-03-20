@@ -4,6 +4,16 @@
 
 A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 30 open-bottom cylindrical vessels (3 vertical loops × 10 vessels) orbiting a central shaft in a 24 ft diameter × 60 ft deep fresh water cylinder. Ascending vessels are air-filled (buoyant); descending vessels are water-filled and pulled down by the chain. Hydrofoils on every vessel are tacked so both ascending and descending vessels contribute torque in the same rotational direction. Co-rotation of the water body reduces horizontal drag without reducing the vertical lift that drives the hydrofoils. The study determines whether the system can produce 1.5W of shaft output per 1W of air pumping input.
 
+## Current Milestone: v1.1 AoA Parametric Sweep
+
+**Goal:** Determine whether adjusting the hydrofoil angle of attack — specifically reversing the foil mount to flip F_vert upward — yields COP ≥ 1.5 and constitutes a viable path to prototype.
+
+**Target results:**
+
+- AoA at which F_vert = 0 (neutral vertical force) and resulting COP
+- Full parametric COP(AoA) sweep from current design point (AoA ≈ 10° at λ = 0.9) through reversed-mount geometry
+- Go/no-go verdict on reversed foil mounting as prototype design path
+
 ## Core Research Question
 
 Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input, as determined by a component-by-component energy balance?
@@ -191,4 +201,4 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 
 ---
 
-_Last updated: 2026-03-19 after v1.0 milestone_
+_Last updated: 2026-03-19 after v1.1 milestone start_

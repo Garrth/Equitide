@@ -261,14 +261,14 @@
     }
   },
   "position": {
-    "current_phase": null,
-    "current_phase_name": null,
+    "current_phase": 5,
+    "current_phase_name": "AoA Parametric Sweep (v1.1)",
     "total_phases": null,
-    "current_plan": null,
+    "current_plan": 0,
     "total_plans_in_phase": null,
-    "status": null,
-    "last_activity": null,
-    "last_activity_desc": null,
+    "status": "Defining objectives",
+    "last_activity": "2026-03-19",
+    "last_activity_desc": "Started milestone v1.1: AoA Parametric Sweep",
     "progress_percent": 0,
     "paused_at": null
   },
@@ -282,7 +282,13 @@
   "performance_metrics": {
     "rows": []
   },
-  "decisions": [],
+  "decisions": [
+    {
+      "phase": "0",
+      "summary": "Started milestone v1.1: AoA Parametric Sweep",
+      "rationale": "New milestone cycle — v1.0 NO_GO verdict; reversed foil mounting is decisive design path"
+    }
+  ],
   "approximations": [],
   "convention_lock": {
     "metric_signature": "N/A — classical fluid mechanics project; no spacetime metric",
