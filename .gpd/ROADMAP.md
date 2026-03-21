@@ -65,9 +65,13 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ### Phase 7: Purge Thrust and Tail Foil Derivation
 
-**Status:** Pending
+**Status:** Planned (2 plans)
 **Objectives:** PROP-01, PROP-02, TAIL-01, TAIL-02, VALD-01
 **Dependencies:** Phase 6 complete (authoritative COP baseline); phase1 JSON (W_iso, V_air(z)); phase5 solver framework
+
+**Plans:**
+- [ ] 07-01-PLAN.md -- Open-bottom force balance (PROP-01), F_jet(z) profile (PROP-02), v_exit(z) derivation (TAIL-01), VALD-01 energy accounting gate
+- [ ] 07-02-PLAN.md -- Tail foil chord parametric sweep (TAIL-02): W_tail_foil(chord) table, Re validity check, phase 8 handoff
 
 **Goal:** The force balance for the open-bottom vessel is derived from first principles, F_jet(z) and W_jet_thrust are computed analytically, tail foil lift at purge flow velocity is quantified parametrically over chord, and the energy accounting gate confirms whether jet thrust is additive to F_buoy or a restatement of it — so that Phase 8 can incorporate both contributions without double-counting.
 
@@ -164,4 +168,4 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 | --------- | ------ | ----- | ------ | ---- |
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
 | v1.1 AoA Parametric Sweep | 5–6 | 2/2 | Complete (NO_GO) | 2026-03-21 |
-| v1.2 Purge Thrust and Tail Foil | 7–8 | 0/2 | In Progress | — |
+| v1.2 Purge Thrust and Tail Foil | 7–8 | 0/4 | In Progress | — |
