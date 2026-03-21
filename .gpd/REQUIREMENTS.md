@@ -91,3 +91,67 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 _Requirements defined: 2026-03-21_
 _Last updated: 2026-03-21 after v1.2 milestone initialization_
+
+---
+
+# Requirements: Hydrowheel Buoyancy Engine — v1.3 Differential Rotation Analysis (Pre-planned)
+
+**Defined:** 2026-03-21
+**Core Research Question:** If v_water_tangential > v_arm_tangential, does the shifted apparent flow vector act as a COP multiplier, additive boost, or stall trigger?
+
+**Scope:** Purely fluid mechanical — no energy accounting for how differential rotation is maintained. Speed ratio r = v_water_tangential / v_arm_tangential swept from 1.0 (co-rotation baseline) to 1.5 (50% faster than arms).
+
+## Primary Requirements
+
+Requirements for v1.3. Phases continue from v1.2 (last phase = 8); v1.3 starts at Phase 9.
+
+### Differential Rotation Analysis (WAVE)
+
+- [ ] **WAVE-01**: Derive the apparent flow vector seen by the foil at speed ratio r = v_water_tangential / v_arm_tangential; compute effective AoA_eff(r) = mount_angle − arctan(v_tangential_net / v_vertical) and |v_rel|(r) for r ∈ [1.0, 1.5] at all loop positions; identify AoA_stall boundary r_stall where AoA_eff ≥ AoA_stall
+- [ ] **WAVE-02**: Compute lift L(r), drag D(r), horizontal torque Γ_h(r), and F_vert(r) at each r using NACA 0012 C_L/C_D data from Phase 5/6 (identical interpolation scheme); compare to baseline r = 1.0 to classify COP response: multiplicative (Γ_h ↑ and F_vert ↓ simultaneously), additive (|v_rel| ↑ only), or negative (AoA > AoA_stall)
+- [ ] **WAVE-03**: Compute COP(r) via coupled brentq solver extending the Phase 5/6 framework; sweep r ∈ [1.0, 1.5] at 0.05 increments (11 points); find optimal r* if a COP maximum exists; report COP gain vs baseline (r = 1.0) and characterize the response type
+
+## Out of Scope
+
+| Topic | Reason |
+| ----- | ------ |
+| Energy cost of differential rotation | Out of scope by user specification — wave energy treated as free |
+| r > 1.5 | Beyond physically realistic range for this geometry |
+| AoA re-optimization at each r | AoA held at Phase 6 optimal (2°) for first pass; sensitivity deferred |
+| Geometry changes (depth, vessel count) | Separate investigation; not part of v1.3 |
+
+## Accuracy and Validation Criteria
+
+| Requirement | Accuracy Target | Validation Method |
+| ----------- | --------------- | ----------------- |
+| WAVE-01 | AoA_eff to 0.1° | Reproduce baseline (r=1.0) → AoA_eff = Phase 6 AoA_optimal = 2.0° |
+| WAVE-02 | Force components to 3 significant figures | At r=1.0, reproduce Phase 6 forces to within 0.5% |
+| WAVE-03 | COP to 4 significant figures | At r=1.0, reproduce Phase 6 COP_nominal to within 0.5% (continuity check) |
+
+## Contract Coverage
+
+| Requirement | Decisive Output | Anchor / Benchmark | Prior Inputs | False Progress To Reject |
+| ----------- | --------------- | ------------------ | ------------ | ------------------------ |
+| WAVE-01 | AoA_eff(r) and \|v_rel\|(r) table | Phase 6 AoA_optimal = 2.0° at r=1.0 | phase5 solver geometry; phase6_verdict.json | AoA_eff at r≠1 without first reproducing r=1.0 baseline |
+| WAVE-02 | Force classification table (multiplicative/additive/negative) | Phase 6 force components at AoA=2° | Phase 5/6 NACA 0012 interpolator | Claiming multiplier without computing F_vert(r) simultaneously |
+| WAVE-03 | COP(r) sweep; optimal r*; gain vs baseline | Phase 6 COP_nominal (continuity check) | phase5 brentq solver | Reporting COP gain without continuity check at r=1.0 |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement | Phase | Status |
+| ----------- | ----- | ------ |
+| WAVE-01 | Phase 9: Differential Rotation Geometry and Force Analysis | Pending |
+| WAVE-02 | Phase 9: Differential Rotation Geometry and Force Analysis | Pending |
+| WAVE-03 | Phase 10: COP Sweep and Differential Rotation Verdict | Pending |
+
+**Coverage:**
+
+- Primary requirements: 3 total
+- Mapped to phases: 3
+- Unmapped: 0
+
+---
+
+_v1.3 requirements pre-planned: 2026-03-21_

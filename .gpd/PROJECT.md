@@ -20,6 +20,16 @@ A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 3
 - W_tail_foil per vessel per cycle (NACA foil lift at purge jet flow velocity; span = 0.457 m, chord parametric up to 0.457 m)
 - Revised 9-scenario COP table including both contributions; minimum and maximum margin above COP = 1.0
 
+## Next Milestone: v1.3 Differential Rotation Analysis
+
+**Goal:** Determine whether water rotating faster than the arm assembly (v_water_tangential > v_arm_tangential) acts as a COP multiplier, additive boost, or stall trigger by analyzing the shifted apparent flow vector at each speed ratio.
+
+**Target results:**
+
+- v_rel vector components and effective AoA_eff as a function of speed ratio r = v_water_tangential / v_arm_tangential ∈ [1.0, 1.5]; stall boundary r_stall
+- Lift, drag, horizontal torque Γ_h(r), and F_vert(r) at each r using NACA 0012 C_L/C_D data from Phase 5/6
+- COP(r) profile via coupled brentq solver; optimal r* if a maximum exists; classification of COP response (multiplicative / additive / negative)
+
 ## Core Research Question
 
 Does the Hydrowheel buoyancy + hydrofoil engine produce net positive energy (COP > 1.0), and what is the corrected COP when previously excluded contributions — purge jet thrust and tail foil lift — are properly accounted for?
@@ -110,6 +120,12 @@ Does the Hydrowheel buoyancy + hydrofoil engine produce net positive energy (COP
 - [ ] Is the upward force from the continuous purge jet (water ejected downward throughout ascent) additive to F_buoy(z), or a restatement of it? What is W_jet_thrust per cycle?
 - [ ] What is W_tail_foil per vessel per cycle from the tail foil harvesting the purge jet flow? (span = 0.457 m, chord parametric)
 - [ ] What is the corrected COP with both contributions included, and what margin exists above COP = 1.0?
+
+### Planned (v1.3)
+
+- [ ] If v_water_tangential > v_arm_tangential, how do the foil's apparent flow vector, effective AoA, and lift/drag components change at each speed ratio r ∈ [1.0, 1.5]?
+- [ ] Is the COP response multiplicative (both higher torque and lower F_vert), additive (more dynamic pressure only), or negative (stall-triggered)?
+- [ ] What is the optimal speed ratio r* that maximizes COP, and how large is the gain relative to co-rotation baseline (r = 1.0)?
 
 ### Out of Scope
 
@@ -226,4 +242,4 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 
 ---
 
-_Last updated: 2026-03-21 after v1.2 milestone initialized_
+_Last updated: 2026-03-21 after v1.3 milestone pre-planned_

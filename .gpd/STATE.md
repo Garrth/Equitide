@@ -169,6 +169,7 @@ None — Phase 7 not yet started.
 - [v1.2 Roadmap 2026-03-21]: AoA held at 2° (Phase 6 optimal) for the 9-scenario COP table; sensitivity check at 1° and 3° in TAIL-03
 - [v1.2 Roadmap 2026-03-21]: Verdict threshold is COP > 1.0 (net-positive), not 1.5 (original target — confirmed unachievable at current geometry)
 - [v1.2 Init]: Started milestone v1.2 — purge thrust and tail foil quantification; verdict gate COP > 1.0 (not 1.5); wave coupling deferred to v1.3
+- [v1.3 Pre-plan 2026-03-21]: v1.3 = Differential Rotation Analysis; core question is whether v_water_tangential > v_arm_tangential is a COP multiplier, additive, or stall trigger; no energy accounting for rotation source; sweep r ∈ [1.0, 1.5]; Phases 9–10
 - [Init]: Use actual cylinder volume (7.069 ft³), not user estimate
 - [Init]: Fill target = air fills vessel exactly at surface (V_air_surface = V_vessel)
 - [Init]: Fill window = 1/4 loop circumference at 3 m/s
@@ -228,10 +229,12 @@ None — Phase 7 not yet started.
 
 - Plan Phase 7 (Purge Thrust and Tail Foil Derivation) — PROP-01, PROP-02, TAIL-01, TAIL-02, VALD-01
 - After Phase 7: plan Phase 8 (Revised System Verdict) — PROP-03, TAIL-03, VALD-02, VALD-03
+- After Phase 8 complete: plan Phase 9 (Differential Rotation Geometry — WAVE-01, WAVE-02)
+- After Phase 9 complete: plan Phase 10 (COP Sweep and Verdict — WAVE-03)
 
 ### Blockers/Concerns
 
-- None — v1.2 roadmap complete; Phase 7 planning is the next step
+- None — v1.2 roadmap complete; Phase 7 planning is the next step; v1.3 pre-planned (Phases 9–10)
 
 ## Session Continuity
 

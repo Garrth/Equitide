@@ -5,6 +5,7 @@
 - **v1.0 Feasibility Study** — Phases 1–4 (completed 2026-03-19) — NO_GO: COP ∈ [0.811, 1.186]; reversed foil mounting invalid design path (kinematic: F_vert opposes motion on both loop halves regardless of orientation)
 - **v1.1 AoA Parametric Sweep** — Phases 5–6 (completed 2026-03-21) — NO_GO: COP_max = 1.210 at (η_c=0.85, loss=5%, AoA=2°); η_c*=1.054 exceeds isothermal limit; AoA optimization cannot reach COP=1.5
 - **v1.2 Purge Thrust and Tail Foil** — Phases 7–8 (in progress) — GO vs COP = 1.0 threshold (verdict pending)
+- **v1.3 Differential Rotation Analysis** — Phases 9–10 (pre-planned) — Is differential water rotation a COP multiplier, additive, or negative?
 
 ---
 
@@ -141,15 +142,96 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ---
 
+---
+
+## v1.3 Differential Rotation Analysis (Phases 9–10)
+
+### Contract Overview
+
+**Central question (v1.3):** If v_water_tangential > v_arm_tangential (water rotating faster than arm assembly), does the shifted apparent flow vector act as a COP multiplier (both higher torque and lower F_vert), an additive boost (more dynamic pressure only), or a negative (stall trigger)?
+
+**Decisive outputs required:**
+- AoA_eff(r) and |v_rel|(r) table for r ∈ [1.0, 1.5] at 0.05 increments; stall boundary r_stall
+- Force classification table: Γ_h(r) and F_vert(r) vs baseline (r=1.0); response type label
+- COP(r) sweep with optimal r* and gain relative to co-rotation baseline; continuity check at r=1.0
+
+**Authoritative prior inputs:**
+- phase5 solver: analysis/phase5/aoa_sweep_solver.py (brentq framework, validated to 0.001%)
+- phase6_verdict.json: COP at (η_c=0.85, loss=5%, AoA=2°) = 1.210 — continuity anchor
+- Phase 5/6 NACA 0012 C_L/C_D interpolator (identical scheme, not re-implemented)
+
+**Forbidden proxies:**
+- fp-multiplier-claim: do not classify response as multiplicative without computing F_vert(r) simultaneously with Γ_h(r)
+- fp-no-continuity: do not accept COP(r) results before the continuity check at r=1.0 reproduces Phase 6 values to 0.5%
+- fp-reimplemented-naca: do not re-implement the NACA interpolator; import from Phase 5/6
+
+**Scope boundary:** No energy accounting for differential rotation — wave energy treated as externally supplied at zero cost.
+
+---
+
+### Phase 9: Differential Rotation Geometry and Force Analysis
+
+**Status:** Pre-planned
+**Objectives:** WAVE-01, WAVE-02
+**Dependencies:** Phase 6 complete (AoA=2° baseline, NACA interpolator); Phase 8 complete (v1.2 verdict established)
+
+**Goal:** The apparent flow vector geometry at each speed ratio r is derived from the rotating-arm kinematics established in Phase 5; foil forces (lift, drag, horizontal torque, F_vert) are computed at each r using the Phase 5/6 NACA interpolator; and the force response is classified as multiplicative, additive, or negative relative to the co-rotation baseline (r=1.0).
+
+**Success Criteria:**
+
+1. At r=1.0, AoA_eff and forces reproduce Phase 6 values to within 0.5% — baseline continuity confirmed before any r≠1 results are accepted
+
+2. AoA_eff(r) and |v_rel|(r) are derived from vector geometry (not guessed); the tangential velocity component Δv = (r−1) × v_arm_tangential adds in the plane of rotation; the vertical component v_rel_vertical = v_loop is unchanged (geometric proof required)
+
+3. Stall boundary r_stall is identified: the smallest r where AoA_eff(r) ≥ AoA_stall (NACA 0012 stall ≈ 12–14°); all r values below r_stall are marked valid
+
+4. Force classification table produced: Γ_h(r) / Γ_h(r=1.0) and F_vert(r) / F_vert(r=1.0) at each valid r; response type determined (multiplicative: Γ_h ratio > 1 AND F_vert ratio < 1; additive: Γ_h ratio > 1 AND F_vert ratio ≈ 1; negative: beyond r_stall)
+
+5. Dimensional check: all forces [N], all torques [N·m], all speed ratios dimensionless; v_tangential_net = v_water_tangential − v_arm_tangential [m/s]
+
+**Backtracking Triggers:**
+- If r=1.0 baseline fails continuity check: debug vector geometry before proceeding
+- If v_rel_vertical is not preserved (geometrically impossible): halt and re-derive the rotating-arm frame
+
+---
+
+### Phase 10: COP Sweep and Differential Rotation Verdict
+
+**Status:** Pre-planned
+**Objectives:** WAVE-03
+**Dependencies:** Phase 9 complete — AoA_eff(r), |v_rel|(r), force components at each r
+
+**Goal:** The Phase 5/6 brentq solver is extended with the differential rotation force contributions; COP(r) is computed across the full r ∈ [1.0, 1.5] sweep; the optimal speed ratio r* is identified if a maximum exists; and the v1.3 verdict characterizes the COP response type.
+
+**Success Criteria:**
+
+1. Continuity check at r=1.0: extended solver reproduces Phase 6 COP_nominal to within 0.5% before any r≠1 results are accepted
+
+2. COP(r) computed at 11 points (r = 1.00, 1.05, 1.10, ..., 1.50); COP reported to 4 significant figures; W_pump denominator unchanged from Phase 6
+
+3. Optimal r* identified: if COP(r) has an interior maximum in [1.0, 1.5], r* is located via bisection or Brent's method; if no interior maximum (monotone or stall-limited), the behavior is documented explicitly
+
+4. COP gain = COP(r*) − COP(r=1.0) reported to 3 significant figures; verdict classifies overall response as multiplicative / additive / negative
+
+5. If COP(r*) > COP_v1.2_best_case: flag as significant result; if COP(r*) ≤ COP_v1.2_best_case: document and do not oversell
+
+**Backtracking Triggers:**
+- If continuity check fails by > 0.5%: debug the r-extension before accepting any results
+- If r_stall < 1.1: water rotation has essentially no safe operating window; document and report zero gain
+
+---
+
 ## Phase Dependencies
 
 | Phase | Depends On | Enables | Critical Path? |
 | ----- | ---------- | ------- | :---: |
 | 7 - Purge Thrust and Tail Foil Derivation | Phase 6 (baseline COP); phase1 JSON; phase5 solver | Phase 8 | Yes |
-| 8 - Revised System Verdict | Phase 7 (VALD-01 gate; W_jet_thrust; W_tail_foil) | — | Yes |
+| 8 - Revised System Verdict | Phase 7 (VALD-01 gate; W_jet_thrust; W_tail_foil) | Phase 9 | Yes |
+| 9 - Differential Rotation Geometry and Force Analysis | Phase 8 complete (v1.2 verdict); Phase 5/6 solver + NACA interpolator | Phase 10 | Yes |
+| 10 - COP Sweep and Differential Rotation Verdict | Phase 9 (AoA_eff(r), force table) | — | Yes |
 
-**Critical path:** 7 → 8 (sequential; Phase 8 cannot begin until VALD-01 is closed in Phase 7)
-**No parallelism:** all Phase 8 inputs are produced in Phase 7
+**v1.2 critical path:** 7 → 8 (sequential; Phase 8 cannot begin until VALD-01 is closed in Phase 7)
+**v1.3 critical path:** 9 → 10 (sequential; Phase 10 depends on Phase 9 force table)
 
 ## Risk Register
 
@@ -162,6 +244,17 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ---
 
+## Risk Register
+
+| Phase | Top Risk | Probability | Impact | Mitigation |
+| ----- | -------- | :---------: | :----: | ---------- |
+| 9 | r_stall close to 1.0 — almost no valid speed ratio range | LOW | HIGH | Check AoA_eff at r=1.1 first; if stall, report and close |
+| 9 | v_rel_vertical not preserved (incorrect frame derivation) | LOW | HIGH | Geometric proof required in plan; backtrack trigger |
+| 10 | COP(r) monotone decreasing — stall dominates before any gain | MEDIUM | MEDIUM | Report honestly; differential rotation is not beneficial |
+| 10 | COP gain < 0.01 (negligible) | MEDIUM | MEDIUM | Report; v1.3 closes with "no significant multiplier found" |
+
+---
+
 ## Progress
 
 | Milestone | Phases | Plans | Status | Date |
@@ -169,3 +262,4 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
 | v1.1 AoA Parametric Sweep | 5–6 | 2/2 | Complete (NO_GO) | 2026-03-21 |
 | v1.2 Purge Thrust and Tail Foil | 7–8 | 0/4 | In Progress | — |
+| v1.3 Differential Rotation Analysis | 9–10 | 0/2 | Pre-planned | — |
