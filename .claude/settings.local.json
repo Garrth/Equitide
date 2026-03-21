@@ -1,7 +1,35 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global state advance --phase 04 --plan 01)",
+      "Bash(python analysis/phase4/sys03_sensitivity_verdict.py)",
+      "Bash(python analysis/phase4/sys04_phase4_summary.py)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(while read:*)",
+      "Bash(do git:*)",
+      "Bash(done)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global --raw convention list 2>&1)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global milestone complete \"v1.0\" --name \"Feasibility Study\")",
+      "Bash(ls .gpd/*.tmp*)",
+      "Bash(rm -f .gpd/*.tmp*)",
+      "Bash(ls -la .gpd/state.json*)",
+      "Bash(git rm:*)",
+      "Bash(git tag:*)",
+      "Bash(ls:*)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global state add-decision --phase \"0\" --summary \"Started milestone v1.1: AoA Parametric Sweep\" --rationale \"New milestone cycle — v1.0 NO_GO verdict; reversed foil mounting is decisive design path\")",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global sync-state)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global pre-commit-check --files .gpd/PROJECT.md .gpd/STATE.md .gpd/state.json)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global commit \"docs: start milestone v1.1 AoA Parametric Sweep\" --files .gpd/PROJECT.md .gpd/STATE.md .gpd/state.json)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global commit \"docs: correct v1.1 framing — F_vert is kinematic, AoA optimization only\" --files .gpd/PROJECT.md .gpd/STATE.md)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global commit \"docs: define milestone v1.1 objectives\" --files .gpd/REQUIREMENTS.md)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global commit \"docs: create milestone v1.1 roadmap \\(2 phases\\)\" --files .gpd/ROADMAP.md .gpd/STATE.md .gpd/REQUIREMENTS.md)",
+      "Skill(gpd:execute-phase)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global commit \"docs\\(09-01\\): complete differential rotation geometry and force analysis plan\" --files \".gpd/phases/09-differential-rotation-geometry-and-force-analysis/09-01-SUMMARY.md\")",
+      "Bash(python -c \":*)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global state advance)",
+      "Bash('C:\\\\Users\\\\garth\\\\.gpd\\\\venv\\\\Scripts\\\\python.exe' -m gpd.runtime_cli --runtime claude-code --config-dir C:/Users/garth/.claude --install-scope global resolve-model gpd-consistency-checker 2>&1)"
     ]
   }
 }
