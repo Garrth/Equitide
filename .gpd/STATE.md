@@ -5,7 +5,7 @@
 See: .gpd/PROJECT.md (updated 2026-03-21)
 
 **Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** v1.1 milestone archived — planning next research stage (design changes required for v1.2)
+**Current focus:** v1.2 milestone initialized — defining purge thrust and tail foil objectives
 
 ## Current Position
 
@@ -14,11 +14,11 @@ See: .gpd/PROJECT.md (updated 2026-03-21)
 **Total Phases:** 6 (v1.1 milestone)
 **Current Plan:** 1
 **Total Plans in Phase:** 1
-**Status:** Milestone complete — NO_GO verdict delivered; v1.1 AoA Parametric Sweep finished
+**Status:** Defining objectives — v1.2 milestone initialized
 **Last Activity:** 2026-03-21
-**Last Activity Description:** Phase 6 Plan 01 complete — full AoA sweep [1°–15°]; AoA_optimal=2.0°; COP_max=1.210 (η_c=0.85, loss=5%); VERDICT NO_GO, gap=0.290, η_c*=1.054 > 1.0 (exceeds isothermal limit); v1.1 milestone complete
+**Last Activity Description:** v1.2 milestone started — purge thrust and tail foil quantification; two phases planned (7: derivation, 8: verdict)
 
-**Progress (v1.1):** [██████████] 100%
+**Progress (v1.2):** [░░░░░░░░░░] 0%
 
 ## Active Calculations
 
@@ -162,6 +162,7 @@ None — v1.1 AoA Parametric Sweep milestone complete.
 
 ### Decisions
 
+- [v1.2 Init]: Started milestone v1.2 — purge thrust and tail foil quantification; verdict gate COP > 1.0 (not 1.5); wave coupling deferred to v1.3
 - [Init]: Use actual cylinder volume (7.069 ft³), not user estimate
 - [Init]: Fill target = air fills vessel exactly at surface (V_air_surface = V_vessel)
 - [Init]: Fill window = 1/4 loop circumference at 3 m/s

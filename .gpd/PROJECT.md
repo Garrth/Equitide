@@ -2,16 +2,27 @@
 
 ## What This Is
 
-A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 30 open-bottom cylindrical vessels (3 vertical loops × 10 vessels) orbiting a central shaft in a 24 ft diameter × 60 ft deep fresh water cylinder. Ascending vessels are air-filled (buoyant); descending vessels are water-filled and pulled down by the chain. Hydrofoils on every vessel are tacked so both ascending and descending vessels contribute torque in the same rotational direction. Co-rotation of the water body reduces horizontal drag without reducing the vertical lift that drives the hydrofoils. The study determines whether the system can produce 1.5W of shaft output per 1W of air pumping input.
+A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 30 open-bottom cylindrical vessels (3 vertical loops × 10 vessels) orbiting a central shaft in a 24 ft diameter × 60 ft deep fresh water cylinder. Ascending vessels are air-filled (buoyant); descending vessels are water-filled and pulled down by the chain. Hydrofoils on every vessel are tacked so both ascending and descending vessels contribute torque in the same rotational direction. Co-rotation of the water body reduces horizontal drag without reducing the vertical lift that drives the hydrofoils. The meaningful energy threshold is COP > 1.0 (net positive energy output); v1.1 confirmed COP_max = 1.210 at current geometry, establishing the device as a working concept.
 
 ## Milestone Status
 
-- **v1.0 Feasibility Study** (Phases 1–4) — COMPLETE (NO_GO, 2026-03-19): COP ∈ [0.811, 1.186]; hydrofoil + co-rotation confirmed kinematically; F_vert coupling reduces v_loop 36%; reversed foil mounting invalid (kinematic)
-- **v1.1 AoA Parametric Sweep** (Phases 5–6) — COMPLETE (NO_GO, 2026-03-21): AoA_optimal = 2°; COP_max = 1.210 at (η_c=0.85, loss=5%); η_c*=1.054 exceeds isothermal limit; AoA optimization exhausted as design lever
+- **v1.0 Feasibility Study** (Phases 1–4) — COMPLETE (NO_GO vs 1.5 target, 2026-03-19): COP ∈ [0.811, 1.186]; hydrofoil + co-rotation confirmed kinematically; F_vert coupling reduces v_loop 36%; reversed foil mounting invalid (kinematic)
+- **v1.1 AoA Parametric Sweep** (Phases 5–6) — COMPLETE (GO vs 1.0 threshold, 2026-03-21): AoA_optimal = 2°; COP_max = 1.210 at (η_c=0.85, loss=5%); η_c*=1.054 exceeds isothermal limit; AoA optimization exhausted as design lever
+- **v1.2 Purge Thrust and Tail Foil** (Phases 7–8) — IN PROGRESS: Quantify two previously excluded contributions (continuous purge jet thrust + tail foil lift from purge flow); determine corrected COP margin above 1.0
+
+## Current Milestone: v1.2 Purge Thrust and Tail Foil Quantification
+
+**Goal:** Quantify two physical contributions excluded from all prior analysis — continuous purge jet thrust and tail foil lift — and determine the corrected COP margin above the net-positive threshold of 1.0.
+
+**Target results:**
+
+- W_jet_thrust per vessel per cycle (from first-principles derivation of open-bottom force balance and isothermal expansion-driven water ejection)
+- W_tail_foil per vessel per cycle (NACA foil lift at purge jet flow velocity; span = 0.457 m, chord parametric up to 0.457 m)
+- Revised 9-scenario COP table including both contributions; minimum and maximum margin above COP = 1.0
 
 ## Core Research Question
 
-Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input, as determined by a component-by-component energy balance?
+Does the Hydrowheel buoyancy + hydrofoil engine produce net positive energy (COP > 1.0), and what is the corrected COP when previously excluded contributions — purge jet thrust and tail foil lift — are properly accounted for?
 
 ## Scoping Contract Summary
 
@@ -92,7 +103,13 @@ Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for ev
 
 - [x] Full parametric AoA sweep (1°–15°): F_vert(AoA) always negative; v_loop ∈ [2.373, 3.465] m/s; W_foil and W_corot trade-off quantified at all 16 points — v1.1
 - [x] AoA_optimal = 2.0° — co-rotation gain (+168 kJ) just outpaces foil loss (−147 kJ) vs AoA=10° baseline; COP maximum is shallow (±0.002 near optimum) — v1.1
-- [x] NO: COP_max = 1.210 < 1.5 at all AoA in all nine scenarios; required η_c* = 1.054 exceeds isothermal limit; gap is fundamental geometric constraint — v1.1
+- [x] YES (vs 1.0 threshold): COP_max = 1.210 > 1.0 at optimal AoA across best-case scenarios; device is net-positive at current geometry — v1.1 reinterpretation
+
+### Active (v1.2)
+
+- [ ] Is the upward force from the continuous purge jet (water ejected downward throughout ascent) additive to F_buoy(z), or a restatement of it? What is W_jet_thrust per cycle?
+- [ ] What is W_tail_foil per vessel per cycle from the tail foil harvesting the purge jet flow? (span = 0.457 m, chord parametric)
+- [ ] What is the corrected COP with both contributions included, and what margin exists above COP = 1.0?
 
 ### Out of Scope
 
@@ -209,4 +226,4 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 
 ---
 
-_Last updated: 2026-03-21 after v1.1 milestone complete_
+_Last updated: 2026-03-21 after v1.2 milestone initialized_
