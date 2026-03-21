@@ -5,7 +5,7 @@
 - **v1.0 Feasibility Study** — Phases 1–4 (completed 2026-03-19) — NO_GO: COP ∈ [0.811, 1.186]; reversed foil mounting invalid design path (kinematic: F_vert opposes motion on both loop halves regardless of orientation)
 - **v1.1 AoA Parametric Sweep** — Phases 5–6 (completed 2026-03-21) — NO_GO: COP_max = 1.210 at (η_c=0.85, loss=5%, AoA=2°); η_c*=1.054 exceeds isothermal limit; AoA optimization cannot reach COP=1.5
 - **v1.2 Purge Thrust and Tail Foil** — Phases 7–8 (in progress) — GO vs COP = 1.0 threshold (verdict pending)
-- **v1.3 Differential Rotation Analysis** — Phases 9–10 (pre-planned) — Is differential water rotation a COP multiplier, additive, or negative?
+- **v1.3 Differential Rotation Analysis** — Phases 9–10 (completed 2026-03-21) — NO_GO: COP(r) monotone decreasing; r*=1.0; gain=0.000; multiplicative response geometrically impossible (enhanced-both)
 
 ---
 
@@ -197,12 +197,12 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ### Phase 10: COP Sweep and Differential Rotation Verdict
 
-**Status:** Planned (1 plan)
+**Status:** Completed (2026-03-21) — NO_GO; COP(r) monotone decreasing; r*=1.0; gain=0.000; gap to 1.5 = 0.556
 **Objectives:** WAVE-03
 **Dependencies:** Phase 9 complete — AoA_eff(r), |v_rel|(r), force components at each r
 
 **Plans:**
-- [ ] 10-01-PLAN.md -- Extended brentq solver at each r; COP(r) sweep at 11 points; r* identification; v1.3 verdict
+- [x] 10-01-PLAN.md -- Extended brentq solver at each r; COP(r) sweep at 11 points; r* identification; v1.3 verdict (completed 2026-03-21)
 
 **Goal:** The Phase 5/6 brentq solver is extended with the differential rotation force contributions; COP(r) is computed across the full r ∈ [1.0, 1.5] sweep; the optimal speed ratio r* is identified if a maximum exists; and the v1.3 verdict characterizes the COP response type.
 
@@ -265,4 +265,4 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
 | v1.1 AoA Parametric Sweep | 5–6 | 2/2 | Complete (NO_GO) | 2026-03-21 |
 | v1.2 Purge Thrust and Tail Foil | 7–8 | 0/4 | In Progress | — |
-| v1.3 Differential Rotation Analysis | 9–10 | 1/2 | In Progress | — |
+| v1.3 Differential Rotation Analysis | 9–10 | 2/2 | Complete (NO_GO) | 2026-03-21 |
