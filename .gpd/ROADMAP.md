@@ -171,7 +171,7 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ### Phase 9: Differential Rotation Geometry and Force Analysis
 
-**Status:** Pre-planned
+**Status:** Completed (2026-03-21) — enhanced-both response; r_stall_onset=1.31; Γ_h up to 4.48×, |F_vert| up to 3.41×; NOT multiplicative
 **Objectives:** WAVE-01, WAVE-02
 **Dependencies:** Phase 6 complete (AoA=2° baseline, NACA interpolator); Phase 8 complete (v1.2 verdict established)
 
@@ -262,4 +262,4 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
 | v1.1 AoA Parametric Sweep | 5–6 | 2/2 | Complete (NO_GO) | 2026-03-21 |
 | v1.2 Purge Thrust and Tail Foil | 7–8 | 0/4 | In Progress | — |
-| v1.3 Differential Rotation Analysis | 9–10 | 0/2 | Pre-planned | — |
+| v1.3 Differential Rotation Analysis | 9–10 | 1/2 | In Progress | — |

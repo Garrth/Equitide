@@ -5,7 +5,7 @@
 See: .gpd/PROJECT.md (updated 2026-03-21)
 
 **Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** v1.2 milestone — Purge Thrust and Tail Foil Quantification; Phase 7 is the next execution target
+**Current focus:** v1.3 milestone — Differential Rotation Analysis; Phase 9 complete; Phase 10 (COP sweep) is next; v1.2 (Phases 7–8) still pending
 
 ## Current Position
 
@@ -16,13 +16,13 @@ See: .gpd/PROJECT.md (updated 2026-03-21)
 **Total Plans in Phase:** TBD
 **Status:** Roadmap complete — ready for Phase 7 planning
 **Last Activity:** 2026-03-21
-**Last Activity Description:** v1.2 roadmap created — Phase 7 (derivation + VALD-01 gate) and Phase 8 (revised verdict) defined; REQUIREMENTS.md traceability confirmed 9/9 objectives mapped
+**Last Activity Description:** Phase 9 complete — differential rotation geometry and force analysis; r_stall_onset=1.31; classification=enhanced-both; baseline 0.000% vs Phase 6; verification passed (3/3)
 
-**Progress (v1.2):** [░░░░░░░░░░] 0%
+**Progress (v1.3):** [█████░░░░░] 50% (Phase 9/10 complete)
 
 ## Active Calculations
 
-None — Phase 7 not yet started.
+None — Phase 9 complete; Phase 10 (COP sweep) not yet started.
 
 ## Intermediate Results
 
@@ -143,6 +143,21 @@ None — Phase 7 not yet started.
 - tack_flip_caveat: +5% additional loss reduces COP_max from 0.944 to 0.891 (highest prototype priority)
 - v1.1_milestone_status = **COMPLETE** (NO_GO; 2026-03-21)
 
+### Phase 9 Locked Values (authoritative — use phase9_geometry_table.json and phase9_force_table.json)
+
+- phase9_status = **COMPLETE** (2026-03-21; verification 3/3 passed)
+- r_stall_onset = 1.31 (AoA_eff = 12.147° ≥ 12° onset); r_stall_full = 1.36 (AoA_eff = 14.045°)
+- v_tangential_net(r) = λ·v_loop·(2−r) — geometric proof: wave co-rotation reduces relative tangential flow
+- AoA_eff(r) = arctan(1/(λ·(2−r))) − arctan(1/λ) + AoA_optimal (closed form)
+- mount_angle = 46.013° (fixed from Phase 6; NOT re-optimized)
+- v_loop_Phase9 = 3.273346 m/s (Phase 6 AoA=2° value; fixed; Phase 10 will re-solve brentq at each r)
+- Baseline continuity at r=1.0: AoA_eff = 2.0000°, F_vert = −251.8383 N (0.000% error), F_tan = 250.8316 N (0.000% error)
+- Classification = **enhanced-both** for r ∈ (1.0, 1.31): Γ_h_ratio up to 4.477× (at r=1.30), F_vert_ratio up to 3.413× (at r=1.30); NOT multiplicative (F_vert does not decrease)
+- Negative regime: r ≥ 1.31 (stall onset); valid COP sweep window is r ∈ [1.0, 1.31)
+- Phase 10 note: Phase 9 forces are UPPER BOUNDS at r ≠ 1.0 (fixed v_loop overestimates; Phase 10 brentq will correct)
+- Forbidden proxy confirmed absent: fp-reversed-foil, fp-brentq-at-each-r, fp-positive-tangential, fp-aoa-anchor-not-optimal
+- PITFALL-P9-WRONG-VTAN: do NOT use r·λ·v_loop; must use λ·(2−r)·v_loop
+
 ## Performance Metrics
 
 | Label | Duration | Tasks | Files |
@@ -158,6 +173,7 @@ None — Phase 7 not yet started.
 | Phase 4 Plan 02 | ~45 min | 2 | 5 |
 | Phase 5 Plan 01 | ~45 min | 2 | 3 |
 | Phase 6 Plan 01 | ~45 min | 2 | 4 |
+| Phase 9 Plan 01 | ~35 min | 2 | 4 |
 
 ## Accumulated Context
 
@@ -170,6 +186,9 @@ None — Phase 7 not yet started.
 - [v1.2 Roadmap 2026-03-21]: Verdict threshold is COP > 1.0 (net-positive), not 1.5 (original target — confirmed unachievable at current geometry)
 - [v1.2 Init]: Started milestone v1.2 — purge thrust and tail foil quantification; verdict gate COP > 1.0 (not 1.5); wave coupling deferred to v1.3
 - [v1.3 Pre-plan 2026-03-21]: v1.3 = Differential Rotation Analysis; core question is whether v_water_tangential > v_arm_tangential is a COP multiplier, additive, or stall trigger; no energy accounting for rotation source; sweep r ∈ [1.0, 1.5]; Phases 9–10
+- [Phase 9 2026-03-21]: Wave co-rotation response is enhanced-both (Γ_h↑ AND |F_vert|↑), NOT multiplicative; C_L increase dominates v_rel² decrease throughout valid r ∈ [1.0, 1.31); net COP effect is ambiguous until Phase 10 coupled brentq
+- [Phase 9 2026-03-21]: v_tangential_net(r) = λ·v_loop·(2−r); PITFALL-P9-WRONG-VTAN: NOT r·λ·v_loop (that formula gives decreasing AoA, never reaches stall — physically wrong)
+- [Phase 9 2026-03-21]: Phase 9 forces at r ≠ 1.0 are upper bounds (fixed v_loop from Phase 6); Phase 10 brentq will give self-consistent v_loop(r) at each r
 - [Init]: Use actual cylinder volume (7.069 ft³), not user estimate
 - [Init]: Fill target = air fills vessel exactly at surface (V_air_surface = V_vessel)
 - [Init]: Fill window = 1/4 loop circumference at 3 m/s
@@ -227,10 +246,9 @@ None — Phase 7 not yet started.
 
 ### Pending Todos
 
-- Plan Phase 7 (Purge Thrust and Tail Foil Derivation) — PROP-01, PROP-02, TAIL-01, TAIL-02, VALD-01
-- After Phase 7: plan Phase 8 (Revised System Verdict) — PROP-03, TAIL-03, VALD-02, VALD-03
-- After Phase 8 complete: plan Phase 9 (Differential Rotation Geometry — WAVE-01, WAVE-02)
-- After Phase 9 complete: plan Phase 10 (COP Sweep and Verdict — WAVE-03)
+- Plan Phase 7 (Purge Thrust and Tail Foil Derivation) — PROP-01, PROP-02, TAIL-01, TAIL-02, VALD-01 [v1.2, still pending]
+- After Phase 7: plan Phase 8 (Revised System Verdict) — PROP-03, TAIL-03, VALD-02, VALD-03 [v1.2, still pending]
+- Plan Phase 10 (COP Sweep and Differential Rotation Verdict — WAVE-03) — r_stall_onset=1.31 from Phase 9; Phase 9 force table is the input
 
 ### Blockers/Concerns
 
@@ -239,5 +257,5 @@ None — Phase 7 not yet started.
 ## Session Continuity
 
 **Last session:** 2026-03-21
-**Stopped at:** v1.2 roadmap created — ready for Phase 7 planning
-**Resume file:** analysis/phase5/aoa_sweep_solver.py (Phase 7 solver extension starting point); phase6_verdict.json (COP baseline reference)
+**Stopped at:** Phase 9 complete — differential rotation geometry and force analysis; classification=enhanced-both; ready for Phase 10 planning
+**Resume file:** analysis/phase9/outputs/phase9_force_table.json (Phase 10 input: r_stall=1.31, Γ_h_ratio and F_vert_ratio at each r); analysis/phase5/aoa_sweep_solver.py (Phase 10 extends brentq solver)
