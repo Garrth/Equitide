@@ -1,0 +1,38 @@
+{
+  "_description": "Phase 10 v1.3 verdict: COP sweep with differential rotation",
+  "_assert_convention": "unit_system=SI, v_tangential_net=lambda*v_loop*(2-r), PITFALL-P9-WRONG-VTAN=guarded, PITFALL-M1=guarded, brentq_at_each_r=True, mount_angle=46.013deg FIXED",
+  "_generated_by": "analysis/phase10/cop_sweep.py",
+  "v13_verdict": "NO_GO",
+  "v13_verdict_detail": "COP(r*) = 0.9437 < 1.5 threshold. Differential rotation provides no COP gain over Phase 6 baseline. Gap to threshold = 0.5563.",
+  "COP_threshold": 1.5,
+  "r_star": 1.0,
+  "COP_r_star": 0.9437,
+  "COP_r_baseline": 0.9437,
+  "COP_gain_vs_r1": 0.0,
+  "r_star_case": "no_gain",
+  "response_type": "no_gain",
+  "response_detail": "negligible (|gain| = 0.0000 < 0.01)",
+  "phase6_nominal_anchor": 0.943726,
+  "phase6_best_case_ceiling": 1.209617,
+  "COP_gap_to_threshold": 0.5563,
+  "COP_gap_to_phase6_ceiling": 0.2659,
+  "phase6_comparison_flag": "no_improvement: COP(r*) = 0.9437 equals Phase 6 nominal (0.9437); differential rotation provides no COP gain",
+  "multiplicative_impossible_note": "Enhanced-both response confirmed in Phase 9: F_vert_ratio > 1.0 at all r in (1.0, 1.31). |F_vert| INCREASES with r (C_L triples while v_rel^2 drops ~8%). True multiplicative COP would require F_vert to DECREASE with r, which is geometrically impossible at fixed mount_angle=46.013 deg. response_type='multiplicative' is REJECTED by Phase 9 evidence.",
+  "v_loop_r_star_ms": 3.2733,
+  "v_loop_r1_ms": 3.2733,
+  "v_loop_ratio": 1.0,
+  "stall_limit_note": "Valid COP sweep window: r \u2208 [1.00, 1.30]; r=1.31 is stall onset (AoA_eff >= 12.147 deg >= 12 deg per Phase 9). Stalled r values computed with clamped NACA coefficients but flagged invalid.",
+  "forbidden_proxies_rejected": {
+    "fp-reversed-foil": "REJECTED: F_vert is kinematic (lift perpendicular to v_rel, always negative/downward); foil orientation irrelevant to F_vert sign.",
+    "fp-fixed-vloop": "REJECTED: brentq re-run at each r; v_loop varies with r (Phase 9 fixed v_loop=3.273346 m/s was UPPER BOUND; Phase 10 self-consistent).",
+    "fp-wrong-vtan": "REJECTED: v_tan = lambda*(2-r)*v_loop; assertion passed at load time (v_tan decreases with r).",
+    "fp-cop-lossless-primary": "REJECTED: COP_nominal (eta_c=0.70, loss=10%) is primary metric; lossless COP not reported.",
+    "fp-no-continuity": "REJECTED: continuity gate PASSED (COP(r=1.0)=0.94373 within 0.0000% of Phase 6 anchor 0.94373).",
+    "fp-multiplier-claim": "REJECTED: response_type='multiplicative' is geometrically impossible. Phase 9 confirmed F_vert_ratio > 1 throughout valid r range. Actual response_type: no_gain."
+  },
+  "backtracking_checks": {
+    "continuity_gate": "PASSED",
+    "brentq_convergence_all_r": true,
+    "v_loop_physically_plausible": "all v_loop(r) > 0.5 m/s"
+  }
+}
