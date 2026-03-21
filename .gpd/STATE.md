@@ -5,24 +5,24 @@
 See: .gpd/PROJECT.md (updated 2026-03-21)
 
 **Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
-**Current focus:** v1.2 milestone initialized — defining purge thrust and tail foil objectives
+**Current focus:** v1.2 milestone — Purge Thrust and Tail Foil Quantification; Phase 7 is the next execution target
 
 ## Current Position
 
-**Current Phase:** 6
-**Current Phase Name:** Full AoA Parametric Sweep and Go/No-Go Verdict
-**Total Phases:** 6 (v1.1 milestone)
-**Current Plan:** 1
-**Total Plans in Phase:** 1
-**Status:** Defining objectives — v1.2 milestone initialized
+**Current Phase:** 7
+**Current Phase Name:** Purge Thrust and Tail Foil Derivation
+**Total Phases:** 8 (v1.2 milestone)
+**Current Plan:** 0 (not yet started)
+**Total Plans in Phase:** TBD
+**Status:** Roadmap complete — ready for Phase 7 planning
 **Last Activity:** 2026-03-21
-**Last Activity Description:** v1.2 milestone started — purge thrust and tail foil quantification; two phases planned (7: derivation, 8: verdict)
+**Last Activity Description:** v1.2 roadmap created — Phase 7 (derivation + VALD-01 gate) and Phase 8 (revised verdict) defined; REQUIREMENTS.md traceability confirmed 9/9 objectives mapped
 
 **Progress (v1.2):** [░░░░░░░░░░] 0%
 
 ## Active Calculations
 
-None — v1.1 AoA Parametric Sweep milestone complete.
+None — Phase 7 not yet started.
 
 ## Intermediate Results
 
@@ -69,9 +69,10 @@ None — v1.1 AoA Parametric Sweep milestone complete.
 
 ## Open Questions
 
-- At what AoA in [1°, 15°] is COP maximized, and does it reach 1.5? (v1.1 primary question)
-- Does the F_vert reduction at low AoA outpace the horizontal torque reduction, or vice versa?
-- Does λ_eff = ω·R/v_loop_corrected(AoA) stay below the stall boundary (λ_max ≈ 1.2748) across all AoA in the sweep?
+- Is W_jet_thrust genuinely additive to W_buoy (i.e., is the purge jet force outside the Archimedes integral), or is it a restatement of work already counted in W_iso? (v1.2 primary physics question — VALD-01 gate)
+- What is the first-principles magnitude of W_jet_thrust, and does it approach the ~20% upward force user estimate?
+- What chord length maximizes W_tail_foil while remaining physically feasible for the vessel geometry?
+- What is the COP margin above 1.0 with both contributions included, across all 9 scenarios?
 
 ### Phase 3 Locked Values (authoritative — use phase3_summary_table.json for exact values)
 
@@ -117,7 +118,7 @@ None — v1.1 AoA Parametric Sweep milestone complete.
 ### Phase 5 Locked Values (authoritative — use phase5_anchor_check.json for exact values)
 
 - phase5_status = **anchor validated** — brentq solver reproduces Phase 4 anchor to 0.001%
-- solver_module = analysis/phase5/aoa_sweep_solver.py (importable by Phase 6)
+- solver_module = analysis/phase5/aoa_sweep_solver.py (importable by Phase 6 and Phase 8)
 - v_loop_at_anchor = 2.383484 m/s (0.0002% error vs Phase 4; tolerance 0.5%)
 - F_vert_at_anchor = −663.862 N per vessel (0.0005% error vs Phase 4; tolerance 1.0%)
 - COP_at_anchor = 0.92501 (0.00007% error vs Phase 4; tolerance 0.5%)
@@ -162,6 +163,11 @@ None — v1.1 AoA Parametric Sweep milestone complete.
 
 ### Decisions
 
+- [v1.2 Roadmap 2026-03-21]: VALD-01 energy accounting gate is Phase 7's load-bearing prerequisite; Phase 8 cannot make COP claims before it is closed
+- [v1.2 Roadmap 2026-03-21]: Phase 8 uses the Phase 5 brentq solver extended with F_jet(z); continuity check (reproduces Phase 6 at zero jet/tail) required before any verdict
+- [v1.2 Roadmap 2026-03-21]: Tail foil span fixed at 0.457 m (vessel diameter, user-asserted anchor); chord is the sweep variable (0.05–0.457 m)
+- [v1.2 Roadmap 2026-03-21]: AoA held at 2° (Phase 6 optimal) for the 9-scenario COP table; sensitivity check at 1° and 3° in TAIL-03
+- [v1.2 Roadmap 2026-03-21]: Verdict threshold is COP > 1.0 (net-positive), not 1.5 (original target — confirmed unachievable at current geometry)
 - [v1.2 Init]: Started milestone v1.2 — purge thrust and tail foil quantification; verdict gate COP > 1.0 (not 1.5); wave coupling deferred to v1.3
 - [Init]: Use actual cylinder volume (7.069 ft³), not user estimate
 - [Init]: Fill target = air fills vessel exactly at surface (V_air_surface = V_vessel)
@@ -220,14 +226,15 @@ None — v1.1 AoA Parametric Sweep milestone complete.
 
 ### Pending Todos
 
-- None
+- Plan Phase 7 (Purge Thrust and Tail Foil Derivation) — PROP-01, PROP-02, TAIL-01, TAIL-02, VALD-01
+- After Phase 7: plan Phase 8 (Revised System Verdict) — PROP-03, TAIL-03, VALD-02, VALD-03
 
 ### Blockers/Concerns
 
-- None — v1.1 milestone complete; v1.2 design changes required to reach COP ≥ 1.5
+- None — v1.2 roadmap complete; Phase 7 planning is the next step
 
 ## Session Continuity
 
-**Last session:** 2026-03-19
-**Stopped at:** v1.1 roadmap created — ready for Phase 5 planning
-**Resume file:** analysis/phase4/outputs/phase4_summary_table.json
+**Last session:** 2026-03-21
+**Stopped at:** v1.2 roadmap created — ready for Phase 7 planning
+**Resume file:** analysis/phase5/aoa_sweep_solver.py (Phase 7 solver extension starting point); phase6_verdict.json (COP baseline reference)
