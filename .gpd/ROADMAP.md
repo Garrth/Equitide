@@ -3,7 +3,7 @@
 ## Milestones
 
 - **v1.0 Feasibility Study** — Phases 1–4 (completed 2026-03-19) — NO_GO: COP ∈ [0.811, 1.186]; reversed foil mounting invalid design path (kinematic: F_vert opposes motion on both loop halves regardless of orientation)
-- **v1.1 AoA Parametric Sweep** — Phases 5–6 (active)
+- **v1.1 AoA Parametric Sweep** — Phases 5–6 (completed 2026-03-21) — NO_GO: COP_max = 1.210 at (η_c=0.85, loss=5%, AoA=2°); η_c*=1.054 exceeds isothermal limit; AoA optimization cannot reach COP=1.5
 
 ---
 
@@ -73,12 +73,12 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 
 ### Phase 6: Full AoA Parametric Sweep and Go/No-Go Verdict
 
-**Status:** Planned (1/1 plan created)
+**Status:** Complete ✓
 **Started:** 2026-03-19
-**Completed:** —
+**Completed:** 2026-03-21
 
 **Plans:** 1 plan
-- [ ] 06-01-PLAN.md — Full AoA sweep (≥10 points, 1°–15°), AoA_optimal identification, nine-scenario COP grid, go/no-go verdict
+- [x] 06-01-PLAN.md — Full AoA sweep (≥10 points, 1°–15°), AoA_optimal identification, nine-scenario COP grid, go/no-go verdict
 
 **Goal:** The net COP is computed across AoA ∈ [1°, 15°] using the validated solver, the AoA at which COP is maximized is identified, and the go/no-go verdict on COP ≥ 1.5 is delivered under the same nine-scenario grid as Phase 4.
 
@@ -135,4 +135,4 @@ The v1.0 study established a NO_GO verdict at the design AoA of approximately 10
 | Milestone | Phases | Plans | Status | Date |
 | --------- | ------ | ----- | ------ | ---- |
 | v1.0 Feasibility Study | 1–4 | 9/9 | Complete (NO_GO) | 2026-03-19 |
-| v1.1 AoA Parametric Sweep | 5–6 | 1/TBD (Phase 5: 1/1) | Active | 2026-03-19 |
+| v1.1 AoA Parametric Sweep | 5–6 | 2/2 | Complete (NO_GO) | 2026-03-21 |

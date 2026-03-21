@@ -5,24 +5,24 @@
 See: .gpd/PROJECT.md (updated 2026-03-19)
 
 **Core research question:** Does any AoA (1°–15°) achieve COP ≥ 1.5 when the F_vert vs. horizontal torque trade-off is optimized?
-**Current focus:** v1.1 AoA Parametric Sweep — Phase 5: AoA Sweep Formulation and Anchor Validation
+**Current focus:** v1.1 AoA Parametric Sweep — COMPLETE (NO_GO verdict delivered 2026-03-21)
 
 ## Current Position
 
-**Current Phase:** 5
-**Current Phase Name:** AoA Sweep Formulation and Anchor Validation
+**Current Phase:** 6
+**Current Phase Name:** Full AoA Parametric Sweep and Go/No-Go Verdict
 **Total Phases:** 6 (v1.1 milestone)
 **Current Plan:** 1
 **Total Plans in Phase:** 1
-**Status:** Phase complete — pending verification
-**Last Activity:** 2026-03-19
-**Last Activity Description:** Phase 5 Plan 01 complete — AoA-parameterized brentq solver implemented and anchor validated (v_loop 0.0002%, COP 0.00007%, F_vert 0.0005% — all tolerances passed)
+**Status:** Milestone complete — NO_GO verdict delivered; v1.1 AoA Parametric Sweep finished
+**Last Activity:** 2026-03-21
+**Last Activity Description:** Phase 6 Plan 01 complete — full AoA sweep [1°–15°]; AoA_optimal=2.0°; COP_max=1.210 (η_c=0.85, loss=5%); VERDICT NO_GO, gap=0.290, η_c*=1.054 > 1.0 (exceeds isothermal limit); v1.1 milestone complete
 
-**Progress (v1.1):** [█████░░░░░] 50%
+**Progress (v1.1):** [██████████] 100%
 
 ## Active Calculations
 
-None — Phase 5 execution complete; verification in progress.
+None — v1.1 AoA Parametric Sweep milestone complete.
 
 ## Intermediate Results
 
@@ -128,6 +128,20 @@ None — Phase 5 execution complete; verification in progress.
 - All three claims PASS: claim-ANAL-01, claim-ANAL-02, claim-VALD-01
 - All 7 pitfall guards confirmed: PITFALL-M1, PITFALL-N-ACTIVE, PITFALL-C6, PITFALL-COROT, F_vert_sign, brentq_not_fixed, inputs_from_JSON
 
+### Phase 6 Locked Values (authoritative — use phase6_verdict.json for exact values)
+
+- phase6_verdict = **NO_GO** across all nine scenarios and all AoA in [1°, 15°]
+- AoA_optimal = 2.0° (scenario-independent; maximizes COP by balancing W_corot gain vs W_foil loss)
+- COP_max_nominal = 0.94373 at (η_c=0.70, loss=10%, AoA=2°) — 2.0% improvement over Phase 4
+- COP_max_all_scenarios = 1.210 at (η_c=0.85, loss=5%, AoA=2°) — gap = 0.290 to threshold 1.5
+- η_c_required_for_GO = 1.054 — exceeds isothermal limit (η_c=1.0); COP=1.5 physically unreachable
+- At η_c=1.0, loss=5%: COP_max = 1.423 < 1.5 (confirms fundamental geometric constraint)
+- scenario_independence = confirmed (argmax_AoA identical for all nine η_c × loss_frac combinations)
+- All 3 contract claims PASS: claim-SWEEP-01, claim-SWEEP-02, claim-VERD-01
+- All 9 acceptance tests PASS; all 7 pitfall guards True; all 5 forbidden proxies rejected
+- tack_flip_caveat: +5% additional loss reduces COP_max from 0.944 to 0.891 (highest prototype priority)
+- v1.1_milestone_status = **COMPLETE** (NO_GO; 2026-03-21)
+
 ## Performance Metrics
 
 | Label | Duration | Tasks | Files |
@@ -142,6 +156,7 @@ None — Phase 5 execution complete; verification in progress.
 | Phase 4 Plan 01 | ~45 min | 2 | 4 |
 | Phase 4 Plan 02 | ~45 min | 2 | 5 |
 | Phase 5 Plan 01 | ~45 min | 2 | 3 |
+| Phase 6 Plan 01 | ~45 min | 2 | 4 |
 
 ## Accumulated Context
 
@@ -185,6 +200,10 @@ None — Phase 5 execution complete; verification in progress.
 - [Phase 5 Plan 01]: F_vert_N in Phase 4 JSON stores per-vessel value; anchor comparison uses per-vessel throughout
 - [Phase 5 Plan 01]: e_oswald=0.85 loaded from foil01_force_sweep.json (not from phase2_summary_table.json)
 - [Phase 5 Plan 01]: AoA parameterization confirmed: mount_angle = beta_deg - AoA_target_deg computed dynamically at each brentq evaluation; NOT pre-fixed at 38 deg
+- [Phase 6 Plan 01]: AoA_optimal = 2.0° (not 10° from Phase 4); co-rotation gain at low AoA slightly outweighs foil torque loss, but only by ~2% COP
+- [Phase 6 Plan 01]: NACA monotonicity restricted to AoA < 12° — C_L peaks at 12° (C_L=1.14) and drops toward stall at 14° (C_L=1.05); physical near-stall feature, not a bug
+- [Phase 6 Plan 01]: η_c* = 1.054 required for GO — exceeds isothermal limit; COP=1.5 not achievable at current geometry; v1.2 must change design (depth, vessel count, or geometry)
+- [Phase 6 Plan 01]: Scenario-independence confirmed — argmax_AoA COP identical for all nine (η_c, loss_frac) combinations (algebraically exact: only W_gross(AoA) depends on AoA)
 
 ### Active Approximations
 
@@ -204,7 +223,7 @@ None — Phase 5 execution complete; verification in progress.
 
 ### Blockers/Concerns
 
-- None — Phase 4 closed; Phase 5 ready to plan
+- None — v1.1 milestone complete; v1.2 design changes required to reach COP ≥ 1.5
 
 ## Session Continuity
 
