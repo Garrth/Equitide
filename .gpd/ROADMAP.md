@@ -197,9 +197,12 @@ Full phase details: `.gpd/milestones/v1.1-ROADMAP.md`
 
 ### Phase 10: COP Sweep and Differential Rotation Verdict
 
-**Status:** Pre-planned
+**Status:** Planned (1 plan)
 **Objectives:** WAVE-03
 **Dependencies:** Phase 9 complete — AoA_eff(r), |v_rel|(r), force components at each r
+
+**Plans:**
+- [ ] 10-01-PLAN.md -- Extended brentq solver at each r; COP(r) sweep at 11 points; r* identification; v1.3 verdict
 
 **Goal:** The Phase 5/6 brentq solver is extended with the differential rotation force contributions; COP(r) is computed across the full r ∈ [1.0, 1.5] sweep; the optimal speed ratio r* is identified if a maximum exists; and the v1.3 verdict characterizes the COP response type.
 
