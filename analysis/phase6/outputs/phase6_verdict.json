@@ -1,0 +1,89 @@
+{
+  "_description": "Phase 6 go/no-go verdict: AoA optimization sweep across nine eta_c x loss_frac scenarios",
+  "_assert_convention": "unit_system=SI, F_vert_sign=Phase2 (negative=downward=opposing_buoyancy), lambda_held_constant=0.9, brentq_from_phase5_solver=imported_not_reimplemented, PITFALL-M1=W_pump_uses_W_adia_not_W_iso, PITFALL-N-ACTIVE=N_foil=24_not_30, PITFALL-C6=W_jet_equals_zero_explicit, PITFALL-COROT=P_net_corot_scaled_by_(v_loop/v_nom)^3_at_each_AoA",
+  "_generated_by": "analysis/phase6/aoa_full_sweep.py",
+  "_units": "SI; COP dimensionless; AoA in degrees; J for energies",
+  "verdict": "NO_GO",
+  "verdict_category": "NO_GO",
+  "verdict_detail": "NO_GO across all AoA and all nine scenarios. Gap = 0.2904.",
+  "COP_threshold": 1.5,
+  "AoA_optimal_deg": 2.0,
+  "COP_max_nominal": 0.943726,
+  "COP_max_all_scenarios": 1.209617,
+  "gap_to_threshold": 0.290383,
+  "closest_scenario": {
+    "eta_c": 0.85,
+    "loss_frac": 0.05,
+    "AoA_deg": 2.0,
+    "COP": 1.209617
+  },
+  "scenario_independence_verified": true,
+  "scenario_independence_note": "argmax_AoA COP is identical for all nine scenarios because COP(AoA, eta_c, loss) = W_gross(AoA) * (1-loss) / (N_total*W_adia/eta_c). The (eta_c, loss_frac) factors are multiplicative scalars; they do not change the argmax over AoA. All nine scenarios yield AoA_optimal = 2.0000 deg.",
+  "backtracking_checks": {
+    "stall_check": {
+      "pass": true,
+      "note": "Not triggered (NO_GO verdict; backtracking condition not met)"
+    },
+    "lambda_eff_check": {
+      "pass": true,
+      "note": "lambda_eff=0.9 < lambda_max=1.2748 throughout sweep: OK"
+    },
+    "brentq_convergence_check": {
+      "pass": true,
+      "note": "All brentq calls converged (no fallback scan triggered)"
+    }
+  },
+  "limiting_constraint_statement": "Even at AoA=0 (C_L=0, maximum v_loop=3.691 m/s, maximum co-rotation benefit), COP = 0.93787 under nominal scenario (eta_c=0.70, loss=0.10). This is the maximum achievable COP from co-rotation savings alone. The AoA sweep maximum COP = 0.94373 occurs at AoA = 2.0000 deg where W_foil contribution adds to W_corot benefit. Neither AoA reduction (to boost v_loop and W_corot) nor AoA increase (to boost W_foil) can reach COP = 1.5. Required compressor efficiency eta_c* = 1.0541 at best loss scenario (loss=0.05), which exceeds the isothermal limit (eta_c=1.0).",
+  "eta_c_required_for_GO": 1.054052,
+  "eta_c_required_note": "Required compressor isentropic efficiency to achieve COP=1.5 at AoA_optimal=2.0000 deg with loss_frac=0.05 (best scenario). eta_c*=1.0541. Since eta_c cannot exceed 1.0 (isothermal limit), this confirms COP=1.5 is not physically achievable.",
+  "nine_scenario_table": {
+    "eta_c=0.65": {
+      "loss=0.05": 0.925002,
+      "loss=0.10": 0.876317,
+      "loss=0.15": 0.827633
+    },
+    "eta_c=0.70": {
+      "loss=0.05": 0.996156,
+      "loss=0.10": 0.943726,
+      "loss=0.15": 0.891297
+    },
+    "eta_c=0.85": {
+      "loss=0.05": 1.209617,
+      "loss=0.10": 1.145953,
+      "loss=0.15": 1.082289
+    }
+  },
+  "phase4_comparison": {
+    "phase4_nominal_COP": 0.92501,
+    "phase6_nominal_COP_at_anchor_AoA": 0.925011,
+    "pct_diff": 6.8e-05,
+    "phase6_COP_at_AoA_optimal": 0.943726,
+    "improvement_over_phase4": 0.018716,
+    "cross_check_pass": true
+  },
+  "energy_at_AoA_optimal": {
+    "W_buoy_total_J": 619338.477,
+    "W_foil_total_J": 99083.7004,
+    "W_corot_total_J": 358299.9025,
+    "W_gross_J": 1076722.0798
+  },
+  "tack_flip_caveat": "CAVEAT (partially quantified): tack-flip mechanism losses are not included in the 5-15% mechanical loss fraction. Each vessel must flip its foil at loop top and bottom. An additional 5% effective loss from tack-flip (applied to the already-net COP_max at AoA_optimal=2.0000 deg) would reduce COP from 0.94373 to 0.89130 (reduction of 0.05243). Prototype measurement remains the highest priority for system feasibility assessment.",
+  "pitfall_guards_verified": {
+    "W_pump_uses_W_adia_not_W_iso": true,
+    "N_foil_active_24_not_30": true,
+    "W_jet_explicit_zero": true,
+    "corot_scaled_by_v_loop_ratio_cubed": true,
+    "F_vert_sign_negative_confirmed": true,
+    "brentq_not_fixed_vloop": true,
+    "inputs_from_JSON_not_hardcoded": true
+  },
+  "forbidden_proxies_rejected": {
+    "fp-cop-lossless": "REJECTED: verdict uses COP_nominal (eta_c=0.70, loss=0.10); COP_lossless=2.204 not reported as metric",
+    "fp-reversed-foil": "REJECTED: F_vert is kinematic (lift perpendicular to v_rel, always negative); reversed foil does not change verdict",
+    "fp-single-aoa": "REJECTED: verdict covers all nine (eta_c x loss_frac) scenarios and full AoA sweep [1, 15] deg",
+    "fp-fixed-vloop": "REJECTED: brentq solved at each AoA; v_loop varies significantly across sweep",
+    "fp-corot-at-vnom": "REJECTED: corot_scale = (v_loop_corrected/v_nom)^3 applied at each AoA"
+  },
+  "sweep_table_ref": "analysis/phase6/outputs/phase6_sweep_table.json",
+  "solver_ref": "analysis/phase5/aoa_sweep_solver.py"
+}
