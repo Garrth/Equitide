@@ -1,8 +1,8 @@
 {
   "project_reference": {
-    "project_md_updated": null,
-    "core_research_question": null,
-    "current_focus": null
+    "project_md_updated": "2026-03-21",
+    "core_research_question": "Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?",
+    "current_focus": "v1.1 milestone archived — planning next research stage (design changes required for v1.2)"
   },
   "project_contract": {
     "schema_version": 1,
@@ -268,16 +268,16 @@
     "total_plans_in_phase": null,
     "status": "complete",
     "last_activity": "2026-03-21",
-    "last_activity_desc": "Started milestone v1.1: AoA Parametric Sweep",
+    "last_activity_desc": "v1.1 AoA Parametric Sweep milestone archived 2026-03-21 — NO_GO final verdict; AoA_optimal=2°; COP_max=1.210; design changes required for v1.2",
     "progress_percent": 100,
     "paused_at": null
   },
   "active_calculations": [],
   "intermediate_results": [],
   "open_questions": [
-    "Final loop geometry needed to compute fill window duration",
-    "Hydrofoil chord length and profile to assume for L/D estimate",
-    "Co-rotation achievement mechanism"
+    "What design changes (depth, vessel count, geometry) are required to reach COP >= 1.5 — to be addressed in v1.2?",
+    "Tack-flip loss fraction (estimated +5% COP reduction) — highest prototype measurement priority",
+    "Can a deeper loop (e.g., 100 ft) or larger vessel count reach COP=1.5 at realistic compressor efficiency?"
   ],
   "performance_metrics": {
     "rows": []

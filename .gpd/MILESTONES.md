@@ -17,3 +17,17 @@
 
 ---
 
+
+## v1.1 AoA Parametric Sweep (Shipped: 2026-03-21)
+
+**Phases completed:** 2 phases (5–6), 2 plans
+
+**Key accomplishments:**
+- AoA-parameterized brentq solver derived from Phase 2 rotating-arm vector geometry; F_vert(AoA) confirmed negative (downward) for all AoA ∈ [1°, 15°] at λ=0.9
+- Anchor validation PASS: solver reproduces Phase 4 anchor (v_loop=2.383484 m/s, COP=0.92501, F_vert=−663.86 N) to within 0.001% — all three VALD-01 tolerances satisfied
+- Full 16-point AoA sweep [1°–15°] completed; AoA_optimal = 2.0° identified (maximizes COP: ΔW_corot gain +168 kJ slightly outpaces ΔW_foil loss −147 kJ vs AoA=10° baseline)
+- Nine-scenario verdict table delivered across all η_c × loss_frac combinations; COP_max = 1.210 at (η_c=0.85, loss=5%, AoA=2°) — gap = 0.290 to threshold 1.5
+- VERDICT: NO_GO — required η_c* = 1.054 exceeds isothermal compression limit (η_c = 1.0); even at ideal compression COP_max = 1.423 < 1.5; COP = 1.5 is physically unreachable at current geometry and depth
+
+---
+

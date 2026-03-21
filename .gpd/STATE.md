@@ -2,10 +2,10 @@
 
 ## Project Reference
 
-See: .gpd/PROJECT.md (updated 2026-03-19)
+See: .gpd/PROJECT.md (updated 2026-03-21)
 
-**Core research question:** Does any AoA (1°–15°) achieve COP ≥ 1.5 when the F_vert vs. horizontal torque trade-off is optimized?
-**Current focus:** v1.1 AoA Parametric Sweep — COMPLETE (NO_GO verdict delivered 2026-03-21)
+**Core research question:** Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for every 1W of air pumping input?
+**Current focus:** v1.1 milestone archived — planning next research stage (design changes required for v1.2)
 
 ## Current Position
 

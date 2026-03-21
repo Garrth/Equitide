@@ -4,15 +4,10 @@
 
 A theoretical feasibility study of a buoyancy + hydrofoil engine consisting of 30 open-bottom cylindrical vessels (3 vertical loops × 10 vessels) orbiting a central shaft in a 24 ft diameter × 60 ft deep fresh water cylinder. Ascending vessels are air-filled (buoyant); descending vessels are water-filled and pulled down by the chain. Hydrofoils on every vessel are tacked so both ascending and descending vessels contribute torque in the same rotational direction. Co-rotation of the water body reduces horizontal drag without reducing the vertical lift that drives the hydrofoils. The study determines whether the system can produce 1.5W of shaft output per 1W of air pumping input.
 
-## Current Milestone: v1.1 AoA Parametric Sweep
+## Milestone Status
 
-**Goal:** Find the AoA that maximizes net COP by balancing two competing effects: smaller AoA reduces the F_vert penalty (raising v_loop and co-rotation savings) but also reduces horizontal torque. Reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves regardless of foil orientation, because lift is perpendicular to v_rel and the vertical component always opposes the direction of travel.
-
-**Target results:**
-
-- Full parametric AoA sweep from 1° to 15°: F_vert(AoA), v_loop_corrected(AoA), co-rotation savings(AoA), horizontal torque(AoA), net COP(AoA)
-- AoA at which net COP is maximized
-- Go/no-go verdict: does any AoA achieve COP ≥ 1.5 under realistic assumptions?
+- **v1.0 Feasibility Study** (Phases 1–4) — COMPLETE (NO_GO, 2026-03-19): COP ∈ [0.811, 1.186]; hydrofoil + co-rotation confirmed kinematically; F_vert coupling reduces v_loop 36%; reversed foil mounting invalid (kinematic)
+- **v1.1 AoA Parametric Sweep** (Phases 5–6) — COMPLETE (NO_GO, 2026-03-21): AoA_optimal = 2°; COP_max = 1.210 at (η_c=0.85, loss=5%); η_c*=1.054 exceeds isothermal limit; AoA optimization exhausted as design lever
 
 ## Core Research Question
 
@@ -93,11 +88,11 @@ Can this buoyancy + hydrofoil engine produce at least 1.5W of shaft power for ev
 - [x] Is the fill window sufficient? — YES (GO): 274 SCFM at 26 psig, medium industrial compressor — v1.0
 - [x] Does the system balance yield COP ≥ 1.5? — **NO**: self-consistent v_loop = 2.384 m/s; corrected COP ∈ [0.811, 1.186], NO_GO — v1.0
 
-### Active (v1.1)
+### Answered (v1.1 — added)
 
-- [ ] Full parametric AoA sweep (1°–15°): what is F_vert(AoA), v_loop_corrected(AoA), horizontal torque(AoA), and net COP(AoA)?
-- [ ] At what AoA is net COP maximized — where does the trade-off between reduced F_vert penalty and reduced horizontal torque balance out?
-- [ ] Does any AoA achieve COP ≥ 1.5 under realistic assumptions?
+- [x] Full parametric AoA sweep (1°–15°): F_vert(AoA) always negative; v_loop ∈ [2.373, 3.465] m/s; W_foil and W_corot trade-off quantified at all 16 points — v1.1
+- [x] AoA_optimal = 2.0° — co-rotation gain (+168 kJ) just outpaces foil loss (−147 kJ) vs AoA=10° baseline; COP maximum is shallow (±0.002 near optimum) — v1.1
+- [x] NO: COP_max = 1.210 < 1.5 at all AoA in all nine scenarios; required η_c* = 1.054 exceeds isothermal limit; gap is fundamental geometric constraint — v1.1
 
 ### Out of Scope
 
@@ -144,9 +139,19 @@ Classical fluid mechanics, hydrostatics, thermodynamics (ideal gas), and hydrofo
 - **System verdict (NO_GO):** Corrected COP_nominal = 0.925; full range [0.811, 1.186] across 9 scenarios — all below 1.5
 - **Corrected understanding:** Reversed foil mounting is NOT a valid design path — F_vert opposes vessel motion on both loop halves (fundamental kinematics: lift ⊥ v_rel). AoA optimization is the only remaining analytical lever.
 
-### What Is New (v1.1 Question)
+### Current Research State (after v1.1)
 
-F_vert is a fundamental kinematic consequence of lift (⊥ to v_rel) and opposes vessel motion on both loop halves regardless of foil orientation — reversed mounting does not fix this. The v1.1 question is whether reducing AoA from the current 10° design point lowers F_vert enough to raise v_loop and co-rotation savings more than the loss in horizontal torque, and whether the optimal AoA yields COP ≥ 1.5.
+Two milestones (v1.0 + v1.1) have exhausted all analytical levers at the current geometry:
+- **AoA optimization** is the only free parameter after v1.0; v1.1 confirms it cannot reach COP=1.5
+- **Fundamental constraint:** Even at ideal compression (η_c=1.0) and minimum losses (5%), COP_max=1.423 < 1.5 — the gap is geometric, not efficiency-driven
+- **Root cause:** W_gross at AoA_optimal cannot reach 1.5 × W_pump_total at the current depth (18.29 m), vessel count (30), and foil geometry (AR=4, NACA 0012)
+- **Tack-flip caveat (highest prototype priority):** +5% additional loss from tack-flip reduces COP_max from 0.944 to 0.891 (nominal scenario)
+
+**Path to COP ≥ 1.5 requires design changes:**
+1. Increased depth H (larger W_buoy per cycle; scales as ln(P_r))
+2. Increased vessel count or volume (larger W_buoy total)
+3. Novel W_gross augmentation outside current model scope
+4. Reduced pressure ratio per compression cycle (lower P_r, less depth per cycle)
 
 ### Target Venue
 
@@ -198,7 +203,10 @@ See `.gpd/REQUIREMENTS.md` for the detailed requirements specification.
 | Co-rotation P_net scaled by (v_corr/v_nom)³ in Phase 4 | Consistent with v³ drag scaling; halves the apparent co-rotation benefit | Good |
 | Lossless gate COP ≠ 1 is expected; use buoy-iso gate instead | Multi-source machine with net energy production; W_buoy = W_iso is the First Law check | Good |
 | Verdict: NO_GO on v1.0 design; reversed mounting invalid design path | F_vert opposes motion on both loop halves (kinematic, not orientation-dependent); AoA optimization is the only analytical lever remaining | Corrected v1.1 |
+| AoA_optimal = 2.0°, not 10°; COP maximum is shallow | At 2°, ΔW_corot gain (+168 kJ) outpaces ΔW_foil loss (−147 kJ); net +21 kJ over anchor. COP function unimodal and well-resolved at 1° grid. | Good v1.1 |
+| NO_GO final: η_c* = 1.054 required, exceeds isothermal limit | Even at η_c=1.0 and loss=5%: COP_max = 1.423 < 1.5. Gap is geometric — depth/count/geometry must change, not efficiency | Confirmed v1.1 |
+| Scenario-independence confirmed: AoA_optimal identical for all nine η_c × loss_frac | W_gross(AoA) is the only AoA-dependent term in COP; scalar factors do not shift argmax | Validated v1.1 |
 
 ---
 
-_Last updated: 2026-03-19 after v1.1 milestone start_
+_Last updated: 2026-03-21 after v1.1 milestone complete_
