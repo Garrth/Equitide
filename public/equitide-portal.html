@@ -1079,11 +1079,12 @@ b8972e;color:white;border:none;padding:8px 18px;border-radius:3px;font-size:0.8r
     'https://wjwnutfljzwofhclxefl.supabase.co',
     'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi'
   );
+  async function signOut() {
+    await _sb.auth.signOut();
+    window.location.href = '/login';
+  }
   (async () => {
     const { data: { session } } = await _sb.auth.getSession();
-    if (!session)async function signOut() {
-  await _sb.auth.signOut();
-  window.location.href = '/login';
-} window.location.href = '/login';
+    if (!session) window.location.href = '/login';
   })();
 </script></html>
