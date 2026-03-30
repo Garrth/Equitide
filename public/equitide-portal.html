@@ -1069,6 +1069,7 @@
   });
 </script>
 
+<button onclick="signOut()" style="position:fixed;top:14px;right:20px;z-index:9999;background:#b8972e;color:white;border:none;padding:8px 18px;border-radius:3px;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Sign Out</button>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -1078,6 +1079,9 @@
   );
   (async () => {
     const { data: { session } } = await _sb.auth.getSession();
-    if (!session) window.location.href = '/login';
+    if (!session)async function signOut() {
+  await _sb.auth.signOut();
+  window.location.href = '/login';
+} window.location.href = '/login';
   })();
 </script></html>
