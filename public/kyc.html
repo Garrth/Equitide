@@ -199,8 +199,10 @@
           btn.textContent = 'Verification In Progress';
         },
         onComplete: ({ inquiryId, status }) => {
-          showStatus('Verification submitted! We will notify you once approved. Inquiry ID: ' + inquiryId, 'success');
-          btn.textContent = 'Verification Submitted';
+          btn.disabled = false;
+          btn.textContent = 'Go to Portal →';
+          btn.onclick = () => window.location.href = '/';
+          showStatus('Verification complete! Click the button above to enter the portal.', 'success');
         },
         onCancel: () => {
           btn.disabled = false;
