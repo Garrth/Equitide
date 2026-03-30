@@ -1070,4 +1070,14 @@
 </script>
 
 </body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const _sb = supabase.createClient(
+    'https://wjwnutfljzwofhclxefl.supabase.co',
+    'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi'
+  );
+  (async () => {
+    const { data: { session } } = await _sb.auth.getSession();
+    if (!session) window.location.href = '/login';
+  })();
+</script></html>
