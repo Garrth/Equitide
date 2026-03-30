@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equitide — Identity Verification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.withpersona.com/dist/persona-v4.8.0.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1a2744;
+      --gold: #b8972e;
+      --gold-lt: #d4af51;
+      --slate: #4a5568;
+      --mist: #f4f6f9;
+      --border: #d8dde6;
+      --white: #ffffff;
+      --green: #1a6b3a;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--mist);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+    .top-bar .wordmark {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .top-bar .wordmark span { color: var(--gold-lt); }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 100%;
+      max-width: 480px;
+      padding: 2.5rem;
+      margin-top: 56px;
+      box-shadow: 0 2px 12px rgba(26,39,68,0.08);
+      text-align: center;
+    }
+    .card h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--slate);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--slate);
+    }
+    .step-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--mist);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .step.active .step-icon {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 3px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #243660; }
+    .btn-primary:disabled { background: #8a9ab5; cursor: not-allowed; }
+    .status {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      display: none;
+    }
+    .status.success { background: #edf7f1; border: 1px solid #a8d5bb; color: var(--green); display: block; }
+    .status.pending { background: #fdf8ed; border: 1px solid #e8d4a0; color: #8a6a00; display: block; }
+    .card-footer {
+      margin-top: 1.5rem;
+      font-size: 0.72rem;
+      color: #aab0bc;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="wordmark">Equitide <span>Investor Portal</span></div>
+  </div>
+
+  <div class="card">
+    <h1>Identity Verification</h1>
+    <p>Federal regulations require us to verify your identity before you can deposit funds or receive distributions. This takes about 2 minutes.</p>
+
+    <div class="steps">
+      <div class="step active">
+        <div class="step-icon">1</div>
+        <span>Verify ID</span>
+      </div>
+      <div class="step">
+        <div class="step-icon">2</div>
+        <span>Deposit</span>
+      </div>
+      <div class="step">
+        <div class="step-icon">3</div>
+        <span>Invest</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="kyc-btn" onclick="startKYC()">Begin Verification</button>
+    <div class="status" id="status-msg"></div>
+
+    <div class="card-footer">
+      Your information is encrypted and stored securely. Equitide will never sell your personal data.
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://wjwnutfljzwofhclxefl.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi';
+    const PERSONA_TEMPLATE_ID = 'itmpl_X8Y36SNNwb2RwKrAp9F9sncn5sDC';
+    const PERSONA_ENV = 'sandbox';
+
+    const { createClient } = supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentUser = null;
+
+    (async () => {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) {
+        window.location.href = '/login';
+        return;
+      }
+      currentUser = session.user;
+    })();
+
+    function startKYC() {
+      const btn = document.getElementById('kyc-btn');
+      btn.disabled = true;
+      btn.textContent = 'Loading…';
+
+      const client = new Persona.Client({
+        templateId: PERSONA_TEMPLATE_ID,
+        environment: PERSONA_ENV,
+        referenceId: currentUser?.id || 'test-user',
+        onReady: () => {
+          client.open();
+          btn.textContent = 'Verification In Progress';
+        },
+        onComplete: ({ inquiryId, status }) => {
+          showStatus('Verification submitted! We will notify you once approved. Inquiry ID: ' + inquiryId, 'success');
+          btn.textContent = 'Verification Submitted';
+        },
+        onCancel: () => {
+          btn.disabled = false;
+          btn.textContent = 'Begin Verification';
+        },
+        onError: (error) => {
+          btn.disabled = false;
+          btn.textContent = 'Begin Verification';
+          showStatus('Something went wrong. Please try again.', 'pending');
+        }
+      });
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.className = 'status ' + type;
+    }
+  </script>
+</body>
+</html>
