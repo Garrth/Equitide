@@ -1085,6 +1085,12 @@ b8972e;color:white;border:none;padding:8px 18px;border-radius:3px;font-size:0.8r
   }
   (async () => {
     const { data: { session } } = await _sb.auth.getSession();
-    if (!session) window.location.href = '/login';
+    if (!session) { window.location.href = '/login'; return; }
+    
+    // Check KYC status
+    const { data: profile } = await _sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
+    if (!profile || profile.kyc_status !== 'approved') {
+      window.location.href = '/kyc';
+    }
   })();
 </script></html>

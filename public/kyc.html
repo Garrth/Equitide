@@ -183,7 +183,12 @@
           client.open();
           btn.textContent = 'Verification In Progress';
         },
-        onComplete: ({ inquiryId, status }) => {
+        onComplete: async ({ inquiryId, status }) => {
+          await sb.from('profiles').upsert({
+            id: currentUser.id,
+            kyc_status: 'approved',
+            kyc_inquiry_id: inquiryId
+          });
           btn.disabled = false;
           btn.textContent = 'Go to Portal →';
           btn.onclick = () => window.location.href = '/';
