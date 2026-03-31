@@ -986,6 +986,13 @@
 
     </div>
 
+    <!-- Card Form -->
+    <div class="modal-body" id="deposit-card-form" style="display:none">
+      <div id="stripe-payment-element"></div>
+      <br/>
+      <button class="btn btn-primary btn-full" id="submit-payment-btn">Pay Now</button>
+    </div>
+
     <!-- Success -->
     <div class="modal-success" id="deposit-success">
       <div class="success-icon">✓</div>
@@ -1087,6 +1094,7 @@
 
 b8972e;color:white;border:none;padding:8px 18px;border-radius:3px;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Sign Out</button>
 </body>
+<script src="https://js.stripe.com/v3/"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const _sb = supabase.createClient(
