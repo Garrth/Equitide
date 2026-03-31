@@ -170,7 +170,11 @@
       currentUser = session.user;
     })();
 
-    function startKYC() {
+    async function startKYC() {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { window.location.href = '/login'; return; }
+      currentUser = session.user;
+
       const btn = document.getElementById('kyc-btn');
       btn.disabled = true;
       btn.textContent = 'Loading…';
