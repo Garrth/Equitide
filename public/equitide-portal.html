@@ -1050,15 +1050,29 @@
     if (e.target === e.currentTarget) closeModal(type);
   }
 
-  function submitDeposit() {
+  async function submitDeposit() {
     const amt = parseFloat(document.getElementById('deposit-amount').value);
     if (!amt || amt < 500) {
       alert('Minimum deposit is $500.');
       return;
     }
-    // TODO: wire to Stripe + backend
-    document.getElementById('deposit-form').style.display = 'none';
-    document.getElementById('deposit-success').style.display = 'block';
+    try {
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amt })
+      });
+      const { clientSecret, error } = await res.json();
+      if (error) throw new Error(error);
+      // Store for Stripe checkout
+      window._depositClientSecret = clientSecret;
+      window._depositAmount = amt;
+      window._depositToken = selectedToken;
+      document.getElementById('deposit-form').style.display = 'none';
+      document.getElementById('deposit-success').style.display = 'block';
+    } catch (err) {
+      alert('Payment error: ' + err.message);
+    }
   }
 
   // ── Keyboard close ───────────────────────────────────────────────────────────
