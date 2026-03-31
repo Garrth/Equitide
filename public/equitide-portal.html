@@ -1069,14 +1069,34 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: amt })
       });
-      const { clientSecret, error } = await res.json();
+     const { clientSecret, error } = await res.json();
       if (error) throw new Error(error);
-      // Store for Stripe checkout
-      window._depositClientSecret = clientSecret;
-      window._depositAmount = amt;
-      window._depositToken = selectedToken;
+
       document.getElementById('deposit-form').style.display = 'none';
-      document.getElementById('deposit-success').style.display = 'block';
+      document.getElementById('deposit-card-form').style.display = 'block';
+
+      const stripe = Stripe('pk_test_51TH4sFGffwmZVStDeY6kBlVU1wLOAlmjj9Ok9wiCUbBFac9gqxEZ8rOA7ZGUAN225qq7H1WUjHKPhnL7HXOwurj600pORkoSn0');
+      const elements = stripe.elements({ clientSecret });
+      const paymentElement = elements.create('payment');
+      paymentElement.mount('#stripe-payment-element');
+
+      document.getElementById('submit-payment-btn').onclick = async () => {
+        const btn = document.getElementById('submit-payment-btn');
+        btn.disabled = true;
+        btn.textContent = 'Processing…';
+        const { error } = await stripe.confirmPayment({
+          elements,
+          redirect: 'if_required'
+        });
+        if (error) {
+          btn.disabled = false;
+          btn.textContent = 'Pay Now';
+          alert(error.message);
+        } else {
+          document.getElementById('deposit-card-form').style.display = 'none';
+          document.getElementById('deposit-success').style.display = 'block';
+        }
+      };
     } catch (err) {
       alert('Payment error: ' + err.message);
     }
