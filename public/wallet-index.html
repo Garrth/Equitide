@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equitide — Investor Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <style>
+    :root {
+      --tan:        #C9A961;
+      --tan-light:  #F0E6CC;
+      --tan-faint:  #FAF6EE;
+      --brown:      #8B6F47;
+      --slate:      #1e293b;
+      --ink:        #0f1923;
+      --muted:      #64748b;
+      --border:     #e8e0d4;
+      --bg:         #f7f4ef;
+      --white:      #ffffff;
+      --green:      #16a34a;
+      --green-bg:   #f0fdf4;
+      --red:        #dc2626;
+      --red-bg:     #fef2f2;
+      --radius-sm:  6px;
+      --radius:     10px;
+      --radius-lg:  16px;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow:     0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg:  0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--slate);
+      min-height: 100vh;
+      font-size: 15px;
+    }
+
+    .app { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 220px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo .wordmark {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      display: block;
+    }
+    .sidebar-logo .sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav { padding: 16px 12px; flex: 1; }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 12px;
+      margin-bottom: 6px;
+      margin-top: 16px;
+    }
+    .nav-label:first-child { margin-top: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 400;
+      transition: all 0.15s;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .nav-item:hover { background: var(--tan-faint); color: var(--slate); }
+    .nav-item.active { background: var(--tan-faint); color: var(--ink); font-weight: 500; }
+    .nav-item.active .nav-icon { color: var(--tan); }
+    .nav-icon { font-size: 16px; width: 18px; text-align: center; }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .user-chip { display: flex; align-items: center; gap: 10px; }
+    .user-avatar {
+      width: 32px; height: 32px;
+      background: var(--tan);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: var(--white); flex-shrink: 0;
+    }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--slate); }
+    .user-status {
+      font-size: 11px; color: var(--green);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .user-status::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--green); border-radius: 50%; display: inline-block;
+    }
+
+    .main { margin-left: 220px; flex: 1; display: flex; flex-direction: column; }
+
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 36px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 5;
+    }
+    .topbar-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px; font-weight: 400; color: var(--ink);
+    }
+    .topbar-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; border: none;
+    }
+    .btn-primary { background: var(--tan); color: var(--white); }
+    .btn-primary:hover { background: var(--brown); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--tan); color: var(--slate); }
+
+    .content { padding: 36px; }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 16px; margin-bottom: 32px;
+    }
+
+    .summary-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      box-shadow: var(--shadow-sm); animation: fadeUp 0.4s ease both;
+    }
+    .summary-card:nth-child(2) { animation-delay: 0.05s; }
+    .summary-card:nth-child(3) { animation-delay: 0.1s; }
+    .summary-card:nth-child(4) { animation-delay: 0.15s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .summary-card.featured { background: var(--ink); border-color: var(--ink); }
+    .summary-card.featured .card-label { color: rgba(255,255,255,0.5); }
+    .summary-card.featured .card-value { color: var(--tan); }
+    .summary-card.featured .card-sub { color: rgba(255,255,255,0.4); }
+
+    .card-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .card-value {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 28px; color: var(--ink); line-height: 1; margin-bottom: 6px;
+    }
+    .card-sub { font-size: 12px; color: var(--muted); font-weight: 300; }
+    .card-sub.positive { color: var(--green); font-weight: 500; }
+    .card-sub.negative { color: var(--red); font-weight: 500; }
+
+    .section-header {
+      display: flex; align-items: baseline;
+      justify-content: space-between; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px; font-weight: 400; color: var(--ink);
+    }
+    .section-sub { font-size: 13px; color: var(--muted); }
+
+    .holdings-table {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+      overflow: hidden; animation: fadeUp 0.4s 0.2s ease both;
+    }
+
+    .table-head {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+      padding: 12px 24px; background: var(--tan-faint);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .table-head span { text-align: right; }
+    .table-head span:first-child { text-align: left; }
+
+    .holding-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      align-items: center; transition: background 0.15s;
+    }
+    .holding-row:last-child { border-bottom: none; }
+    .holding-row:hover { background: var(--tan-faint); }
+
+    .holding-identity { display: flex; align-items: center; gap: 14px; }
+
+    .token-badge {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace; font-size: 10px;
+      font-weight: 500; letter-spacing: 0.05em; flex-shrink: 0;
+    }
+    .badge-eqtd { background: #FDF3DC; color: #92650A; }
+    .badge-scrt { background: #E8F4EC; color: #166534; }
+    .badge-iml  { background: #EEF2FF; color: #3730a3; }
+    .badge-perks { background: #FDF4FF; color: #7e22ce; }
+
+    .holding-name { font-weight: 500; font-size: 14px; color: var(--ink); }
+    .holding-ticker { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .holding-cell { text-align: right; font-size: 14px; color: var(--slate); }
+    .holding-cell.mono { font-family: 'DM Mono', monospace; font-size: 13px; }
+    .holding-cell .change { font-size: 12px; margin-top: 2px; }
+    .change.up { color: var(--green); }
+    .change.flat { color: var(--muted); }
+
+    .holding-actions { text-align: right; }
+    .action-row { display: flex; gap: 6px; justify-content: flex-end; }
+
+    .btn-sm {
+      padding: 5px 12px; font-size: 12px; border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      cursor: pointer; border: none; transition: all 0.15s;
+    }
+    .btn-buy { background: var(--tan); color: var(--white); }
+    .btn-buy:hover { background: var(--brown); }
+    .btn-sell { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-sell:hover { border-color: var(--red); color: var(--red); }
+
+    .perks-note {
+      font-size: 11px; color: #7e22ce; background: #fdf4ff;
+      border: 1px solid #e9d5ff; border-radius: 20px;
+      padding: 3px 10px; white-space: nowrap;
+    }
+
+    .activity-section { margin-top: 32px; animation: fadeUp 0.4s 0.3s ease both; }
+    .activity-list {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .activity-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px; border-bottom: 1px solid var(--border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+    }
+    .icon-deposit { background: var(--green-bg); }
+    .icon-pending { background: #fefce8; }
+    .activity-desc { flex: 1; }
+    .activity-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .activity-date  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .activity-amount { font-family: 'DM Mono', monospace; font-size: 14px; text-align: right; }
+    .activity-amount .amt { color: var(--ink); }
+    .activity-amount .status { font-family: 'DM Sans', monospace; font-size: 11px; margin-top: 2px; }
+    .status-settled { color: var(--green); }
+    .status-pending { color: #ca8a04; }
+    .empty-activity { padding: 40px 24px; text-align: center; color: var(--muted); font-size: 14px; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15,25,35,0.5); backdrop-filter: blur(4px);
+      z-index: 100; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: var(--radius-lg);
+      width: 480px; max-width: calc(100vw - 32px);
+      box-shadow: var(--shadow-lg); overflow: hidden;
+      animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.94) translateY(8px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 28px 20px; border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px; font-weight: 400; color: var(--ink);
+    }
+    .modal-close {
+      background: none; border: none; font-size: 20px; color: var(--muted);
+      cursor: pointer; line-height: 1; padding: 2px 6px;
+      border-radius: 4px; transition: background 0.15s;
+    }
+    .modal-close:hover { background: var(--border); color: var(--slate); }
+    .modal-body { padding: 28px; }
+
+    /* Token selector */
+    .token-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .token-option {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 14px; cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .token-option:hover { border-color: var(--tan); background: var(--tan-faint); }
+    .token-option.selected { border-color: var(--tan); background: var(--tan-faint); }
+    .token-option-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .token-option-ticker { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .token-badge-sm {
+      width: 32px; height: 32px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; flex-shrink: 0;
+    }
+
+    /* Amount input */
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .amount-field {
+      display: flex; align-items: center; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); overflow: hidden; transition: border-color 0.15s;
+    }
+    .amount-field:focus-within { border-color: var(--tan); }
+    .amount-prefix {
+      padding: 12px 14px; background: var(--tan-faint);
+      font-size: 16px; color: var(--muted);
+      border-right: 1px solid var(--border); font-weight: 500;
+    }
+    .amount-input {
+      flex: 1; border: none; outline: none; padding: 12px 14px;
+      font-family: 'DM Mono', monospace; font-size: 18px;
+      color: var(--ink); background: transparent;
+    }
+    .amount-presets { display: flex; gap: 8px; margin-top: 10px; }
+    .preset-btn {
+      background: var(--tan-faint); border: 1px solid var(--border);
+      border-radius: 20px; padding: 4px 12px; font-size: 12px;
+      font-family: 'DM Sans', sans-serif; color: var(--brown);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .preset-btn:hover { background: var(--tan-light); border-color: var(--tan); }
+
+    .conversion-display {
+      background: var(--tan-faint); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .conversion-label { font-size: 13px; color: var(--muted); }
+    .conversion-value { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--ink); font-weight: 500; }
+    .conversion-sub { font-size: 11px; color: var(--muted); margin-top: 2px; text-align: right; }
+
+    /* Payment method selector */
+    .payment-method-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .payment-method-btn {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 14px; cursor: pointer; transition: all 0.15s;
+      background: var(--white); text-align: center; font-family: 'DM Sans', sans-serif;
+    }
+    .payment-method-btn:hover { border-color: var(--tan); background: var(--tan-faint); }
+    .payment-method-btn.selected { border-color: var(--tan); background: var(--tan-faint); }
+    .payment-method-icon { font-size: 22px; margin-bottom: 6px; }
+    .payment-method-label { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .payment-method-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .modal-notice {
+      font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 20px;
+    }
+    .modal-notice strong { color: var(--slate); }
+    .btn-full { width: 100%; justify-content: center; padding: 13px; font-size: 15px; }
+
+    .modal-success { display: none; padding: 40px 28px; text-align: center; }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 20px; color: var(--ink); margin-bottom: 8px;
+    }
+    .success-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* KYC Banner */
+    .kyc-banner {
+      background: linear-gradient(135deg, var(--ink) 0%, #1e3a5f 100%);
+      border-radius: var(--radius); padding: 20px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 28px; animation: fadeUp 0.4s ease both;
+    }
+    .kyc-text .kyc-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .kyc-text .kyc-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .btn-kyc {
+      background: var(--tan); color: var(--white); border: none;
+      padding: 9px 20px; border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; white-space: nowrap; transition: background 0.15s;
+    }
+    .btn-kyc:hover { background: var(--brown); }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .summary-row { grid-template-columns: 1fr 1fr; }
+      .table-head, .holding-row { grid-template-columns: 2fr 1fr 1fr; }
+      .table-head span:nth-child(3),
+      .holding-row > *:nth-child(3),
+      .table-head span:nth-child(5),
+      .holding-row > *:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="wordmark">Equitide</span>
+      <span class="sub">Investor Portal</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Account</div>
+      <a class="nav-item active" href="#">
+        <span class="nav-icon">⬛</span> Portfolio
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">↓</span> Deposit
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">↑</span> Withdraw
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">≡</span> Activity
+      </a>
+      <div class="nav-label">Offerings</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">🏠</span> Sonoma eREIT I
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">⚙️</span> IML
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">✦</span> Equitide
+      </a>
+      <div class="nav-label">Support</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">?</span> Help
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">⚙</span> Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">GW</div>
+        <div>
+          <div class="user-name">Garth Wells</div>
+          <div class="user-status">Accredited</div>
+        </div>
+      </div>
+      <button onclick="signOut()" style="width:100%;margin-top:1rem;padding:0.6rem;background:transparent;border:1px solid #3a4a6b;color:#8a9ab5;border-radius:3px;font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title">Portfolio Overview</div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" onclick="openModal('withdraw')">Withdraw</button>
+        <button class="btn btn-primary" onclick="openModal('deposit')">+ Deposit</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- KYC Banner -->
+      <div class="kyc-banner">
+        <div class="kyc-text">
+          <div class="kyc-title">Complete your accredited investor verification</div>
+          <div class="kyc-sub">Required before purchasing — takes about 3 minutes.</div>
+        </div>
+        <button class="btn-kyc">Verify Identity →</button>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="summary-row">
+        <div class="summary-card featured">
+          <div class="card-label">Total Portfolio Value</div>
+          <div class="card-value">$0.00</div>
+          <div class="card-sub">Awaiting first deposit</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-label">Total Invested</div>
+          <div class="card-value">$0</div>
+          <div class="card-sub">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-label">Distributions</div>
+          <div class="card-value">$0.00</div>
+          <div class="card-sub">Year to date</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-label">PERKS Balance</div>
+          <div class="card-value" style="color:#7e22ce">0</div>
+          <div class="card-sub">Earned through participation</div>
+        </div>
+      </div>
+
+      <!-- Holdings -->
+      <div class="section-header">
+        <div class="section-title">Holdings</div>
+        <div class="section-sub">All values in USD</div>
+      </div>
+
+      <div class="holdings-table">
+        <div class="table-head">
+          <span>Investment</span>
+          <span>Units</span>
+          <span>Unit Price</span>
+          <span>Value</span>
+          <span>Actions</span>
+        </div>
+
+        <!-- EQTD -->
+        <div class="holding-row">
+          <div class="holding-identity">
+            <div class="token-badge badge-eqtd">EQTD</div>
+            <div>
+              <div class="holding-name">Equitide</div>
+              <div class="holding-ticker">Parent Company · EQTD</div>
+            </div>
+          </div>
+          <div class="holding-cell mono">0</div>
+          <div class="holding-cell">$10.00<div class="change flat">—</div></div>
+          <div class="holding-cell">$0.00</div>
+          <div class="holding-actions">
+            <div class="action-row">
+              <button class="btn-sm btn-buy" onclick="openModal('deposit','eqtd')">Buy</button>
+              <button class="btn-sm btn-sell">Sell</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCRT -->
+        <div class="holding-row">
+          <div class="holding-identity">
+            <div class="token-badge badge-scrt">SCRT</div>
+            <div>
+              <div class="holding-name">Sonoma County eREIT I</div>
+              <div class="holding-ticker">Real Estate Fund · SCRT</div>
+            </div>
+          </div>
+          <div class="holding-cell mono">0</div>
+          <div class="holding-cell">$10.00<div class="change flat">—</div></div>
+          <div class="holding-cell">$0.00</div>
+          <div class="holding-actions">
+            <div class="action-row">
+              <button class="btn-sm btn-buy" onclick="openModal('deposit','scrt')">Buy</button>
+              <button class="btn-sm btn-sell">Sell</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IML -->
+        <div class="holding-row">
+          <div class="holding-identity">
+            <div class="token-badge badge-iml">IML</div>
+            <div>
+              <div class="holding-name">Impossible Machines Lab</div>
+              <div class="holding-ticker">Technology Venture · IML</div>
+            </div>
+          </div>
+          <div class="holding-cell mono">0</div>
+          <div class="holding-cell">$10.00<div class="change flat">—</div></div>
+          <div class="holding-cell">$0.00</div>
+          <div class="holding-actions">
+            <div class="action-row">
+              <button class="btn-sm btn-buy" onclick="openModal('deposit','iml')">Buy</button>
+              <button class="btn-sm btn-sell">Sell</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERKS -->
+        <div class="holding-row">
+          <div class="holding-identity">
+            <div class="token-badge badge-perks">PRKS</div>
+            <div>
+              <div class="holding-name">Perks</div>
+              <div class="holding-ticker">Earned Reward · PERKS</div>
+            </div>
+          </div>
+          <div class="holding-cell mono">0</div>
+          <div class="holding-cell">—<div class="change flat">Not purchasable</div></div>
+          <div class="holding-cell">—</div>
+          <div class="holding-actions">
+            <span class="perks-note">✦ Earned only</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Activity -->
+      <div class="activity-section">
+        <div class="section-header">
+          <div class="section-title">Recent Activity</div>
+        </div>
+        <div class="activity-list">
+          <div class="empty-activity">
+            No transactions yet. Make your first deposit to get started.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Deposit Modal -->
+<div class="modal-overlay" id="modal-deposit" onclick="closeModalOutside(event,'deposit')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Deposit Funds</div>
+      <button class="modal-close" onclick="closeModal('deposit')">×</button>
+    </div>
+
+    <!-- Step 1: Amount + Payment Method -->
+    <div class="modal-body" id="deposit-form">
+
+      <div class="form-group">
+        <label class="form-label">Select Investment</label>
+        <div class="token-select-grid">
+          <div class="token-option selected" onclick="selectToken('eqtd',this)" id="opt-eqtd">
+            <div class="token-badge-sm badge-eqtd">EQTD</div>
+            <div>
+              <div class="token-option-name">Equitide</div>
+              <div class="token-option-ticker">EQTD</div>
+            </div>
+          </div>
+          <div class="token-option" onclick="selectToken('scrt',this)" id="opt-scrt">
+            <div class="token-badge-sm badge-scrt">SCRT</div>
+            <div>
+              <div class="token-option-name">Sonoma eREIT I</div>
+              <div class="token-option-ticker">SCRT</div>
+            </div>
+          </div>
+          <div class="token-option" onclick="selectToken('iml',this)" id="opt-iml">
+            <div class="token-badge-sm badge-iml">IML</div>
+            <div>
+              <div class="token-option-name">Impossible Machines</div>
+              <div class="token-option-ticker">IML</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Amount (USD)</label>
+        <div class="amount-field">
+          <span class="amount-prefix">$</span>
+          <input class="amount-input" id="deposit-amount" type="number" min="500" step="100" placeholder="0.00" oninput="updateConversion()" />
+        </div>
+        <div class="amount-presets">
+          <button class="preset-btn" onclick="setAmount(500)">$500</button>
+          <button class="preset-btn" onclick="setAmount(1000)">$1,000</button>
+          <button class="preset-btn" onclick="setAmount(5000)">$5,000</button>
+          <button class="preset-btn" onclick="setAmount(10000)">$10,000</button>
+        </div>
+      </div>
+
+      <div class="conversion-display">
+        <div><div class="conversion-label">You will receive</div></div>
+        <div>
+          <div class="conversion-value" id="conversion-value">— units</div>
+          <div class="conversion-sub">at $10.00 per unit (NAV)</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Payment Method</label>
+        <div class="payment-method-selector">
+          <div class="payment-method-btn selected" id="method-ach" onclick="selectMethod('ach')">
+            <div class="payment-method-icon">🏦</div>
+            <div class="payment-method-label">Bank Transfer</div>
+            <div class="payment-method-sub">ACH · 2–3 days</div>
+          </div>
+          <div class="payment-method-btn" id="method-card" onclick="selectMethod('card')">
+            <div class="payment-method-icon">💳</div>
+            <div class="payment-method-label">Credit / Debit</div>
+            <div class="payment-method-sub">Instant</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-notice" id="payment-notice">
+        <strong>ACH bank transfer.</strong> Funds are held in a segregated account until units are issued. Settlement takes 2–3 business days. Minimum deposit is $500. Units are issued at NAV on the date funds clear.
+      </div>
+
+      <button class="btn btn-primary btn-full" onclick="submitDeposit()">
+        Continue to Payment →
+      </button>
+
+    </div>
+
+    <!-- Step 2: Card Form (Stripe) -->
+    <div class="modal-body" id="deposit-card-form" style="display:none">
+      <div id="stripe-payment-element"></div>
+      <br/>
+      <button class="btn btn-primary btn-full" id="submit-payment-btn">Pay Now</button>
+    </div>
+
+    <!-- Success -->
+    <div class="modal-success" id="deposit-success">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Deposit Initiated</div>
+      <div class="success-sub">
+        Your deposit is being processed. Units will appear in your portfolio once funds clear (2–3 business days). You'll receive a confirmation by email.
+      </div>
+      <br/>
+      <button class="btn btn-primary" onclick="closeModal('deposit')">Back to Portfolio</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // Auth check
+  async function checkAuth() {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+    const supabase = createClient(
+      'https://wjwnutfljzwofhclxefl.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indqd251dGZsanp3b2ZoY2x4ZWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjE5MDQsImV4cCI6MjA1OTAzNzkwNH0.fMBMCLRCSPbTkJpFVwrNMNlIAtVNTyFHNFbsameqpJE'
+    );
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { window.location.href = '/login'; return; }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('kyc_status')
+      .eq('id', session.user.id)
+      .single();
+
+    if (!profile || profile.kyc_status !== 'approved') {
+      window.location.href = '/kyc';
+    }
+  }
+  checkAuth();
+
+  async function signOut() {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+    const supabase = createClient(
+      'https://wjwnutfljzwofhclxefl.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indqd251dGZsanp3b2ZoY2x4ZWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjE5MDQsImV4cCI6MjA1OTAzNzkwNH0.fMBMCLRCSPbTkJpFVwrNMNlIAtVNTyFHNFbsameqpJE'
+    );
+    await supabase.auth.signOut();
+    window.location.href = '/login';
+  }
+
+  // Token selection
+  let selectedToken = 'eqtd';
+  let selectedMethod = 'ach';
+
+  function selectToken(ticker, el) {
+    document.querySelectorAll('.token-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedToken = ticker;
+    updateConversion();
+  }
+
+  function selectMethod(method) {
+    selectedMethod = method;
+    document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('method-' + method).classList.add('selected');
+    const notice = document.getElementById('payment-notice');
+    if (method === 'ach') {
+      notice.innerHTML = '<strong>ACH bank transfer.</strong> Funds are held in a segregated account until units are issued. Settlement takes 2–3 business days. Minimum deposit is $500. Units are issued at NAV on the date funds clear.';
+    } else {
+      notice.innerHTML = '<strong>Credit or debit card.</strong> Funds are processed instantly via Stripe. Minimum deposit is $500. Units are issued at NAV on the date payment clears.';
+    }
+  }
+
+  function setAmount(val) {
+    document.getElementById('deposit-amount').value = val;
+    updateConversion();
+  }
+
+  function updateConversion() {
+    const amt = parseFloat(document.getElementById('deposit-amount').value) || 0;
+    const units = amt > 0 ? (amt / 10.00).toFixed(2) : '—';
+    document.getElementById('conversion-value').textContent = units === '—' ? '— units' : units + ' units';
+  }
+
+  // Modal
+  function openModal(type, token) {
+    if (token) {
+      document.querySelectorAll('.token-option').forEach(o => o.classList.remove('selected'));
+      const opt = document.getElementById('opt-' + token);
+      if (opt) { opt.classList.add('selected'); selectedToken = token; }
+    }
+    updateConversion();
+    document.getElementById('modal-' + type).classList.add('open');
+  }
+
+  function closeModal(type) {
+    document.getElementById('modal-' + type).classList.remove('open');
+    if (type === 'deposit') {
+      document.getElementById('deposit-form').style.display = 'block';
+      document.getElementById('deposit-card-form').style.display = 'none';
+      document.getElementById('deposit-success').style.display = 'none';
+      document.getElementById('deposit-amount').value = '';
+      document.getElementById('conversion-value').textContent = '— units';
+    }
+  }
+
+  function closeModalOutside(e, type) {
+    if (e.target === e.currentTarget) closeModal(type);
+  }
+
+  async function submitDeposit() {
+    const amt = parseFloat(document.getElementById('deposit-amount').value);
+    if (!amt || amt < 500) { alert('Minimum deposit is $500.'); return; }
+
+    if (selectedMethod === 'ach') {
+      await initiatePlaidLink(amt);
+    } else {
+      await initiateStripePayment(amt);
+    }
+  }
+
+  // Plaid ACH
+  async function initiatePlaidLink(amt) {
+    try {
+      const res = await fetch('/api/plaid/link-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: 'investor' })
+      });
+      const { link_token } = await res.json();
+
+      const handler = Plaid.create({
+        token: link_token,
+        onSuccess: async (public_token, metadata) => {
+          await fetch('/api/plaid/exchange-token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ public_token, amount: amt })
+          });
+          document.getElementById('deposit-form').style.display = 'none';
+          document.getElementById('deposit-success').style.display = 'block';
+        },
+        onExit: (err) => {
+          if (err) console.error('Plaid exit error:', err);
+        }
+      });
+      handler.open();
+    } catch (err) {
+      alert('Bank connection error: ' + err.message);
+    }
+  }
+
+  // Stripe Card
+  async function initiateStripePayment(amt) {
+    try {
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amt })
+      });
+      const { clientSecret, error } = await res.json();
+      if (error) throw new Error(error);
+
+      document.getElementById('deposit-form').style.display = 'none';
+      document.getElementById('deposit-card-form').style.display = 'block';
+
+      const stripe = Stripe('pk_test_51TH4sFGffwmZVStDeY6kBlVU1wLOAlmjj9Ok9wiCUbBFac9gqxEZ8rOA7ZGUAN225qq7H1WUjHKPhnL7HXOwurj600pORkoSn0');
+      const elements = stripe.elements({ clientSecret });
+      const paymentElement = elements.create('payment');
+      paymentElement.mount('#stripe-payment-element');
+
+      document.getElementById('submit-payment-btn').onclick = async () => {
+        const btn = document.getElementById('submit-payment-btn');
+        btn.disabled = true;
+        btn.textContent = 'Processing…';
+        const { error } = await stripe.confirmPayment({ elements, redirect: 'if_required' });
+        if (error) {
+          btn.disabled = false;
+          btn.textContent = 'Pay Now';
+          alert(error.message);
+        } else {
+          document.getElementById('deposit-card-form').style.display = 'none';
+          document.getElementById('deposit-success').style.display = 'block';
+        }
+      };
+    } catch (err) {
+      alert('Payment error: ' + err.message);
+    }
+  }
+</script>
+</body>
+</html>
