@@ -164,6 +164,12 @@
 
     let currentUser = null;
 
+    function showStatus(msg, type) {
+      const el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.className = 'status ' + type;
+    }
+
     (async () => {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) {
@@ -221,11 +227,7 @@
       });
     }
 
-    function showStatus(msg, type) {
-      const el = document.getElementById('status-msg');
-      el.textContent = msg;
-      el.className = 'status ' + type;
-    }
+    
   </script>
 </body>
 </html>

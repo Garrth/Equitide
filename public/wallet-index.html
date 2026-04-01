@@ -782,9 +782,7 @@
       .select('kyc_status')
       .eq('id', session.user.id)
       .single();
-if (!profile || profile.kyc_status !== 'approved') {
-      window.location.href = '/kyc';
-    }
+
     
   }
   checkAuth();
