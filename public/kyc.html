@@ -173,11 +173,11 @@
   currentUser = session.user;
   const { data: profile } = await sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
   if (profile && profile.kyc_status === 'approved') {
-    document.getelementbyid('kyc-btn').textcontent = 'already verified ✓';
-    document.getelementbyid('kyc-btn').disabled = true;
-    document.getelementbyid('kyc-btn').style.background = '#1a6b3a';
-    document.getelementbyid('kyc-btn').onclick = null;
-    showstatus('your identity has already been verified. you\'re all set!', 'success');
+    document.getElementById('kyc-btn').textContent = 'Already Verified ✓';
+    document.getElementById('kyc-btn').disabled = true;
+    document.getElementById('kyc-btn').style.background = '#1a6b3a';
+    document.getElementById('kyc-btn').onclick = null;
+    showStatus('Your identity has already been verified. You\'re all set!', 'success');
   }
 })();
 
