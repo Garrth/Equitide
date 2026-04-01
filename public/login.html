@@ -462,9 +462,8 @@
         return;
       }
 
-      showMsg('signup-msg',
-        'Account created! Check your email to confirm your address, then sign in.',
-        'success');
+      showMsg('signup-msg', 'Account created! Redirecting to verification…', 'success');
+      setTimeout(() => { window.location.href = '/kyc'; }, 1500);
       document.getElementById('signup-name').value = '';
       document.getElementById('signup-email').value = '';
       document.getElementById('signup-password').value = '';
