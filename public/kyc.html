@@ -162,13 +162,17 @@
     let currentUser = null;
 
     (async () => {
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) {
-        window.location.href = '/login';
-        return;
-      }
-      currentUser = session.user;
-    })();
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/login';
+    return;
+  }
+  currentUser = session.user;
+  const { data: profile } = await sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
+  if (profile && profile.kyc_status === 'approved') {
+    window.location.href = '/';
+  }
+})();
 
     async function startKYC() {
       const { data: { session } } = await sb.auth.getSession();
