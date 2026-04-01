@@ -142,12 +142,15 @@
     <h1>Identity Verification</h1>
     <p>Federal regulations require us to verify your identity before you can deposit funds or receive distributions. This takes about 2 minutes.</p>
 
-    <button class="btn-primary" id="kyc-btn" onclick="startKYC()">Begin Verification</button>
-    <div class="status" id="status-msg"></div>
+   <button class="btn-primary" id="kyc-btn" onclick="startKYC()">Begin Verification</button>
+<div class="status" id="status-msg"></div>
+<div style="margin-top:1rem;">
+  <a href="/" style="font-size:0.82rem;color:#4a5568;text-decoration:none;">← Back to Portfolio</a>
+</div>
 
-    <div class="card-footer">
-      Your information is encrypted and stored securely. Equitide will never sell your personal data.
-    </div>
+<div class="card-footer">
+  Your information is encrypted and stored securely. Equitide will never sell your personal data.
+</div> 
   </div>
 
   <script>
@@ -170,7 +173,11 @@
   currentUser = session.user;
   const { data: profile } = await sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
   if (profile && profile.kyc_status === 'approved') {
-    window.location.href = '/';
+    document.getelementbyid('kyc-btn').textcontent = 'already verified ✓';
+    document.getelementbyid('kyc-btn').disabled = true;
+    document.getelementbyid('kyc-btn').style.background = '#1a6b3a';
+    document.getelementbyid('kyc-btn').onclick = null;
+    showstatus('your identity has already been verified. you\'re all set!', 'success');
   }
 })();
 
