@@ -521,7 +521,7 @@
           <div class="kyc-title">Complete your accredited investor verification</div>
           <div class="kyc-sub">Required before purchasing — takes about 3 minutes.</div>
         </div>
-        <button class="btn-kyc">Verify Identity →</button>
+        <button class="btn-kyc" onclick="window.location.href='/kyc'">Verify Identity →</button>
       </div>
 
       <!-- Summary Cards -->
@@ -772,7 +772,7 @@
     const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
     const supabase = createClient(
       'https://wjwnutfljzwofhclxefl.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indqd251dGZsanp3b2ZoY2x4ZWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjE5MDQsImV4cCI6MjA1OTAzNzkwNH0.fMBMCLRCSPbTkJpFVwrNMNlIAtVNTyFHNFbsameqpJE'
+      'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi'
     );
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { window.location.href = '/login'; return; }
@@ -793,7 +793,7 @@ if (!profile || profile.kyc_status !== 'approved') {
     const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
     const supabase = createClient(
       'https://wjwnutfljzwofhclxefl.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indqd251dGZsanp3b2ZoY2x4ZWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjE5MDQsImV4cCI6MjA1OTAzNzkwNH0.fMBMCLRCSPbTkJpFVwrNMNlIAtVNTyFHNFbsameqpJE'
+      'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi'
     );
     await supabase.auth.signOut();
     window.location.href = '/login';
@@ -862,6 +862,15 @@ if (!profile || profile.kyc_status !== 'approved') {
   async function submitDeposit() {
     const amt = parseFloat(document.getElementById('deposit-amount').value);
     if (!amt || amt < 500) { alert('Minimum deposit is $500.'); return; }
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+    const supabase = createClient('https://wjwnutfljzwofhclxefl.supabase.co','sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi');
+    const { data: { session } } = await supabase.auth.getSession();
+    const { data: profile } = await supabase.from('profiles').select('kyc_status').eq('id', session.user.id).single();
+    if (!profile || profile.kyc_status !== 'approved') {
+      alert('Please complete identity verification before making a deposit.');
+      window.location.href = '/kyc';
+      return;
+    }
 
     if (selectedMethod === 'ach') {
       await initiatePlaidLink(amt);
