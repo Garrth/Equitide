@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Equitide — Identity Verification</title>
+  <title>Equitide - Identity Verification</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.withpersona.com/dist/persona-v4.8.0.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -71,35 +71,6 @@
       line-height: 1.6;
       margin-bottom: 1.5rem;
     }
-    .steps {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: var(--slate);
-    }
-    .step-icon {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--mist);
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-    }
-    .step.active .step-icon {
-      background: var(--navy);
-      border-color: var(--navy);
-      color: white;
-    }
     .btn-primary {
       width: 100%;
       padding: 0.85rem;
@@ -141,26 +112,25 @@
   <div class="card">
     <h1>Identity Verification</h1>
     <p>Federal regulations require us to verify your identity before you can deposit funds or receive distributions. This takes about 2 minutes.</p>
-
-   <button class="btn-primary" id="kyc-btn" onclick="startKYC()">Begin Verification</button>
-<div class="status" id="status-msg"></div>
-<div style="margin-top:1rem;">
-  <a href="/" style="font-size:0.82rem;color:#4a5568;text-decoration:none;">← Back to Portfolio</a>
-</div>
-
-<div class="card-footer">
-  Your information is encrypted and stored securely. Equitide will never sell your personal data.
-</div> 
+    <button class="btn-primary" id="kyc-btn" onclick="startKYC()">Begin Verification</button>
+    <div class="status" id="status-msg"></div>
+    <div style="margin-top:1rem;">
+      <a href="/" style="font-size:0.82rem;color:#4a5568;text-decoration:none;">Back to Portfolio</a>
+    </div>
+    <div class="card-footer">
+      Your information is encrypted and stored securely. Equitide will never sell your personal data.
+    </div>
   </div>
 
   <script>
     const SUPABASE_URL = 'https://wjwnutfljzwofhclxefl.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_0uW8okQkW24Wel3B8r7QPQ_gGlZGbGi';
-    const PERSONA_TEMPLATE_ID = 'itmpl_X8Y36SNNwb2RwKrAp9F9sncn5sDC';
-    const PERSONA_ENV = 'sandbox';
+    const STRIPE_PK = 'pk_live_51TT5Q3QbhCin1f0yJUJlFH9dASBS0GWIqA7TmS68z0oIehuEJ93ZCOAqAW4wwGwAhJFwprwCALRZTfiXS1gr8WFK002vCvSzEU';
+    const API_URL = 'https://wallet.equitide.io/api';
 
     const { createClient } = supabase;
     const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const stripeClient = Stripe(STRIPE_PK);
 
     let currentUser = null;
 
@@ -171,21 +141,19 @@
     }
 
     (async () => {
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) {
-    window.location.href = '/login';
-    return;
-  }
-  currentUser = session.user;
-  const { data: profile } = await sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
-  if (profile && profile.kyc_status === 'approved') {
-    document.getElementById('kyc-btn').textContent = 'Already Verified ✓';
-    document.getElementById('kyc-btn').disabled = true;
-    document.getElementById('kyc-btn').style.background = '#1a6b3a';
-    document.getElementById('kyc-btn').onclick = null;
-    showStatus('Your identity has already been verified. You\'re all set!', 'success');
-  }
-})();
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { window.location.href = '/login'; return; }
+      currentUser = session.user;
+      const { data: profile } = await sb.from('profiles').select('kyc_status').eq('id', session.user.id).single();
+      if (profile && profile.kyc_status === 'approved') {
+        const btn = document.getElementById('kyc-btn');
+        btn.textContent = 'Already Verified';
+        btn.disabled = true;
+        btn.style.background = '#1a6b3a';
+        btn.onclick = null;
+        showStatus('Your identity has already been verified. You are all set!', 'success');
+      }
+    })();
 
     async function startKYC() {
       const { data: { session } } = await sb.auth.getSession();
@@ -194,40 +162,36 @@
 
       const btn = document.getElementById('kyc-btn');
       btn.disabled = true;
-      btn.textContent = 'Loading…';
+      btn.textContent = 'Loading...';
 
-      const client = new Persona.Client({
-        templateId: PERSONA_TEMPLATE_ID,
-        environment: PERSONA_ENV,
-        referenceId: currentUser?.id || 'test-user',
-        onReady: () => {
-          client.open();
-          btn.textContent = 'Verification In Progress';
-        },
-        onComplete: async ({ inquiryId, status }) => {
-          await sb.from('profiles').upsert({
-            id: currentUser.id,
-            kyc_status: 'approved',
-            kyc_inquiry_id: inquiryId
-          });
-          btn.disabled = false;
-          btn.textContent = 'Go to Portal →';
-          btn.onclick = () => window.location.href = '/';
-          showStatus('Verification complete! Click the button above to enter the portal.', 'success');
-        },
-        onCancel: () => {
-          btn.disabled = false;
-          btn.textContent = 'Begin Verification';
-        },
-        onError: (error) => {
-          btn.disabled = false;
-          btn.textContent = 'Begin Verification';
-          showStatus('Something went wrong. Please try again.', 'pending');
-        }
-      });
+      try {
+        const response = await fetch(API_URL + '/create-verification-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser.id })
+        });
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        const { error } = await stripeClient.verifyIdentity(data.client_secret);
+        if (error) throw new Error(error.message);
+
+        await sb.from('profiles').upsert({
+          id: currentUser.id,
+          kyc_status: 'approved'
+        });
+
+        btn.disabled = false;
+        btn.textContent = 'Go to Portal';
+        btn.onclick = () => window.location.href = '/';
+        showStatus('Verification complete! Click the button above to enter the portal.', 'success');
+
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Begin Verification';
+        showStatus('Something went wrong: ' + err.message, 'pending');
+      }
     }
-
-    
   </script>
 </body>
 </html>
