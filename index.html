@@ -5,7 +5,7 @@
     <style>
       #cookie-banner {
         display: none; position: fixed; bottom: 0; left: 0; right: 0;
-        z-index: 9999; background: #1e293b; color: #e2e8f0;
+        z-index: 9999; background: #4a1828; color: #e2e8f0;
         padding: 16px 24px; font-family: 'Inter', sans-serif;
         font-size: 13px; line-height: 1.5; box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
       }
@@ -14,14 +14,14 @@
         align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
       }
       #cookie-banner p { margin: 0; color: #94a3b8; }
-      #cookie-banner a { color: #C9A961; text-decoration: underline; }
+      #cookie-banner a { color: #7DB547; text-decoration: underline; }
       #cookie-banner .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
       #cookie-banner button {
         padding: 8px 20px; border-radius: 6px; font-size: 13px;
         font-family: 'Inter', sans-serif; cursor: pointer; border: none; font-weight: 500;
       }
-      #cookie-accept { background: #C9A961; color: #fff; }
-      #cookie-accept:hover { background: #8B6F47; }
+      #cookie-accept { background: #7DB547; color: #fff; }
+      #cookie-accept:hover { background: #5A8C2E; }
       #cookie-decline { background: transparent; color: #94a3b8; border: 1px solid #334155 !important; }
       #cookie-decline:hover { color: #e2e8f0; }
     </style>
@@ -83,7 +83,7 @@
         }
         .modal-overlay.open { display: flex; }
         .chat-modal {
-            background: #0a0814;
+            background: #4a1828;
             border: 1px solid rgba(130,100,255,0.25);
             border-radius: 24px; padding: 32px;
             width: 90%; max-width: 520px; position: relative;
@@ -95,7 +95,7 @@
         }
         .modal-close:hover { color: #fff; }
         .meridian-card {
-            background: #07050f;
+            background: #4a1828;
             border: 1px solid rgba(130,100,255,0.2);
             border-radius: 20px; padding: 28px;
             display: flex; flex-direction: column;
@@ -119,16 +119,16 @@
             border-color: rgba(130,100,255,0.6);
         }
         .stack-layer {
-            border-left: 3px solid #C9A961; padding: 20px 24px;
+            border-left: 3px solid #7DB547; padding: 20px 24px;
             margin-bottom: 4px; background: white;
             border-radius: 0 8px 8px 0; transition: all 0.3s;
         }
         .stack-layer:hover { background: #faf7f2; }
-        .stack-connector { width: 3px; height: 16px; background: #C9A961; margin-left: 0; }
+        .stack-connector { width: 3px; height: 16px; background: #7DB547; margin-left: 0; }
     </style>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { 'brand-tan': '#C9A961', 'brand-brown': '#8B6F47' } } }
+            theme: { extend: { colors: { 'brand-green': '#7DB547', 'brand-deepgreen': '#5A8C2E', 'brand-burgundy': '#4A1828' } } }
         }
     </script>
 </head>
@@ -139,9 +139,9 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
-                <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#7DB547" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#5A8C2E" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#4a1828" stroke-width="3" stroke-linecap="round"/>
             </svg>
             <span class="text-xl font-semibold text-slate-900 tracking-tight serif">Equitide</span>
         </div>
@@ -152,7 +152,7 @@
             <a href="https://press.equitide.io" target="_blank" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">Press</a>
             <a href="https://meridian.equitide.io" target="_blank" class="text-slate-600 hover:text-slate-900 transition-colors text-sm">Meet Meridian</a>
             <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
-                    class="px-5 py-2.5 bg-brand-tan hover:bg-brand-brown text-white rounded-md transition-all text-sm font-medium">
+                    class="px-5 py-2.5 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md transition-all text-sm font-medium">
                 Join the waitlist
             </button>
         </div>
@@ -170,7 +170,7 @@
         <a href="https://press.equitide.io" target="_blank" class="block text-slate-600 hover:text-slate-900 transition-colors text-sm py-2">Press</a>
         <a href="https://meridian.equitide.io" target="_blank" class="block text-slate-600 hover:text-slate-900 transition-colors text-sm py-2">Meet Meridian</a>
         <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'}); toggleMenu();"
-                class="w-full px-5 py-3 bg-brand-tan hover:bg-brand-brown text-white rounded-md transition-all text-sm font-medium">
+                class="w-full px-5 py-3 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md transition-all text-sm font-medium">
             Join the waitlist
         </button>
     </div>
@@ -189,7 +189,7 @@ function toggleMenu() {
             <div class="lg:col-span-2 space-y-8 fade-in">
                 <h1 class="text-6xl lg:text-7xl font-bold leading-tight text-slate-900 serif">
                     Invest in real estate.<br/>
-                    <span class="text-brand-brown">From $100.</span>
+                    <span class="text-brand-deepgreen">From $100.</span>
                 </h1>
                 <p class="text-xl text-slate-600 leading-relaxed max-w-xl">
                     Equitide is a vertically integrated real estate trust open to everyone, not just the wealthy. We build attainable housing by aligning every party in the development stack. Lower costs mean better returns for investors and more attainable rents for tenants.
@@ -197,7 +197,7 @@ function toggleMenu() {
                 <div>
                     <p class="text-sm text-slate-500 mb-4 font-medium uppercase tracking-wide">First offering opens June 30, 2026</p>
                     <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
-                            class="px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all text-lg">
+                            class="px-8 py-4 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md font-medium transition-all text-lg">
                         Join the waitlist
                     </button>
                 </div>
@@ -215,23 +215,23 @@ function toggleMenu() {
 </section>
 
 <!-- The Problem -->
-<section class="py-20 px-6 bg-slate-900 text-white">
+<section class="py-20 px-6 bg-brand-BURGUNDY text-white">
     <div class="max-w-4xl mx-auto text-center">
-        <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-6">Why housing costs so much</p>
+        <p class="text-sm uppercase tracking-wider text-brand-green font-medium mb-6">Why housing costs so much</p>
         <h2 class="text-4xl font-bold mb-10 serif">Traditional development is built on conflict.</h2>
         <div class="grid md:grid-cols-3 gap-8 text-left">
-            <div class="bg-slate-800 rounded-lg p-6">
-                <div class="text-brand-tan text-2xl mb-3">01</div>
+            <div class="bg-brand-BURGUNDY rounded-lg p-6">
+                <div class="text-brand-green text-2xl mb-3">01</div>
                 <h3 class="font-bold text-lg mb-2 serif">Developer vs. Lender</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">Developers depend on financing and the people who provide it. When interest rates move a couple of points the whole project stops making sense.</p>
             </div>
-            <div class="bg-slate-800 rounded-lg p-6">
-                <div class="text-brand-tan text-2xl mb-3">02</div>
+            <div class="bg-brand-BURGUNDY rounded-lg p-6">
+                <div class="text-brand-green text-2xl mb-3">02</div>
                 <h3 class="font-bold text-lg mb-2 serif">Developer vs. Contractor</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">The developer wants to build for less. The contractor wants to earn more. These interests are fundamentally opposed, and someone always loses.</p>
             </div>
-            <div class="bg-slate-800 rounded-lg p-6">
-                <div class="text-brand-tan text-2xl mb-3">03</div>
+            <div class="bg-brand-BURGUNDY rounded-lg p-6">
+                <div class="text-brand-green text-2xl mb-3">03</div>
                 <h3 class="font-bold text-lg mb-2 serif">Everyone vs. The Renter</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">Every markup at every stage flows through to rent. Margins are so tight that vacancies can jeopardize the mortgage. Renters pay the price for a broken system.</p>
             </div>
@@ -243,7 +243,7 @@ function toggleMenu() {
 <section id="how-it-works" class="py-24 px-6 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
-            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">The Equitide model</p>
+            <p class="text-sm uppercase tracking-wider text-brand-green font-medium mb-4">The Equitide model</p>
             <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">Everyone works at cost.<br/>Everyone shares the upside.</h2>
             <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 In a conventional deal, every participant extracts margin during construction and renters pay for it through higher rents. In the Equitide model, margin is deferred to exit. The project gets built for less, the surplus is larger, and everyone including small investors gets a better outcome.
@@ -256,7 +256,7 @@ function toggleMenu() {
                 <div class="stack-layer">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-bold text-slate-900 serif">1 · Investors</h3>
-                        <span class="text-sm text-brand-brown font-medium">Paid first</span>
+                        <span class="text-sm text-brand-deepgreen font-medium">Paid first</span>
                     </div>
                     <p class="text-sm text-slate-600">Investors receive their preferred return first, typically 12% annually on capital deployed, prorated by time. Capital is returned before any other participant sees profit.</p>
                 </div>
@@ -264,7 +264,7 @@ function toggleMenu() {
                 <div class="stack-layer">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-bold text-slate-900 serif">2 · Landowner</h3>
-                        <span class="text-sm text-brand-brown font-medium">Made whole</span>
+                        <span class="text-sm text-brand-deepgreen font-medium">Made whole</span>
                     </div>
                     <p class="text-sm text-slate-600">If the landowner contributed land below market value, they are brought up to an agreed market rate price from project proceeds before the remaining surplus is divided.</p>
                 </div>
@@ -272,7 +272,7 @@ function toggleMenu() {
                 <div class="stack-layer">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-bold text-slate-900 serif">3 · Builder</h3>
-                        <span class="text-sm text-brand-brown font-medium">Cost plus markup</span>
+                        <span class="text-sm text-brand-deepgreen font-medium">Cost plus markup</span>
                     </div>
                     <p class="text-sm text-slate-600">The builder constructs at cost. Their margin, typically 15% on hard costs, is paid from proceeds rather than baked into the project budget upfront. Less risk for everyone.</p>
                 </div>
@@ -280,7 +280,7 @@ function toggleMenu() {
                 <div class="stack-layer">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-bold text-slate-900 serif">4 · Developer</h3>
-                        <span class="text-sm text-brand-brown font-medium">Fee for value created</span>
+                        <span class="text-sm text-brand-deepgreen font-medium">Fee for value created</span>
                     </div>
                     <p class="text-sm text-slate-600">The developer is compensated for entitlements, project management, and deal origination. The fee reflects the scope of their contribution and is agreed before the project begins.</p>
                 </div>
@@ -288,7 +288,7 @@ function toggleMenu() {
                 <div class="stack-layer">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-bold text-slate-900 serif">5 · Remaining surplus</h3>
-                        <span class="text-sm text-brand-brown font-medium">Split by agreement</span>
+                        <span class="text-sm text-brand-deepgreen font-medium">Split by agreement</span>
                     </div>
                     <p class="text-sm text-slate-600">Whatever remains after all participants are made whole is divided between investors, builder, developer, and landowner based on a waterfall agreed at the start of the deal.</p>
                 </div>
@@ -301,9 +301,9 @@ function toggleMenu() {
 
             <div class="space-y-6">
                 <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-6">Why this works</p>
-                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
@@ -312,9 +312,9 @@ function toggleMenu() {
                         <p class="text-slate-600 text-sm leading-relaxed">When the developer, builder, and renters all hold equity, everyone has the same goal: build efficiently, maintain well, keep occupancy high.</p>
                     </div>
                 </div>
-                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
                     </div>
@@ -323,9 +323,9 @@ function toggleMenu() {
                         <p class="text-slate-600 text-sm leading-relaxed">Building components in a controlled factory environment reduces build time and cost significantly. Faster delivery means less interest expense, which means lower rents.</p>
                     </div>
                 </div>
-                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
@@ -334,9 +334,9 @@ function toggleMenu() {
                         <p class="text-slate-600 text-sm leading-relaxed">In the Equitide model, risk is distributed across investors, the developer, and the builder. A bad outcome hurts everyone a little rather than one party a lot.</p>
                     </div>
                 </div>
-                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                     </div>
@@ -354,11 +354,11 @@ function toggleMenu() {
             <p class="text-slate-600 mb-6 max-w-lg mx-auto">Join the waitlist and be first in when we open June 30. Accredited and non-accredited investors welcome.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
-                        class="px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all">
+                        class="px-8 py-4 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md font-medium transition-all">
                     Join the waitlist
                 </button>
                 <a href="/why.html"
-                   class="px-8 py-4 border border-slate-300 hover:border-brand-tan text-slate-700 rounded-md font-medium transition-all">
+                   class="px-8 py-4 border border-slate-300 hover:border-brand-green text-slate-700 rounded-md font-medium transition-all">
                     Why Equitide &#8594;
                 </a>
             </div>
@@ -370,7 +370,7 @@ function toggleMenu() {
 <section id="investment" class="py-24 px-6 bg-stone-50">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
-            <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">First eREIT · Golden Hinde I</p>
+            <p class="text-sm uppercase tracking-wider text-brand-green font-medium mb-4">First eREIT · Golden Hinde I</p>
             <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">Our first offering opens June 30.</h2>
             <p class="text-xl text-slate-600 max-w-2xl mx-auto">A fully entitled 171-unit build-to-rent community in Carrollton, Georgia. Sponsored by Huffman Group, a vertically integrated developer with a proven track record in this exact market.</p>
         </div>
@@ -378,14 +378,14 @@ function toggleMenu() {
         <div class="grid lg:grid-cols-2 gap-12 items-start">
             <!-- Left: property card -->
             <div class="bg-white rounded-xl border border-stone-200 overflow-hidden">
-                <div class="bg-slate-900 px-8 py-6">
+                <div class="bg-brand-BURGUNDY px-8 py-6">
                     <div class="flex items-start justify-between mb-4">
                         <div>
-                            <p class="text-brand-tan text-xs uppercase tracking-widest font-medium mb-1">Cedar Mill · Carrollton, GA</p>
+                            <p class="text-brand-green text-xs uppercase tracking-widest font-medium mb-1">Cedar Mill · Carrollton, GA</p>
                             <h3 class="text-2xl font-bold text-white serif">171-Unit Build-to-Rent</h3>
                         </div>
-                        <div class="bg-brand-tan/20 border border-brand-tan/40 rounded-full px-3 py-1 flex-shrink-0 ml-4">
-                            <span class="text-brand-tan text-xs font-medium whitespace-nowrap">Opens June 30</span>
+                        <div class="bg-brand-green/20 border border-brand-green/40 rounded-full px-3 py-1 flex-shrink-0 ml-4">
+                            <span class="text-brand-green text-xs font-medium whitespace-nowrap">Opens June 30</span>
                         </div>
                     </div>
                     <p class="text-slate-400 text-sm leading-relaxed">Neighborhood-style rental homes, 1, 2, and 3 bedroom, on 12.38 acres just outside downtown Carrollton. Fully entitled, plans approved, Land Disturbance Permit imminent.</p>
@@ -442,9 +442,9 @@ function toggleMenu() {
             <div class="space-y-5">
                 <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">Why we selected this deal</p>
 
-                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
@@ -454,9 +454,9 @@ function toggleMenu() {
                     </div>
                 </div>
 
-                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
                     </div>
@@ -466,9 +466,9 @@ function toggleMenu() {
                     </div>
                 </div>
 
-                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
@@ -478,9 +478,9 @@ function toggleMenu() {
                     </div>
                 </div>
 
-                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-tan transition-all">
+                <div class="flex gap-4 items-start p-6 bg-white border border-slate-200 rounded-lg hover:border-brand-green transition-all">
                     <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-deepgreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
@@ -490,11 +490,11 @@ function toggleMenu() {
                     </div>
                 </div>
 
-                <div class="p-6 bg-slate-900 rounded-xl text-center">
+                <div class="p-6 bg-brand-BURGUNDY rounded-xl text-center">
                     <p class="text-slate-400 text-sm mb-2">This offering opens to verified investors</p>
                     <p class="text-white font-bold text-2xl serif mb-4">June 30, 2026</p>
                     <button onclick="document.getElementById('waitlist-section').scrollIntoView({behavior:'smooth'})"
-                            class="w-full px-6 py-3 bg-brand-tan hover:bg-brand-brown text-white rounded-md text-sm font-medium transition-all">
+                            class="w-full px-6 py-3 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md text-sm font-medium transition-all">
                         Join the waitlist to be notified &#8594;
                     </button>
                     <p class="text-slate-500 text-xs mt-3">Login to wallet.equitide.io to invest when the offering opens</p>
@@ -509,7 +509,7 @@ function toggleMenu() {
 <!-- Waitlist -->
 <section id="waitlist-section" class="py-24 px-6 bg-white">
     <div class="max-w-3xl mx-auto text-center">
-        <p class="text-sm uppercase tracking-wider text-brand-tan font-medium mb-4">Early access</p>
+        <p class="text-sm uppercase tracking-wider text-brand-green font-medium mb-4">Early access</p>
         <h2 class="text-5xl font-bold text-slate-900 mb-6 serif">Be first in when we open.</h2>
         <p class="text-xl text-slate-600 mb-10 leading-relaxed">
             We are opening soon to accredited investors. Non-accredited investors are coming soon after. Join the waitlist now and we will reach out with details when your opportunity is ready.
@@ -517,22 +517,22 @@ function toggleMenu() {
         <div id="waitlist-form" class="space-y-4 max-w-md mx-auto">
             <div class="grid grid-cols-2 gap-3">
                 <input id="wl-name" type="text" placeholder="First name"
-                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-tan transition-colors"/>
+                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-green transition-colors"/>
                 <input id="wl-email" type="email" placeholder="Email address"
-                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-tan transition-colors"/>
+                       class="px-5 py-4 bg-white border border-slate-300 rounded-md text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-green transition-colors"/>
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <button id="btn-non" onclick="selectType('non')"
-                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-tan">
+                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-green">
                     Non-accredited investor
                 </button>
                 <button id="btn-acc" onclick="selectType('acc')"
-                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-tan">
+                        class="px-5 py-4 border border-slate-300 rounded-md text-slate-600 text-sm transition-all hover:border-brand-green">
                     Accredited investor
                 </button>
             </div>
             <button onclick="submitWaitlist()"
-                    class="w-full px-8 py-4 bg-brand-tan hover:bg-brand-brown text-white rounded-md font-medium transition-all text-lg">
+                    class="w-full px-8 py-4 bg-brand-green hover:bg-brand-deepgreen text-white rounded-md font-medium transition-all text-lg">
                 Join the waitlist
             </button>
             <p class="text-sm text-slate-400">No commitment. We will be in touch when the offering is ready.</p>
@@ -542,7 +542,7 @@ function toggleMenu() {
             <h3 class="text-2xl font-bold text-slate-900 mb-3 serif">You're on the list.</h3>
             <p id="success-text" class="text-slate-600 mb-6 leading-relaxed"></p>
             <button onclick="window.open('https://meridian.equitide.io','_blank')"
-                    class="px-6 py-3 border border-slate-300 hover:border-brand-tan text-slate-700 rounded-md text-sm transition-all">
+                    class="px-6 py-3 border border-slate-300 hover:border-brand-green text-slate-700 rounded-md text-sm transition-all">
                 Talk to Meridian while you wait &#8594;
             </button>
         </div>
@@ -550,15 +550,15 @@ function toggleMenu() {
 </section>
 
 <!-- Footer -->
-<footer class="py-16 px-6 bg-slate-900 text-white">
+<footer class="py-16 px-6 bg-brand-BURGUNDY text-white">
     <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-4 gap-12 mb-12">
             <div>
                 <div class="flex items-center gap-2 mb-4">
                     <svg width="40" height="30" viewBox="0 0 50 40" fill="none">
-                        <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#C9A961" stroke-width="2.5" stroke-linecap="round"/>
-                        <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#8B6F47" stroke-width="2.5" stroke-linecap="round"/>
-                        <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#C9A961" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#7DB547" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#5A8C2E" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="#7DB547" stroke-width="3" stroke-linecap="round"/>
                     </svg>
                     <span class="font-semibold tracking-tight serif">Equitide</span>
                 </div>
@@ -634,11 +634,11 @@ function selectType(type) {
     const btnNon = document.getElementById('btn-non');
     const btnAcc = document.getElementById('btn-acc');
     if (type === 'non') {
-        btnNon.classList.add('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
-        btnAcc.classList.remove('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+        btnNon.classList.add('border-brand-green', 'text-brand-deepgreen', 'bg-amber-50');
+        btnAcc.classList.remove('border-brand-green', 'text-brand-deepgreen', 'bg-amber-50');
     } else {
-        btnAcc.classList.add('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
-        btnNon.classList.remove('border-brand-tan', 'text-brand-brown', 'bg-amber-50');
+        btnAcc.classList.add('border-brand-green', 'text-brand-deepgreen', 'bg-amber-50');
+        btnNon.classList.remove('border-brand-green', 'text-brand-deepgreen', 'bg-amber-50');
     }
 }
 
