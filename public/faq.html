@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Equitide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --burgundy:      #4A1828;
+      --mid-burgundy:  #7A2E42;
+      --dark-burgundy: #3a1020;
+      --green:         #7DB547;
+      --deep-green:    #5A8C2E;
+      --warm-white:    #f8f6f0;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--burgundy);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(74, 24, 40, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(125,181,71,0.18);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--warm-white);
+    }
+
+    .nav-logo svg { width: 32px; height: 20px; }
+
+    .nav-logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--warm-white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-section {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      border-left: 1px solid rgba(125,181,71,0.35);
+      padding-left: 0.75rem;
+    }
+
+    .nav-back {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248,246,240,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--green); }
+
+    /* HERO */
+    .hero {
+      min-height: 46vh;
+      background: var(--dark-burgundy);
+      display: flex;
+      align-items: flex-end;
+      padding: 10rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 60% at 85% 30%, rgba(125,181,71,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(125,181,71,0.05) 0%, transparent 60%);
+    }
+
+    .hero-line {
+      position: absolute;
+      top: 0; bottom: 0; left: 45%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(125,181,71,0.2) 40%, transparent 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .hero-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 400;
+      line-height: 0.95;
+      color: var(--warm-white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(248,246,240,0.65);
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    /* QUICK START CALLOUT */
+    .quickstart {
+      background: var(--warm-white);
+      padding: 5rem 4rem 2rem;
+    }
+
+    .quickstart-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      border-left: 4px solid var(--green);
+      background: #fff;
+      padding: 2.5rem 3rem;
+      box-shadow: 0 2px 24px rgba(74,24,40,0.07);
+    }
+
+    .quickstart-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .quickstart-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--burgundy);
+      margin-bottom: 0.4rem;
+    }
+
+    .quickstart-sub {
+      font-size: 0.85rem;
+      color: rgba(74,24,40,0.6);
+      margin-bottom: 2rem;
+    }
+
+    .quickstart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .qs-item {
+      border-top: 1px solid rgba(74,24,40,0.1);
+      padding-top: 1rem;
+    }
+
+    .qs-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--burgundy);
+      margin-bottom: 0.4rem;
+    }
+
+    .qs-a {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(74,24,40,0.7);
+    }
+
+    /* FAQ MAIN */
+    .faq-main {
+      padding: 4rem 4rem 6rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* SECTION */
+    .faq-section {
+      margin-bottom: 4rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--burgundy);
+      margin-bottom: 0.3rem;
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 0.83rem;
+      color: rgba(74,24,40,0.55);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .section-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--green);
+      margin-bottom: 2rem;
+    }
+
+    /* ACCORDION */
+    .accordion-item {
+      border-top: 1px solid rgba(74,24,40,0.1);
+    }
+
+    .accordion-item:last-child {
+      border-bottom: 1px solid rgba(74,24,40,0.1);
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      text-align: left;
+      gap: 1.5rem;
+    }
+
+    .accordion-trigger:hover .accordion-q {
+      color: var(--mid-burgundy);
+    }
+
+    .accordion-q {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--burgundy);
+      line-height: 1.45;
+      transition: color 0.2s;
+    }
+
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid rgba(74,24,40,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.3s;
+    }
+
+    .accordion-icon svg {
+      width: 10px;
+      height: 10px;
+      stroke: var(--burgundy);
+      transition: transform 0.3s;
+    }
+
+    .accordion-item.open .accordion-icon {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .accordion-item.open .accordion-icon svg {
+      stroke: #fff;
+      transform: rotate(45deg);
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 0 0 1.5rem 0;
+    }
+
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+
+    .accordion-a {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(74,24,40,0.72);
+      max-width: 680px;
+    }
+
+    .accordion-a .legal-note {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(74,24,40,0.45);
+    }
+
+    /* LEGAL SECTION — visually subdued */
+    .faq-section.legal .section-title {
+      font-size: 1.3rem;
+      color: rgba(74,24,40,0.65);
+    }
+
+    .faq-section.legal .accordion-q {
+      font-weight: 500;
+      color: rgba(74,24,40,0.7);
+    }
+
+    .faq-section.legal .accordion-a {
+      color: rgba(74,24,40,0.55);
+      font-size: 0.84rem;
+    }
+
+    .faq-section.legal .section-rule {
+      background: rgba(74,24,40,0.2);
+    }
+
+    .faq-section.legal {
+      padding: 2rem 2.5rem;
+      background: rgba(74,24,40,0.03);
+      border: 1px solid rgba(74,24,40,0.08);
+      border-radius: 2px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark-burgundy);
+      padding: 3rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(125,181,71,0.12);
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: rgba(248,246,240,0.4);
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(248,246,240,0.22);
+      letter-spacing: 0.05em;
+      max-width: 420px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .footer-back {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .footer-back:hover { opacity: 1; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero { padding: 8rem 1.5rem 4rem; }
+      .quickstart { padding: 4rem 1.5rem 1.5rem; }
+      .quickstart-inner { padding: 2rem 1.5rem; }
+      .quickstart-grid { grid-template-columns: 1fr; }
+      .faq-main { padding: 3rem 1.5rem 5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://equitide.io" class="nav-logo">
+    <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 8 Q10 2 20 8 Q30 14 38 8" stroke="#7DB547" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M2 14 Q10 8 20 14 Q30 20 38 14" stroke="#7DB547" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M2 20 Q10 14 20 20 Q30 26 38 20" stroke="#7DB547" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <span class="nav-logo-text">Equitide</span>
+    <span class="nav-section">FAQ</span>
+  </a>
+  <a href="https://equitide.io" class="nav-back">← equitide.io</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Frequently Asked Questions</p>
+    <h1 class="hero-headline">Answers,<br>not <em>disclaimers.</em></h1>
+    <p class="hero-sub">48 questions across 8 sections. We answer them all — including the ones about what could go wrong.</p>
+  </div>
+</section>
+
+<!-- QUICK START -->
+<div class="quickstart">
+  <div class="quickstart-inner">
+    <p class="quickstart-label">Quick Start · Top 5 Things to Know</p>
+    <h2 class="quickstart-title">Before You Read Further</h2>
+    <p class="quickstart-sub">Quick answers to the questions most investors ask first.</p>
+    <div class="quickstart-grid">
+      <div class="qs-item">
+        <p class="qs-q">What is the minimum investment?</p>
+        <p class="qs-a">$100. No $500,000 check required.</p>
+      </div>
+      <div class="qs-item">
+        <p class="qs-q">What is the risk?</p>
+        <p class="qs-a">Real estate development involves genuine execution risk, including the possibility of partial or total loss of principal. We disclose this clearly because you deserve the full picture.</p>
+      </div>
+      <div class="qs-item">
+        <p class="qs-q">Is my money liquid?</p>
+        <p class="qs-a">No. Real estate is illiquid. You should expect your capital to be committed for the duration of the 3–4 year hold period.</p>
+      </div>
+      <div class="qs-item">
+        <p class="qs-q">How do I get paid?</p>
+        <p class="qs-a">Investors hold preferred equity and are paid first — before any other participant in the deal shares in the upside.</p>
+      </div>
+      <div class="qs-item" style="grid-column: 1 / -1;">
+        <p class="qs-q">How is this different from a REIT stock?</p>
+        <p class="qs-a">Public REITs trade on stock exchanges and move with the market, not the underlying property. Equitide eREITs are tied to specific projects — you know the address, unit count, construction timeline, and projected returns before you invest.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ MAIN -->
+<main class="faq-main">
+
+  <!-- SECTION 1 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 1</p>
+    <h2 class="section-title">The Basics</h2>
+    <p class="section-sub">Understanding Equitide</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is Equitide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide is a vertically integrated real estate trust that opens property investment to everyone — not just wealthy or accredited investors. We develop, build, finance, and manage attainable housing through a single aligned team, then pool investor capital through eREITs so anyone can participate starting at $100.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is an eREIT?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">An eREIT (equity Real Estate Investment Trust) is a fund structure that lets multiple investors collectively own a stake in a real estate project. Instead of writing a $500,000 check for a private deal, investors pool smaller amounts to access the same preferred return tier. Equitide's eREITs are structured around individual projects, so you know exactly what you're investing in.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What does 'vertically integrated' actually mean?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">It means Equitide controls the full development process — from acquiring land and securing entitlements, through design and construction, to property management after the building opens. Because we don't hand off the project at each stage, the margin that would normally be extracted at each handoff stays in the deal. That's what makes attainable rents and competitive investor returns possible at the same time.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How is Equitide different from a regular REIT I can buy on the stock market?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Public REITs trade on stock exchanges and their prices move with the market, not necessarily with the performance of the underlying properties. Equitide's eREITs are tied directly to specific real estate projects — you know the address, the unit count, the construction timeline, and the projected returns before you invest. You're investing in a deal, not a ticker symbol.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How is Equitide different from platforms like Fundrise or Crowdstreet?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Most crowdfunding platforms connect investors with deals sourced from third-party developers. Equitide is the developer, the builder, and the manager. That vertical integration means we control costs in a way most platforms can't, and our incentives are fully aligned with investor outcomes rather than with deal flow fees.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Who founded Equitide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide was co-founded by Garth Wells and Dana Constance. Garth brings 30+ years of Bay Area construction and real estate development experience. Dana leads brand, creative, and investor communications. Our first offering, Argo, is sponsored by Huffman Group, a vertically integrated developer with an established track record in the Carrollton, Georgia market.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 2</p>
+    <h2 class="section-title">The Investment &amp; Liquidity</h2>
+    <p class="section-sub">How the Investment Works</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is the minimum investment?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">$100. We structured the minimum this way deliberately — the $500,000 floor on institutional real estate deals was never a requirement of the underlying asset. It was a requirement of how those deals were structured. Change the structure, change the minimum.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What returns can I expect?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Our first offering, Argo, targets a 12% net preferred return annually on capital deployed, and approximately 25% target IRR over the hold period. These figures are projections based on our underwriting and are not guaranteed. Real estate investment involves risk including possible loss of principal. Actual returns may differ materially from projections.<span class="legal-note">Target returns are projections only and are not guaranteed. Investing involves risk including possible loss of principal.</span></p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What does 'preferred return' mean?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">It means investors are paid first, before any other participant in the deal shares in the upside. Once the project exits — through a sale or refinancing — investor capital and their 12% preferred return are returned before the developer, builder, or landowner receive any profit. Preferred return is your priority position in the waterfall.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is IRR and why does it matter?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">IRR (Internal Rate of Return) measures the annualized return on your investment accounting for the timing of cash flows. A 25% IRR means that if you factor in when you put your money in and when you get it back, your investment grew at the equivalent of 25% per year. It's a more complete picture of returns than annual yield alone, and it's the standard metric used to compare real estate deals.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What are the fees?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide does not charge upfront management fees or acquisition fees. Our compensation is deferred to project exit through the waterfall, which means we only get paid meaningfully when investors are paid first. This alignment is intentional — our financial outcome depends on yours.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How long is my money committed?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Argo has a projected hold period of 3 to 4 years. Real estate is illiquid — you should expect your capital to be committed for the duration of the hold period and not plan to access it before the project exits. We will communicate any material changes to the timeline as the project develops.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Can I get my money back early?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Because real estate is illiquid, there is currently no secondary market for Argo interests. Investors should not plan to access capital before the project exits. We are exploring secondary market options for future offerings and will communicate developments as they become available.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How do I actually receive my returns?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Returns are distributed to investors from project proceeds at exit, which occurs when the completed asset is sold or refinanced. The distribution follows the waterfall: investors receive their preferred return and return of capital first, then other participants are made whole, then remaining surplus is divided. We will provide full accounting at exit.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How is my personal and tax data handled?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">We require standard identity verification — name, address, date of birth, and Social Security Number — to comply with securities regulations. All data is handled in accordance with our Privacy Policy and SEC requirements. Investors will receive a Schedule K-1 annually for tax reporting purposes. Full details are available at <a href="https://equitide.io/privacy.html" style="color:var(--green);">equitide.io/privacy.html</a>.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Can I invest through my IRA or retirement account?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">We are working to enable self-directed IRA investment and will provide details when that option is available. Join the waitlist and we will notify you when IRA investing opens.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Do I need to be an accredited investor?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">No. Equitide welcomes both accredited and non-accredited investors. Accredited investors — those with $1M+ in net assets excluding primary residence, or $200K+ annual income — can access the offering immediately when it opens. Non-accredited investors will have access shortly after, subject to regulatory requirements. Join the waitlist and we will notify you when your opportunity is ready.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 3</p>
+    <h2 class="section-title">The Deal</h2>
+    <p class="section-sub">About Argo — Our First Offering</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is Argo?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Argo is the name of Equitide's first eREIT. The underlying project is Cedar Mill — a fully entitled 171-unit build-to-rent community in Carrollton, Georgia, sponsored by Huffman Group. Argo opens to investors on June 30, 2026.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Why Carrollton, Georgia?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Carrollton is a supply-constrained market with strong fundamentals: fewer than 100 traditional multifamily units built in the past decade, 520 new jobs arriving within 3.5 miles over the next 36 months, and a proven rental market directly next door. Cedar Walk Phase I — 47 units, same sponsor, same street — is running at 95% occupancy and achieved the highest rental rates of any apartment complex in Carrollton. We chose this deal because the proof of concept is already operating.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is the total project size and capital structure?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Total project cost is $42 million. The equity raise is $7.5 million, construction debt is $32.5 million at 80% loan-to-cost, and the sponsor co-invests $2 million. The project is fully entitled, plans are approved, and the Land Disturbance Permit is imminent. Two lenders have provided term sheets at 80% LTC.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What type of housing is Cedar Mill?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Cedar Mill is a neighborhood-style build-to-rent community of 1, 2, and 3 bedroom homes on 12.38 acres just outside downtown Carrollton. Build-to-rent means the homes are designed and built specifically for renters — with the amenities and layout of owned homes — rather than repurposed from a for-sale development.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Who is Huffman Group?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Huffman Group is a vertically integrated developer and operator with a proven track record in the Carrollton market. They develop through Huffman Group, build through Huffman Built, and manage through SimpliRent. Margins stay in-house at every stage, which is exactly the aligned incentive model Equitide was built around. Their Cedar Walk Phase I project is the direct proof of concept for Cedar Mill.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How do you select your development partners?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">We partner with sponsors who are themselves vertically integrated — developers who also build and manage — and who have a demonstrable track record in their specific market. Huffman Group was selected because they have an operating project at 95% occupancy on the same street as Cedar Mill. We require proof of concept, not just a pitch.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is the construction timeline?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Cedar Mill is targeted for a 3 to 4 year hold period from investment to exit. We will provide project updates to investors throughout the construction and lease-up phases.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 4</p>
+    <h2 class="section-title">Risk &amp; Transparency</h2>
+    <p class="section-sub">What Could Go Wrong</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What are the main risks of investing in Equitide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Real estate investment involves genuine risk. The principal risks include: construction delays or cost overruns that extend the timeline or reduce returns; market conditions in Carrollton changing during the hold period; the project not achieving projected occupancy or rental rates; and the possibility of partial or total loss of principal if the project underperforms significantly. None of these are hypothetical — they are real risks that any investor should weigh before committing capital.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What happens if construction goes over budget?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide's vertically integrated model reduces but does not eliminate the risk of cost overruns. Because the developer and builder are aligned through the same incentive structure, there is no adversarial dynamic driving up costs. However, real estate development involves genuine execution risk. Material cost increases, labor market changes, and permitting delays are real possibilities. The project budget includes contingency reserves for this reason.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What happens if the project fails?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">In a worst-case scenario where the project cannot be completed or must be wound down, investor capital would be returned from whatever proceeds are available after construction debt is repaid. This could result in partial or total loss of principal. We disclose this clearly because we believe investors deserve to understand the full risk picture before committing capital.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How is my investment protected?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Investors hold preferred equity in the Argo eREIT, which means they are first in line to receive returns before any other participant in the deal. The project has construction debt at 80% LTC, meaning the lender also provides oversight of construction progress through draw requests. The sponsor co-invests $2 million of their own capital alongside investors, which aligns their incentives directly with project success.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Is Equitide regulated?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Yes. Equitide operates under applicable securities laws. Our Regulation A+ filing is in process with the SEC, which will allow us to offer securities to non-accredited investors at scale. All offering documents are prepared in compliance with SEC requirements and will be available to investors before the offering opens.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Where can I read the full legal disclosures?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Full disclosures are available at <a href="https://equitide.io/disclosures.html" style="color:var(--green);">equitide.io/disclosures.html</a>. All investment decisions should be made after reviewing the complete offering documents, which will be provided when the offering opens on June 30, 2026.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 5</p>
+    <h2 class="section-title">Our Mission</h2>
+    <p class="section-sub">Why We Built This</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Why does attainable housing matter to Equitide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">The U.S. is millions of homes short. The households bearing the cost are not only the most vulnerable — they are nurses, teachers, first responders, and working families spending more than 30% of their income on housing because the market was never designed to serve them. We believe the shortage is primarily a structural problem: the development model doesn't reward building what's needed. Equitide exists to prove that structure can be changed.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How does Equitide's model actually lower rents?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">In a traditional development deal, 30 to 40% of total project economics are extracted as margin at each stage before a single investor sees a return — and those costs flow through to rent. By deferring all margin to exit and aligning every participant around project success, Equitide reduces the cost basis of the project. Lower cost basis means lower rents can still support investor returns. That's not a social mission trade-off. It's better math.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Why is real estate investment important for everyday investors?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Real estate has created more generational wealth than almost any other asset class in American history. Access to the best deals has historically required $500,000 checks and industry connections. The people most affected by the housing shortage are often the same people who could most benefit from investing in the solution — and who have been most systematically excluded from doing so. Equitide is built to change that.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How can I track Equitide's impact?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">As we develop, we will share project milestones, construction updates, and performance metrics with investors. Each project represents a specific number of new attainable housing units — Cedar Mill is 171 homes. We will connect the mechanics of each deal to the communities it serves through regular reporting.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How does WeFunder fit into Equitide's model?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide is raising capital on WeFunder to build the platform infrastructure — the operational and technology foundation that makes vertically integrated attainable housing development possible at scale. Investors in the WeFunder round become founding co-owners of the Equitide platform itself, with equity in the company and 24-hour early access to every new offering before it opens to the public. This is separate from investing in individual eREITs like Argo.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Will there be more offerings after Argo?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Yes. Argo is the first of what we plan to be a growing series of eREIT offerings. Each will be a specific project with disclosed terms, projected returns, and deal specifics before opening. Founding investors in the WeFunder round receive early access to every new offering.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 6</p>
+    <h2 class="section-title">Getting Started</h2>
+    <p class="section-sub">How to Invest</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">How do I invest?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Join the waitlist at equitide.io. When the offering opens on June 30, 2026, you will receive an email with instructions to access wallet.equitide.io, review the offering documents, complete your investor verification, and submit your investment.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What information do I need to provide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">You will need to provide standard identity verification — name, address, date of birth, Social Security Number or equivalent — as required by securities regulations. Accredited investors will need to self-certify or provide documentation of accredited status. The process is designed to be completed online in under 10 minutes.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What is the difference between accredited and non-accredited investors?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">An accredited investor is someone with $1 million or more in net assets (excluding their primary residence), or $200,000 or more in annual income ($300,000 with a spouse). Non-accredited investors are everyone else. Both are welcome at Equitide — accredited investors can access the offering immediately when it opens, and non-accredited access follows shortly after subject to regulatory requirements.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">When does the offering close?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">The offering opens June 30, 2026. The closing date will be announced when the offering opens. We recommend joining the waitlist to be notified immediately when the offering is ready.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Is there a maximum investment?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">There is no stated maximum for accredited investors. Non-accredited investors are subject to investment limits under Regulation Crowdfunding based on their annual income and net worth. These limits will be disclosed clearly in the offering documents.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">What happens after I join the waitlist?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">You will receive a confirmation email. We will reach out with updates on the offering timeline, project news, and details on next steps. In the meantime, you can talk to Meridian, our AI CEO, at <a href="https://meridian.equitide.io" style="color:var(--green);">meridian.equitide.io</a> with any questions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="faq-section">
+    <p class="section-eyebrow">Section 7</p>
+    <h2 class="section-title">Questions &amp; Support</h2>
+    <p class="section-sub">Still Have Questions?</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Who can I talk to if I have questions?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Talk to Meridian, our AI CEO, at <a href="https://meridian.equitide.io" style="color:var(--green);">meridian.equitide.io</a>. Meridian can answer detailed questions about the offering, the deal structure, the model, and the team at any time. For questions that require a human response, contact us at <a href="mailto:contact@equitide.io" style="color:var(--green);">contact@equitide.io</a>.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">I'm a financial advisor. Can my clients invest in Equitide?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">We welcome interest from financial advisors and RIAs. Please reach out to us at <a href="mailto:contact@equitide.io" style="color:var(--green);">contact@equitide.io</a> to discuss how Equitide eREITs can be accessed through your practice.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">I'm a developer interested in the Equitide model. How can we connect?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Equitide is designed to scale by bringing additional developers into the model. If you are a developer interested in structuring a project through the Equitide framework, please contact us at <a href="mailto:contact@equitide.io" style="color:var(--green);">contact@equitide.io</a>. Future eREITs will be open to developers who adopt the aligned incentive structure.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">I'm a journalist or researcher. Who should I contact?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Press inquiries are welcome at <a href="https://press.equitide.io" style="color:var(--green);">press.equitide.io</a> or <a href="mailto:contact@equitide.io" style="color:var(--green);">contact@equitide.io</a>. We are happy to speak with journalists covering housing, real estate investment, and the democratization of private markets.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8 — LEGAL (subdued) -->
+  <div class="faq-section legal">
+    <p class="section-eyebrow">Section 8</p>
+    <h2 class="section-title">Legal &amp; Compliance</h2>
+    <p class="section-sub">Disclosures &amp; Legal</p>
+    <div class="section-rule"></div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Are target returns guaranteed?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">No. Target returns are projections only and are not guaranteed. The 12% net preferred return and approximately 25% IRR figures are based on our underwriting assumptions for Cedar Mill. Actual performance may differ materially from projections. Investing in real estate involves risk, including the possible loss of principal.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Is this an offer to sell securities?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">This FAQ and the equitide.io website are for informational purposes only and do not constitute an offer to sell or solicitation of an offer to buy securities. Any offering will be made only by means of an offering circular filed with the SEC and provided directly to investors.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">
+        <span class="accordion-q">Where are full disclosures available?</span>
+        <span class="accordion-icon"><svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="1" x2="5" y2="9" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      </button>
+      <div class="accordion-body">
+        <p class="accordion-a">Full legal disclosures are available at <a href="https://equitide.io/disclosures.html" style="color:var(--mid-burgundy);">equitide.io/disclosures.html</a>. Terms of service are at <a href="https://equitide.io/terms.html" style="color:var(--mid-burgundy);">equitide.io/terms.html</a>. Privacy policy is at <a href="https://equitide.io/privacy.html" style="color:var(--mid-burgundy);">equitide.io/privacy.html</a>. All investment decisions should be made after reviewing the complete offering documents.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Equitide</span>
+  <p class="footer-copy">Target returns are projections only and not guaranteed. Investing involves risk including possible loss of principal. This page is for informational purposes only and does not constitute an offer to sell securities.</p>
+  <a href="https://equitide.io" class="footer-back">← equitide.io</a>
+</footer>
+
+<script>
+  document.querySelectorAll('.accordion-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.accordion-item');
+      item.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>
