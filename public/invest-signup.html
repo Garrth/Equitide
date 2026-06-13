@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join the Waitlist — Equitide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --burgundy:   #4A1828;
+      --burgundy-mid: #7A2E42;
+      --green:      #7DB547;
+      --green-deep: #5A8C2E;
+      --green-faint:#f0f7e8;
+      --slate:      #2d3748;
+      --muted:      #64748b;
+      --border:     #e2ddd8;
+      --bg:         #f8f6f0;
+      --white:      #ffffff;
+      --radius-sm:  6px;
+      --radius:     10px;
+      --radius-lg:  16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--slate); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Nav */
+    .topnav {
+      background: var(--burgundy); padding: 0 32px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .topnav-logo {
+      font-family: 'Libre Baskerville', serif; font-size: 18px;
+      color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;
+    }
+    .back-link {
+      color: rgba(255,255,255,0.65); font-size: 13px; text-decoration: none;
+      padding: 6px 12px; border-radius: var(--radius-sm); transition: all 0.15s;
+    }
+    .back-link:hover { color: white; background: rgba(255,255,255,0.1); }
+
+    /* Main centered layout */
+    .page-center {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 48px 24px;
+    }
+
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 48px;
+      box-shadow: 0 8px 40px rgba(74,24,40,0.1);
+      width: 100%; max-width: 480px;
+    }
+
+    .card-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 12px;
+    }
+    .card-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 30px; color: var(--burgundy); line-height: 1.2; margin-bottom: 10px;
+    }
+    .card-sub {
+      font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 32px;
+    }
+
+    .form-group { margin-bottom: 14px; }
+    .form-label {
+      display: block; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+      font-size: 15px; color: var(--slate); background: var(--bg);
+      transition: border-color 0.15s; outline: none;
+    }
+    .form-input:focus { border-color: var(--green); background: white; }
+
+    .type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .type-btn {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 12px 10px; cursor: pointer; background: white;
+      font-family: 'DM Sans', sans-serif; transition: all 0.15s; text-align: center;
+    }
+    .type-btn:hover { border-color: var(--green); background: var(--green-faint); }
+    .type-btn.selected { border-color: var(--green); background: var(--green-faint); }
+    .type-btn-title { font-size: 13px; font-weight: 600; color: var(--burgundy); }
+    .type-btn-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--green);
+      color: white; border: none; border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s; margin-bottom: 16px;
+    }
+    .submit-btn:hover { background: var(--green-deep); }
+
+    .back-btn {
+      display: block; width: 100%; padding: 12px; text-align: center;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--muted); text-decoration: none; font-size: 14px;
+      transition: all 0.15s; background: transparent;
+    }
+    .back-btn:hover { border-color: var(--burgundy); color: var(--burgundy); }
+
+    .disclaimer {
+      font-size: 11px; color: var(--muted); text-align: center;
+      margin-top: 16px; line-height: 1.5;
+    }
+
+    /* Success */
+    .success-state { display: none; text-align: center; }
+    .success-icon { font-size: 52px; margin-bottom: 16px; }
+    .success-title { font-family: 'Libre Baskerville', serif; font-size: 26px; color: var(--burgundy); margin-bottom: 8px; }
+    .success-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
+    .success-btn {
+      display: block; padding: 13px; border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      text-decoration: none; text-align: center; transition: all 0.15s; margin-bottom: 10px;
+    }
+    .success-btn-primary { background: var(--green); color: white; }
+    .success-btn-primary:hover { background: var(--green-deep); }
+    .success-btn-ghost { border: 1px solid var(--border); color: var(--muted); }
+    .success-btn-ghost:hover { border-color: var(--burgundy); color: var(--burgundy); }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="https://equitide.io" class="topnav-logo">
+    <svg width="32" height="26" viewBox="0 0 50 40" fill="none">
+      <path d="M 5 30 Q 12 28 18 30 T 30 30" stroke="#7DB547" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 5 20 Q 15 15 25 20 T 40 20" stroke="#5A8C2E" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 5 8 Q 18 0 32 8 T 50 8" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    Equitide
+  </a>
+  <a href="https://equitide.io" class="back-link">← Back to site</a>
+</nav>
+
+<div class="page-center">
+  <div class="card">
+
+    <div id="signup-form">
+      <div class="card-eyebrow">Argo eREIT I · Opens June 30, 2026</div>
+      <h1 class="card-title">You're one step away.</h1>
+      <p class="card-sub">Reserve your spot on the waitlist and we'll reach out the moment investing opens.</p>
+
+      <div class="form-group">
+        <label class="form-label">First name</label>
+        <input class="form-input" id="inv-name" type="text" placeholder="Your first name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" id="inv-email" type="email" placeholder="your@email.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Investor type</label>
+        <div class="type-selector">
+          <div class="type-btn" id="type-acc" onclick="selectType('acc')">
+            <div class="type-btn-title">Accredited</div>
+            <div class="type-btn-sub">First access June 30</div>
+          </div>
+          <div class="type-btn" id="type-non" onclick="selectType('non')">
+            <div class="type-btn-title">Non-accredited</div>
+            <div class="type-btn-sub">Opening shortly after</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="submitSignup()">Reserve my spot →</button>
+      <a href="https://equitide.io" class="back-btn">Back to equitide.io</a>
+      <div class="disclaimer">No money is being solicited. This is an expression of interest only. Any offering will be made pursuant to applicable SEC offering documents.</div>
+    </div>
+
+    <div class="success-state" id="success-state">
+      <div class="success-icon">✅</div>
+      <h2 class="success-title">You're on the list.</h2>
+      <p class="success-sub" id="success-text"></p>
+      <a href="https://equitide.io" class="success-btn success-btn-primary">Back to Equitide →</a>
+      <a href="https://meridian.equitide.io" target="_blank" class="success-btn success-btn-ghost">Talk to Meridian while you wait</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let selectedType = '';
+
+  function selectType(type) {
+    selectedType = type;
+    document.getElementById('type-acc').classList.toggle('selected', type === 'acc');
+    document.getElementById('type-non').classList.toggle('selected', type === 'non');
+  }
+
+  async function submitSignup() {
+    const name = document.getElementById('inv-name').value.trim();
+    const email = document.getElementById('inv-email').value.trim();
+    if (!name) { alert('Please enter your first name.'); return; }
+    if (!email) { alert('Please enter your email address.'); return; }
+    if (!selectedType) { alert('Please select your investor type.'); return; }
+
+    try {
+      await fetch('/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email, firstName: name, lastName: '',
+          tags: [selectedType === 'acc' ? 'accredited' : 'non-accredited', 'wallet-signup']
+        })
+      });
+    } catch(e) { console.log(e); }
+
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    document.getElementById('success-text').textContent = selectedType === 'acc'
+      ? 'Thanks ' + name + '! Accredited investors get first access. We\'ll be in touch before June 30 with everything you need to invest.'
+      : 'Thanks ' + name + '! We\'re opening to non-accredited investors shortly after June 30. We\'ll reach out the moment your window opens.';
+  }
+</script>
+</body>
+</html>
